@@ -84,8 +84,10 @@ module Option : OPTION with type 'a t = 'a option = Make(
     let to_option x = x
     let from_option x = x
 
-    let to_optdef, from_optdef = Js.Optdef.(option, to_option)
-    let to_opt, from_opt = Js.Opt.(option, to_option)
+    let to_optdef = Js.Optdef.option
+    let from_optdef = Js.Optdef.to_option
+    let to_opt = Js.Opt.option
+    let from_opt = Js.Opt.to_option
   end
 )
 
@@ -96,10 +98,12 @@ module Opt : OPTION with type 'a t = 'a Js.Opt.t = Make(
     let to_opt x = x
     let from_opt x = x
     let from_option = option
+
     let to_optdef opt =
       match to_option opt with
       | Some x -> Js.Optdef.return x
       | None -> Js.Optdef.empty
+
     let from_optdef optdef =
       match Js.Optdef.to_option optdef with
       | Some x -> return x
