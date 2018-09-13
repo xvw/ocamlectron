@@ -1,5 +1,7 @@
 .PHONY: clean
 
+all: build doc
+
 build: 
 	dune build
 
