@@ -91,3 +91,38 @@ val get_app_path : t -> string
 
 val get_path : t -> path_name -> string
 (** Returns a path to a special directory or file associated with name. *)
+
+val set_path : t -> path_name -> string -> unit
+(** Overrides the path to a special directory or file associated with name. 
+    If the path specifies a directory that does not exist, the directory 
+    will be created by this method .
+*)
+
+val get_version : t -> string
+(** Returns the version of the loaded application. If no 
+    version is found in the application's package.json file, the 
+    version of the current bundle or executable is returned.
+*)
+
+val get_name : t -> string 
+(** Returns the current application's name, which is the name in 
+    the application's package.json file 
+*)
+
+val set_name : t -> string -> unit
+(** Overrides the current application's name. *)
+
+val get_locale : t -> string
+(** Returns the current application locale. *)
+
+val add_recent_document : t -> string -> unit 
+(** {b only macOS and Windows}
+
+    Adds [path] to the recent documents list.
+*)
+
+val clear_recent_documents : t -> unit
+(** {b only macOS and Windows}
+
+    Clears the recent documents list.
+*)

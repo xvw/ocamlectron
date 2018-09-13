@@ -63,13 +63,48 @@ class type app = object
       automatically focus them.
   *)
 
-  method getAppPath : unit -> js_string t meth
+  method getAppPath : unit -> (js_string t) meth
   (** Returns the current application directory. *)
 
 
-  method getPath : js_string t -> js_string t meth
+  method getPath : js_string t -> (js_string t) meth
   (** Returns a path to a special directory or file associated with name. 
       On failure an Error is thrown.
+  *)
+
+  method setPath : js_string t -> js_string t -> unit meth
+  (** Overrides the path to a special directory or file associated with name. 
+      If the path specifies a directory that does not exist, the directory 
+      will be created by this method 
+  *)
+
+  method getVersion : unit -> (js_string t) meth
+  (** Returns the version of the loaded application. If no 
+      version is found in the application's package.json file, the 
+      version of the current bundle or executable is returned.
+  *)
+
+  method getName : unit -> (js_string t) meth
+  (** Returns the current application's name, which is the name in 
+      the application's package.json file 
+  *)
+
+  method setName : js_string t -> unit meth
+  (** Overrides the current application's name. *)
+
+  method getLocale : unit -> (js_string t) meth
+  (** Returns the current application locale. *)
+
+  method addRecentDocument : js_string t -> unit meth
+  (** {b only macOS and Windows}
+
+      Adds [path] to the recent documents list.
+  *)
+
+  method clearRecentDocuments : unit -> unit meth
+  (** {b only macOS and Windows}
+
+      Clears the recent documents list.
   *)
 
 end

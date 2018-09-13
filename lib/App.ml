@@ -74,3 +74,30 @@ let get_path app path_name =
   let path = path_to_string path_name in 
   let value = app ## getPath (Js.string path) in 
   Js.to_string value
+
+let set_path app path_name path = 
+  let p = path_to_string path_name in 
+  app ## setPath (Js.string p) (Js.string path)
+
+let get_version app = 
+  let v = app ## getVersion () in 
+  Js.to_string v
+
+let get_name app = 
+  let v = app ## getName () in 
+  Js.to_string v
+
+let set_name app new_name = 
+  let name = Js.string new_name in 
+  app ## setName name
+
+let get_locale app = 
+  let v = app ## getLocale () in 
+  Js.to_string v
+
+let add_recent_document app path = 
+  let v = Js.string path in 
+  app ## addRecentDocument v
+
+let clear_recent_documents app = 
+  app ## clearRecentDocuments ()
