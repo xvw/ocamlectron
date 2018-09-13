@@ -1,6 +1,9 @@
 (** Control your application's event lifecycle. 
 
     Wrap the behaviour of [Electron.app]
+
+    You can find more information on this page :
+    {{: https://electronjs.org/docs/api/app }  ElectronJS : documentation for [app] }
 *)
 
 (** {2 Internals types} *)

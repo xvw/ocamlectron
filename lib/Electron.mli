@@ -8,7 +8,11 @@ class type app_relaunch_options = object
   method execPath : js_string t Optdef.t readonly_prop
 end
 
-(** Control your application's event lifecycle. *)
+(** Control your application's event lifecycle. 
+
+    You can find more information on this page :
+    {{: https://electronjs.org/docs/api/app }  ElectronJS : documentation for [app] }
+*)
 class type app = object
 
   method quit : unit -> unit meth
