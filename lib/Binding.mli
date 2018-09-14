@@ -120,6 +120,19 @@ class type process = object
   method allowedNodeEnvironmentFlags : (js_string t) Set.t readonly_prop
   (** Resolves node options flags *)
 
+  method arch : (js_string t) readonly_prop
+  (** returns a string identifying the operating system CPU architecture 
+      for which the Node.js binary was compiled 
+  *)
+
+  method argv : (js_string t js_array t) readonly_prop
+  (** Returns [argv], the passed arguments array *)
+
+  method argv0 : js_string t readonly_prop
+  (**  a read-only copy of the original value of [argv[0]] passed 
+       when Node.js starts. 
+  *)
+
   method defaultApp : (bool Optdef.t) readonly_prop
   (** When app is started by being passed as parameter to the 
       default app, this property is [true] in the main process, 

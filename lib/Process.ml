@@ -6,7 +6,21 @@ type t = Binding.process Js.t
 type process_kind = 
   | Browser 
   | Renderer
-  | Unknown
+  | Unknown_kind
+
+type architecture = 
+  | Arm 
+  | Arm64 
+  | Ia32 
+  | Mips 
+  | Mipsel 
+  | Ppc 
+  | Ppc64 
+  | S390
+  | S390x 
+  | X32
+  | X64
+  | Unknown_architecture
 let process : t = Js.Unsafe.global##._process
 
 let abort () = process ## abort ()
@@ -32,7 +46,7 @@ let kind () =
   match result with 
   | "browser" -> Browser
   | "renderer" -> Renderer
-  | _ -> Unknown
+  | _ -> Unknown_kind
 
 let versions () = 
   let result = process ##. versions in 
@@ -101,3 +115,29 @@ let system_memory_info () =
 
 let hang () = process ## hang ()
 let set_fd_limit value = process ## setFdLimit (value)
+
+let arch () = 
+  let result = process ##. arch in
+  match Js.to_string result with 
+  | "arm" -> Arm
+  | "arm64" -> Arm64 
+  | "ia32" -> Ia32
+  | "mips" -> Mips 
+  | "mispel" -> Mipsel
+  | "ppc" -> Ppc 
+  | "ppc64" -> Ppc64 
+  | "s390" -> S390 
+  | "s390x" -> S390x 
+  | "x32" -> X32
+  | "x64" -> X64
+  | _ -> Unknown_architecture
+
+let argv () =  
+  let raw_argv = process ##. argv in 
+  raw_argv
+  |> Js.to_array
+  |> Array.map (Js.to_string)
+
+let argv0 () =  
+  let raw_arg = process ##. argv0 in 
+  Js.to_string raw_arg

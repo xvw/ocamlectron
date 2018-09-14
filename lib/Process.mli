@@ -17,7 +17,22 @@ type t = Binding.process Js.t
 type process_kind = 
   | Browser 
   | Renderer
-  | Unknown
+  | Unknown_kind
+
+(** Kind of Architecture *)
+type architecture = 
+  | Arm 
+  | Arm64 
+  | Ia32 
+  | Mips 
+  | Mipsel 
+  | Ppc 
+  | Ppc64 
+  | S390
+  | S390x 
+  | X32
+  | X64
+  | Unknown_architecture
 
 (** {2 Objects} *)
 
@@ -31,6 +46,19 @@ val abort : unit -> unit
 
 val allowed_node_environment_flags : unit -> string array
 (** Resolves node options flags *)
+
+val arch : unit -> architecture
+(** returns a string identifying the operating system CPU architecture 
+    for which the Node.js binary was compiled 
+*)
+
+val argv : unit -> string array 
+(** Returns [argv], the passed arguments array *)
+
+val argv0 : unit -> string 
+(**  a read-only copy of the original value of [argv[0]] passed 
+     when Node.js starts. 
+*)
 
 val crash : unit -> unit 
 (** Causes the main thread of the current process crash. *)
