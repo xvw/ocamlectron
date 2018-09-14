@@ -98,10 +98,10 @@ val trace_deprecation_enabled : unit -> bool
 val crash : unit -> unit 
 (** Causes the main thread of the current process crash. *)
 
-val get_cpu_usage : unit -> Struct.CPUUsage.t
+val cpu_usage : unit -> Struct.CPUUsage.t
 (** Get the [CPUUSage] object *)
 
-val cpu_usage : unit -> int 
+val percent_cpu_usage : unit -> int 
 (** Percentage of CPU used since the last call to getCPUUsage. 
     First call returns [0]. 
 *)
@@ -110,4 +110,15 @@ val cpu_idle_wakeup : unit -> int
 (** The number of average idle cpu wakeups per second since 
     the last call to getCPUUsage. First call returns [0]. 
     Will always return [0] on Windows. 
+*)
+
+val io_counters : unit -> Struct.IOCounters.t
+(** {b only Windows and Linux}
+
+    Get the [IOCounters] object 
+*)
+
+val process_memory_info : unit -> Struct.ProcessMemoryInfo.t 
+(** Returns an object giving memory usage statistics about the 
+    current process. Note that all statistics are reported in Kilobytes. 
 *)

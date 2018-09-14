@@ -29,7 +29,7 @@ class type cpu_usage = object
 end
 
 (** Accessors for IO data *)
-class type io_counter = object 
+class type io_counters = object 
 
   method readOperationCount : int readonly_prop
   (** The number of I/O read operations. *)
@@ -48,6 +48,32 @@ class type io_counter = object
 
   method otherTransferCount : int readonly_prop
   (** Then number of I/O other transfers. *)
+end
+
+
+(** Data about process 's memorymemory usage statistics about the 
+    current process. Note that all statistics are reported in Kilobytes  
+*)
+class type process_memory_info = object 
+
+  method workingSetSize : int readonly_prop
+  (** The amount of memory currently pinned to actual physical RAM. *)
+
+  method peakWorkingSetSize : int readonly_prop
+  (** The maximum amount of memory that has ever been pinned to actual 
+      physical RAM. 
+  *)
+
+  method privateBytes : int readonly_prop
+  (** The amount of memory not shared by other processes, such as JS heap 
+      or HTML content. 
+  *)
+
+  method sharedBytes : int readonly_prop
+  (** The amount of memory shared between processes, typically memory consumed 
+      by the Electron code itself. 
+  *)
+
 end
 
 
@@ -134,8 +160,19 @@ class type process = object
   method crash : unit -> unit meth
   (** Causes the main thread of the current process crash. *)
 
-  method getCPUUsage : unit -> cpu_usage t meth
+  method getCPUUsage : unit -> (cpu_usage t) meth
   (** Returns [cpu_usage] *)
+
+  method getIOCounters : unit -> (io_counters t) meth
+  (** {b only Windows and Linux}
+
+      Returns [io_counters] 
+  *)
+
+  method getProcessMemoryInfo : unit -> (process_memory_info t) meth
+  (** Returns an object giving memory usage statistics about the 
+      current process. Note that all statistics are reported in Kilobytes.
+  *)
 
 end
 

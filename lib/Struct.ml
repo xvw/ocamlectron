@@ -6,10 +6,10 @@ struct
   ; electron : string
   }
 
-  let from_object obj = 
-    { chrome   = Js.to_string (obj ##. chrome)
-    ; electron = Js.to_string (obj ##. chrome)
-    }
+  let from_object obj = { 
+    chrome   = Js.to_string (obj ##. chrome)
+  ; electron = Js.to_string (obj ##. chrome)
+  }
 
 end
 
@@ -21,14 +21,14 @@ struct
   ; idle_wakeups_per_second : int 
   }
 
-  let from_object obj = 
-    { percent_cpu_usage = obj ##. percentCPUUsage
-    ; idle_wakeups_per_second = obj ##. idleWakeupsPerSecond
-    }
+  let from_object obj = { 
+    percent_cpu_usage = obj ##. percentCPUUsage
+  ; idle_wakeups_per_second = obj ##. idleWakeupsPerSecond
+  }
 
 end
 
-module IOCounter = 
+module IOCounters = 
 struct 
 
   type t = {
@@ -48,5 +48,24 @@ struct
     ; write_transfer_count = obj ##. writeTransferCount 
     ; other_transfer_count = obj ##. otherTransferCount
     }
+
+end
+
+module ProcessMemoryInfo = 
+struct 
+
+  type t = {
+    working_set_size : int 
+  ; peak_working_set_size : int 
+  ; private_bytes : int 
+  ; shared_bytes : int 
+  }
+
+  let from_object obj = {
+    working_set_size = obj ##. workingSetSize
+  ; peak_working_set_size = obj ##. peakWorkingSetSize
+  ; private_bytes = obj ##. privateBytes
+  ; shared_bytes = obj ##. sharedBytes
+  }
 
 end

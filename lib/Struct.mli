@@ -25,10 +25,11 @@ sig
   }
 
   val from_object : Binding.cpu_usage Js.t -> t
+  (** Converts [Binding.cpu_usage] to [t] *)
 
 end
 
-module IOCounter : 
+module IOCounters : 
 sig 
 
   type t = {
@@ -40,6 +41,30 @@ sig
   ; other_transfer_count  : int (** Then number of I/O other transfers. *)
   }
 
-  val from_object : Binding.io_counter Js.t -> t
+  val from_object : Binding.io_counters Js.t -> t
+  (** Converts [Binding.io_counters] to [t] *)
+
+end
+
+module ProcessMemoryInfo : 
+sig 
+
+  type t = {
+    working_set_size : int (** The amount of memory currently pinned to actual 
+                               physical RAM. 
+                           *)
+  ; peak_working_set_size : int (** The maximum amount of memory that has ever been 
+                                    pinned to actual physical RAM. 
+                                *)
+  ; private_bytes : int (** The amount of memory not shared by other processes, 
+                            such as JS heap or HTML content. 
+                        *)
+  ; shared_bytes : int (** The amount of memory shared between processes, typically
+                           memory consumed by the Electron code itself. 
+                       *)
+  }
+
+  val from_object : Binding.process_memory_info Js.t -> t 
+  (** Converts [Binding.process_memory_info] to [t] *)
 
 end

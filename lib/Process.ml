@@ -66,13 +66,21 @@ let trace_deprecation_enabled () =
 
 let crash () = process ## crash ()
 
-let get_cpu_usage () = 
+let cpu_usage () = 
   let handler = process ## getCPUUsage () in 
   Struct.CPUUsage.from_object handler
-let cpu_usage () = 
+let percent_cpu_usage () = 
   let handler = process ## getCPUUsage () in 
   handler ##. percentCPUUsage
 
 let cpu_idle_wakeup () = 
   let handler = process ## getCPUUsage () in 
   handler ##. idleWakeupsPerSecond
+
+let io_counters () = 
+  let handler = process ## getIOCounters () in 
+  Struct.IOCounters.from_object handler
+
+let process_memory_info () = 
+  let handler = process ## getProcessMemoryInfo () in 
+  Struct.ProcessMemoryInfo.from_object handler
