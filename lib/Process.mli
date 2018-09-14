@@ -38,6 +38,9 @@ val resource_path : unit -> string
 val kind : unit -> process_kind
 (** The current process's type.*)
 
+val versions : unit -> Struct.Versions.t
+(** Get the versions object *)
+
 val chrome_version : unit -> string 
 (** Get the version of chrome *)
 
@@ -94,6 +97,9 @@ val trace_deprecation_enabled : unit -> bool
 
 val crash : unit -> unit 
 (** Causes the main thread of the current process crash. *)
+
+val get_cpu_usage : unit -> Struct.CPUUsage.t
+(** Get the [CPUUSage] object *)
 
 val cpu_usage : unit -> int 
 (** Percentage of CPU used since the last call to getCPUUsage. 

@@ -24,6 +24,10 @@ let kind () =
   | "renderer" -> Renderer
   | _ -> Unknown
 
+let versions () = 
+  let result = process ##. versions in 
+  Struct.Versions.from_object result
+
 let chrome_version () = 
   let result = process ##. versions ##. chrome in 
   Js.to_string result
@@ -62,6 +66,9 @@ let trace_deprecation_enabled () =
 
 let crash () = process ## crash ()
 
+let get_cpu_usage () = 
+  let handler = process ## getCPUUsage () in 
+  Struct.CPUUsage.from_object handler
 let cpu_usage () = 
   let handler = process ## getCPUUsage () in 
   handler ##. percentCPUUsage

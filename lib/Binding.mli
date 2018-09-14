@@ -12,6 +12,7 @@ class type versions = object
   (** Resolve the electron version *)
 end
 
+
 (** Data about CPU usage *)
 class type cpu_usage = object 
 
@@ -26,6 +27,30 @@ class type cpu_usage = object
       return [0] on Windows. 
   *)
 end
+
+(** Accessors for IO data *)
+class type io_counter = object 
+
+  method readOperationCount : int readonly_prop
+  (** The number of I/O read operations. *)
+
+  method writeOperationCount : int readonly_prop
+  (** The number of I/O write operations. *)
+
+  method otherOperationCount : int readonly_prop
+  (** The number of I/O other operations. *)
+
+  method readTransferCount : int readonly_prop
+  (** The number of I/O read transfers. *)
+
+  method writeTransferCount : int readonly_prop
+  (** The number of I/O write transfers. *)
+
+  method otherTransferCount : int readonly_prop
+  (** Then number of I/O other transfers. *)
+end
+
+
 
 (** The process object is a global that provides information about, 
     and control over, the current Node.js process.
@@ -115,11 +140,15 @@ class type process = object
 end
 
 
+
+
 (** Parameters for [app#relaunch] *)
 class type electron_app_relaunch_options = object
   method args : js_string t readonly_prop
   method execPath : js_string t Optdef.t readonly_prop
 end
+
+
 
 (** Control your application's event lifecycle.
 
