@@ -68,3 +68,25 @@ sig
   (** Converts [Binding.process_memory_info] to [t] *)
 
 end
+
+module SystemMemoryInfo : 
+sig 
+
+  type t = {
+    total : int (** The total amount of physical memory in Kilobytes available 
+                    to the system. 
+                *)
+  ; free : int (** The total amount of memory not being used by applications 
+                   or disk cache. 
+               *)
+  ; swap_total : int (** The total amount of swap memory in Kilobytes available 
+                         to the system. {b only Windows and Linux} 
+                     *)
+  ; swap_free : int (** The free amount of swap memory in Kilobytes 
+                        available to the system. {b only Windows and Linux} 
+                    *)
+  }
+
+  val from_object : Binding.system_memory_info Js.t -> t
+
+end

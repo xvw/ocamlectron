@@ -69,3 +69,22 @@ struct
   }
 
 end
+
+module SystemMemoryInfo =
+struct 
+
+  type t = {
+    total : int 
+  ; free : int 
+  ; swap_total : int
+  ; swap_free : int 
+  }
+
+  let from_object obj = {
+    total = obj ##. total 
+  ; free = obj ##. free 
+  ; swap_total = obj ##. swapTotal
+  ; swap_free = obj ##. swapFree
+  }
+
+end

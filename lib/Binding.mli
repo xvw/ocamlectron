@@ -77,6 +77,30 @@ class type process_memory_info = object
 end
 
 
+(** Object giving memory usage statistics about the entire system. 
+    Note that all statistics are reported in Kilobytes. 
+*)
+class type system_memory_info = object 
+
+  method total : int readonly_prop
+  (** The total amount of physical memory in Kilobytes available to the system. *)
+
+  method free : int readonly_prop
+  (** The total amount of memory not being used by applications or disk cache. *)
+
+  method swapTotal : int readonly_prop
+  (** The total amount of swap memory in Kilobytes available to the system. 
+      {b only Windows and Linux} 
+  *)
+
+  method swapFree : int readonly_prop
+  (** The free amount of swap memory in Kilobytes available to the system. 
+      {b only Windows and Linux} 
+  *)
+
+end
+
+
 
 (** The process object is a global that provides information about, 
     and control over, the current Node.js process.
@@ -88,6 +112,9 @@ end
     - {{: https://electronjs.org/docs/api/process }  ElectronJS : documentation for [process] } 
 *)
 class type process = object
+
+  method abort : unit -> unit meth
+  (** causes the Node.js process to exit immediately and generate a core file. *)
 
   method defaultApp : (bool t Optdef.t) readonly_prop
   (** When app is started by being passed as parameter to the 
@@ -172,6 +199,18 @@ class type process = object
   method getProcessMemoryInfo : unit -> (process_memory_info t) meth
   (** Returns an object giving memory usage statistics about the 
       current process. Note that all statistics are reported in Kilobytes.
+  *)
+
+  method getSystemMemoryInfo : unit -> (system_memory_info t) meth
+  (** Returns an object giving memory usage statistics about the entire system.
+      Note that all statistics are reported in Kilobytes. *)
+
+  method hang : unit -> unit meth
+  (** Causes the main thread of the current process hang. *)
+
+  method setFdLimit : int -> unit meth
+  (** Sets the file descriptor soft limit to maxDescriptors or the OS 
+      hard limit, whichever is lower for the current process. 
   *)
 
 end

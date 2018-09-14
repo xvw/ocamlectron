@@ -8,6 +8,8 @@ type process_kind =
   | Unknown
 let process = Js.Unsafe.global##.process
 
+let abort () = process ## abort ()
+
 let extract_bool result = 
   Optdef.get result (fun () -> false)
 
@@ -84,3 +86,10 @@ let io_counters () =
 let process_memory_info () = 
   let handler = process ## getProcessMemoryInfo () in 
   Struct.ProcessMemoryInfo.from_object handler
+
+let system_memory_info () =  
+  let handler = process ## getSystemMemoryInfo () in 
+  Struct.SystemMemoryInfo.from_object handler
+
+let hang () = process ## hang ()
+let set_fd_limit value = process ## setFdLimit (value)

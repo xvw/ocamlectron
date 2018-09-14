@@ -24,7 +24,16 @@ type process_kind =
 val process : t
 (** Reference the current process object *)
 
-(** {2 Accessor and mutator} *)
+(** {2 Methods} *)
+
+val abort : unit -> unit 
+(** causes the Node.js process to exit immediately and generate a core file. *)
+
+val crash : unit -> unit 
+(** Causes the main thread of the current process crash. *)
+
+val hang : unit -> unit 
+(** Causes the main thread of the current process hang. *)
 
 val default_app : unit -> bool
 (** When app is started by being passed as parameter to the 
@@ -93,11 +102,6 @@ val disable_trace_deprecation : unit -> unit
 val trace_deprecation_enabled : unit -> bool
 (** Returns [true] if [tracing deprecation] is enabled, [false] otherwise *)
 
-(** {2 Methods} *)
-
-val crash : unit -> unit 
-(** Causes the main thread of the current process crash. *)
-
 val cpu_usage : unit -> Struct.CPUUsage.t
 (** Get the [CPUUSage] object *)
 
@@ -121,4 +125,14 @@ val io_counters : unit -> Struct.IOCounters.t
 val process_memory_info : unit -> Struct.ProcessMemoryInfo.t 
 (** Returns an object giving memory usage statistics about the 
     current process. Note that all statistics are reported in Kilobytes. 
+*)
+
+val system_memory_info : unit -> Struct.SystemMemoryInfo.t
+(** Returns an object giving memory usage statistics about the entire 
+    system. Note that all statistics are reported in Kilobytes.
+*)
+
+val set_fd_limit : int -> unit 
+(** Sets the file descriptor soft limit to maxDescriptors or the 
+    OS hard limit, whichever is lower for the current process. 
 *)
