@@ -9,7 +9,7 @@
 (** {2 Internals types} *)
 
 type t
-(** An abstract version of [Electron.app] *)
+(** An abstract version of [Binding.Electron.app] *)
 
 (** Presaved path_name *)
 type path_name = 
@@ -129,3 +129,30 @@ val clear_recent_documents : t -> unit
 
     Clears the recent documents list.
 *)
+
+val set_as_default_protocol_client : t -> string -> bool
+(** This method sets the current executable as the default handler for 
+    a protocol (aka URI scheme). It allows you to integrate your app 
+    deeper into the operating system. Once registered, all links with 
+    [your-protocol://] will be opened with the current executable. 
+
+    The whole link, including protocol, will be passed to your application 
+    as a parameter.
+*)
+
+(* val set_as_default_protocol_client_with : 
+    t
+    -> string 
+    -> ?path:string 
+    -> ?args:(string list) 
+    -> bool
+   (** {b only Windows}
+
+    This method sets the current executable as the default handler for 
+    a protocol (aka URI scheme). It allows you to integrate your app 
+    deeper into the operating system. Once registered, all links with 
+    [your-protocol://] will be opened with the current executable. 
+
+    The whole link, including protocol, will be passed to your application 
+    as a parameter.
+ *) *)

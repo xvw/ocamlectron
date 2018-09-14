@@ -1,6 +1,6 @@
 open Optional
 
-type t = Electron.app Js.t
+type t = Binding.Electron.app Js.t
 
 type path_name = 
   | Home 
@@ -101,3 +101,9 @@ let add_recent_document app path =
 
 let clear_recent_documents app = 
   app ## clearRecentDocuments ()
+
+let set_as_default_protocol_client app protocol_name = 
+  let protocol = Js.string protocol_name in 
+  let result = 
+    app ## setAsDefaultProtocolClient protocol (Optdef.empty) (Optdef.empty)
+  in Js.to_bool result
