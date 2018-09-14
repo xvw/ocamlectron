@@ -1,6 +1,7 @@
 (** Direct Binding for stuff from NodeJS and Electron *)
 
 open Js
+open Builtin
 
 (** Versions allowed *)
 class type versions = object 
@@ -116,18 +117,21 @@ class type process = object
   method abort : unit -> unit meth
   (** causes the Node.js process to exit immediately and generate a core file. *)
 
-  method defaultApp : (bool t Optdef.t) readonly_prop
+  method allowedNodeEnvironmentFlags : (js_string t) Set.t readonly_prop
+  (** Resolves node options flags *)
+
+  method defaultApp : (bool Optdef.t) readonly_prop
   (** When app is started by being passed as parameter to the 
       default app, this property is [true] in the main process, 
       otherwise it is [undefined]. 
   *)
 
-  method mas : (bool t Optdef.t) readonly_prop
+  method mas : (bool Optdef.t) readonly_prop
   (** For Mac App Store build, this property is [true], for other builds 
       it is undefined. 
   *)
 
-  method windowsStore : (bool t Optdef.t) readonly_prop
+  method windowsStore : (bool Optdef.t) readonly_prop
   (** For Windows Store build, this property is [true], for other builds 
       it is undefined. 
   *)

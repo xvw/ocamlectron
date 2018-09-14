@@ -12,7 +12,7 @@ sig
   val constr : ('a js_array -> 'a t Js.t) constr
   (** Constructor for set *)
 
-  class type ['a] t = object 
+  class type ['a] set = object 
 
     method size : int readonly_prop
     (** The size accessor property returns the number of 
@@ -32,7 +32,6 @@ sig
 
     method forEach : 
       ('a -> 'a Optdef.t  -> 'a t Js.t Optdef.t -> unit) callback
-      -> 'b Optdef.t 
       -> unit meth
     (** Executes a provided function once for each value in the [Set object], 
         in insertion order. 
@@ -45,7 +44,12 @@ sig
 
   end
 
-  val make : 'a list -> 'a t Js.t
+  type 'a t = 'a set Js.t
+
+  val make : 'a list -> 'a t
   (** Helper to build Set *)
+
+  val iteri : (int -> 'a -> unit) -> 'a t -> unit 
+  (** Iter on a set *)
 
 end

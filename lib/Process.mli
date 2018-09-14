@@ -29,6 +29,9 @@ val process : t
 val abort : unit -> unit 
 (** causes the Node.js process to exit immediately and generate a core file. *)
 
+val allowed_node_environment_flags : unit -> string array
+(** Resolves node options flags *)
+
 val crash : unit -> unit 
 (** Causes the main thread of the current process crash. *)
 
@@ -41,7 +44,7 @@ val default_app : unit -> bool
     otherwise it is [false]. 
 *)
 
-val resource_path : unit -> string
+val resources_path : unit -> string
 (** A [String] representing the path to the resources directory. *)
 
 val kind : unit -> process_kind

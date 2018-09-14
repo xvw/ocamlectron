@@ -1,4 +1,5 @@
 open Optional
+open Builtin
 
 type t = Binding.process Js.t
 
@@ -6,17 +7,24 @@ type process_kind =
   | Browser 
   | Renderer
   | Unknown
-let process = Js.Unsafe.global##.process
+let process : t = Js.Unsafe.global##._process
 
 let abort () = process ## abort ()
+
+let allowed_node_environment_flags () =  
+  let set = process ##. allowedNodeEnvironmentFlags in 
+  let len = set ##. size in
+  let arr = Array.make len "" in 
+  let () = Set.iteri (fun i value -> arr.(i) <- Js.to_string value) set
+  in arr
 
 let extract_bool result = 
   Optdef.get result (fun () -> false)
 
 let default_app () = extract_bool (process ##. defaultApp)
 
-let resource_path () = 
-  let result = process ##. resourcePath in 
+let resources_path () = 
+  let result = process ##. resourcesPath in 
   Js.to_string result
 
 let kind () = 
