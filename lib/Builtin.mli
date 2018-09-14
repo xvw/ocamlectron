@@ -7,7 +7,10 @@ open Js
     whether primitive values or object references. 
 *)
 module Set : 
-sig 
+sig
+
+  val constr : ('a js_array -> 'a t Js.t) constr
+  (** Constructor for set *)
 
   class type ['a] t = object 
 
@@ -41,5 +44,8 @@ sig
     *)
 
   end
+
+  val make : 'a list -> 'a t Js.t
+  (** Helper to build Set *)
 
 end
