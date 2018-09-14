@@ -59,3 +59,13 @@ let disable_trace_deprecation () = process ##. traceDeprecation := Js._false
 let trace_deprecation_enabled () = 
   let result = process ##. traceDeprecation in 
   Js.to_bool result
+
+let crash () = process ## crash ()
+
+let cpu_usage () = 
+  let handler = process ## getCPUUsage () in 
+  handler ##. percentCPUUsage
+
+let cpu_idle_wakeup () = 
+  let handler = process ## getCPUUsage () in 
+  handler ##. idleWakeupsPerSecond

@@ -91,3 +91,17 @@ val trace_deprecation_enabled : unit -> bool
 (** Returns [true] if [tracing deprecation] is enabled, [false] otherwise *)
 
 (** {2 Methods} *)
+
+val crash : unit -> unit 
+(** Causes the main thread of the current process crash. *)
+
+val cpu_usage : unit -> int 
+(** Percentage of CPU used since the last call to getCPUUsage. 
+    First call returns [0]. 
+*)
+
+val cpu_idle_wakeup : unit -> int 
+(** The number of average idle cpu wakeups per second since 
+    the last call to getCPUUsage. First call returns [0]. 
+    Will always return [0] on Windows. 
+*)
