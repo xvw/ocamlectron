@@ -2,6 +2,16 @@
 
 open Js
 
+(** Versions allowed *)
+class type versions = object 
+
+  method chrome : (js_string t) readonly_prop
+  (** Resolve the chrome version *)
+
+  method electron : (js_string t) readonly_prop
+  (** Resolve the electron version *)
+end
+
 (** The process object is a global that provides information about, 
     and control over, the current Node.js process.
 
@@ -21,6 +31,11 @@ class type process = object
 
   method mas : (bool t Optdef.t) readonly_prop
   (** For Mac App Store build, this property is [true], for other builds 
+      it is undefined. 
+  *)
+
+  method windowsStore : (bool t Optdef.t) readonly_prop
+  (** For Windows Store build, this property is [true], for other builds 
       it is undefined. 
   *)
 
@@ -67,6 +82,14 @@ class type process = object
 
       This property is instead of the [--trace-warnings] command line flag. 
   *)
+
+  method _type : (js_string t) readonly_prop
+  (** A [String] representing the current process's type, can be ["browser"]
+      (i.e. main process) or ["renderer"].
+  *)
+
+  method versions : (versions t) readonly_prop
+  (** Returns an object with versions labels *)
 
 end
 

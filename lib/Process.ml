@@ -1,13 +1,40 @@
 open Optional
 
 type t = Binding.process Js.t
+
+type process_kind = 
+  | Browser 
+  | Renderer
+  | Unknown
 let process = Js.Unsafe.global##.process
 
 let extract_bool result = 
   Optdef.get result (fun () -> false)
 
 let default_app () = extract_bool (process ##. defaultApp)
+
+let resource_path () = 
+  let result = process ##. resourcePath in 
+  Js.to_string result
+
+let kind () = 
+  let result = Js.to_string (process ##. _type) in 
+  match result with 
+  | "browser" -> Browser
+  | "renderer" -> Renderer
+  | _ -> Unknown
+
+let chrome_version () = 
+  let result = process ##. versions ##. chrome in 
+  Js.to_string result
+
+let electron_version () = 
+  let result = process ##. versions ##. electron in 
+  Js.to_string result
+
+
 let mas () = extract_bool (process ##. mas)
+let windows_store () = extract_bool (process ##. windowsStore)
 
 let enable_asar () = process ##. noAsar := Js._false
 let disable_asar () = process ##. noAsar := Js._true
@@ -21,6 +48,14 @@ let deprecation_warning_enabled () =
   let result = process ##. noDeprecation in 
   not (Js.to_bool result)
 
-let resource_path () = 
-  let result = process ##. resourcePath in 
-  Js.to_string result
+let enable_throw_deprecation () = process ##. throwDeprecation := Js._true
+let disable_throw_deprecation () = process ##. throwDeprecation := Js._false
+let throw_deprecation_enabled () = 
+  let result = process ##. throwDeprecation in 
+  Js.to_bool result
+
+let enable_trace_deprecation () = process ##. traceDeprecation := Js._true
+let disable_trace_deprecation () = process ##. traceDeprecation := Js._false
+let trace_deprecation_enabled () = 
+  let result = process ##. traceDeprecation in 
+  Js.to_bool result
