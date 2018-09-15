@@ -1,0 +1,22 @@
+opam-version: "1.2"
+version: "0.0.1"
+maintainer: "xvw"
+authors: ["xvw"]
+homepage: "https://github.com/xvw/ocamlectron"
+bug-reports: "https://github.com/xvw/ocamlectron/issues"
+dev-repo: "https://github.com/xvw/ocamlectron.git"
+license: "MIT"
+
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+depends: [
+  "dune" {build}
+  "js_of_ocaml-compiler" {build & >= "3.0" & < "4.0"}
+  "js_of_ocaml-ppx" {build & >= "3.0" & < "4.0"}
+  "js_of_ocaml-lwt" {>= "3.0" & < "4.0"}
+  "js_of_ocaml" {>= "3.0" & < "4.0"}
+  "lwt_ppx" {build}
+]

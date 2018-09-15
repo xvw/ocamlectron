@@ -1,0 +1,6 @@
+(library
+  (name common)
+  (public_name ocamlectron.common)
+  (synopsis "Common")
+  (preprocess (pps js_of_ocaml-ppx lwt_ppx))
+  (libraries js_of_ocaml-lwt binding))
