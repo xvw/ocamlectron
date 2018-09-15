@@ -1,5 +1,7 @@
 (** Mapping from JS Object to OCaml records *)
 
+open Binding
+
 module Versions : 
 sig 
 
@@ -8,7 +10,7 @@ sig
   ; electron : string (** Resolve the electron version *)
   }
 
-  val from_object : Binding.versions Js.t -> t
+  val from_object : Versions.t -> t
   (** Converts [Binding.versions] to [t] *)
 
 end
@@ -24,7 +26,7 @@ sig
                                       per second since the last call to getCPUUsage *)
   }
 
-  val from_object : Binding.cpu_usage Js.t -> t
+  val from_object : CPUUsage.t -> t
   (** Converts [Binding.cpu_usage] to [t] *)
 
 end
@@ -41,7 +43,7 @@ sig
   ; other_transfer_count  : int (** Then number of I/O other transfers. *)
   }
 
-  val from_object : Binding.io_counters Js.t -> t
+  val from_object : IOCounter.t -> t
   (** Converts [Binding.io_counters] to [t] *)
 
 end
@@ -64,7 +66,7 @@ sig
                        *)
   }
 
-  val from_object : Binding.process_memory_info Js.t -> t 
+  val from_object : ProcessMemoryInfo.t -> t 
   (** Converts [Binding.process_memory_info] to [t] *)
 
 end
@@ -87,7 +89,7 @@ sig
                     *)
   }
 
-  val from_object : Binding.system_memory_info Js.t -> t
+  val from_object : SystemMemoryInfo.t -> t
   (** Converts [Binding.system_memory_info] to [t] *)
 
 end
@@ -102,7 +104,7 @@ sig
   ; external_ : int
   }
 
-  val from_object : Binding.memory_usage Js.t -> t
+  val from_object : MemoryUsage.t -> t
   (** Converts [Binding.memory_usage] to [t] *)
 
 end
@@ -148,7 +150,7 @@ sig
   val lts_from_string : string -> lts
   (** Converts a [string] to an [lts] *)
 
-  val from_object : Binding.release Js.t -> t
+  val from_object : Release.t -> t
   (** Converts [Binding.release] to [t] *)
 
 end
@@ -185,10 +187,10 @@ sig
 
   }
 
-  val to_object : t -> Binding.task Js.t 
+  val to_object : t -> Task.t
   (** Converts [t] to [Binding.task] *)
 
-  val from_object : Binding.task Js.t -> t 
+  val from_object : Task.t -> t 
   (** Converts [Binding.task] to [t] *)
 
 end

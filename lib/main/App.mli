@@ -6,6 +6,8 @@
     {{: https://electronjs.org/docs/api/app }  ElectronJS : documentation for [app] }
 *)
 
+open Common
+
 (** {2 Internals types} *)
 
 type t

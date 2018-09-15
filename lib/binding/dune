@@ -1,0 +1,18 @@
+(library
+  (name binding)
+  (public_name ocamlectron.binding)
+  (synopsis "Lowlevel framework")
+  (preprocess (pps js_of_ocaml-ppx lwt_ppx))
+  (libraries js_of_ocaml-lwt)
+  (modules_without_implementation 
+    process
+    app
+    task
+    release
+    versions
+    memoryUsage
+    cPUUsage
+    iOCounter
+    processMemoryInfo
+    systemMemoryInfo
+  ))

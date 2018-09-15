@@ -10,7 +10,7 @@
 
 (** {2 Internals types} *)
 
-type t = Binding.process Js.t
+type t = Binding.Process.t
 (** An alias of [Binding.process] *)
 
 (** The current process type *)

@@ -1,7 +1,7 @@
 open Optional
-open Builtin
+open Binding.Builtin
 
-type t = Binding.process Js.t
+type t = Binding.Process.t
 
 type process_kind = 
   | Browser 

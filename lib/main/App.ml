@@ -1,6 +1,7 @@
+open Common
 open Optional
 
-type t = Binding.electron_app Js.t
+type t = Binding.App.t
 
 type path_name = 
   | Home 

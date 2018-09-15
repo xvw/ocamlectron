@@ -2,7 +2,5 @@
   (name ocamlectron)
   (public_name ocamlectron)
   (synopsis "A small framework to build application using Electron")
-  (js_of_ocaml (flags :standard --opt 3))
   (preprocess (pps js_of_ocaml-ppx lwt_ppx))
-  (libraries js_of_ocaml-lwt)
-  (modules_without_implementation binding))
+  (libraries js_of_ocaml-lwt binding common main render))
