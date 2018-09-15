@@ -140,13 +140,13 @@ val set_as_default_protocol_client : t -> string -> bool
     as a parameter.
 *)
 
-(* val set_as_default_protocol_client_with : 
-    t
-    -> string 
-    -> ?path:string 
-    -> ?args:(string list) 
-    -> bool
-   (** {b only Windows}
+val set_as_default_protocol_client_with : 
+  ?path:string 
+  -> ?args:(string list)
+  -> t 
+  -> string 
+  -> bool
+(** {b only Windows}
 
     This method sets the current executable as the default handler for 
     a protocol (aka URI scheme). It allows you to integrate your app 
@@ -155,4 +155,4 @@ val set_as_default_protocol_client : t -> string -> bool
 
     The whole link, including protocol, will be passed to your application 
     as a parameter.
- *) *)
+*)

@@ -102,8 +102,20 @@ let add_recent_document app path =
 let clear_recent_documents app = 
   app ## clearRecentDocuments ()
 
-let set_as_default_protocol_client app protocol_name = 
+let set_as_default_protocol_client_with ?path ?args app protocol_name = 
   let protocol = Js.string protocol_name in 
-  let result = 
-    app ## setAsDefaultProtocolClient protocol (Optdef.empty) (Optdef.empty)
+  let p = Option.(path >|= Js.string |> to_optdef) in 
+  let a = Option.(
+      args 
+      >|= List.map Js.string 
+      >|= Array.of_list
+      >|= Js.array
+      |> to_optdef
+    ) 
+  in 
+  let result = app ## setAsDefaultProtocolClient protocol p a 
   in Js.to_bool result
+
+
+let set_as_default_protocol_client app protocol_name = 
+  set_as_default_protocol_client_with app protocol_name
