@@ -156,3 +156,43 @@ val set_as_default_protocol_client_with :
     The whole link, including protocol, will be passed to your application 
     as a parameter.
 *)
+
+val remove_as_default_protocol_client_with : 
+  ?path:string 
+  -> ?args:(string list)
+  -> t 
+  -> string 
+  -> bool
+(** {b only Windows}
+
+    This method checks if the current executable as the default handler for a 
+    protocol (aka URI scheme). If so, it will remove the app as 
+    the default handler. 
+*)
+
+val remove_as_default_protocol_client : t -> string -> bool
+(** This method checks if the current executable as the default handler for a 
+    protocol (aka URI scheme). If so, it will remove the app as 
+    the default handler. 
+*)
+
+val is_default_protocol_client_with : 
+  ?path:string 
+  -> ?args:(string list)
+  -> t 
+  -> string 
+  -> bool
+(** {b only Windows}
+
+    This method checks if the current executable is the default 
+    handler for a protocol (aka URI scheme). 
+
+    If so, it will return [true]. Otherwise, it will return [false]. 
+*)
+
+val is_default_protocol_client : t -> string -> bool
+(** This method checks if the current executable is the default 
+    handler for a protocol (aka URI scheme). 
+
+    If so, it will return [true]. Otherwise, it will return [false].  
+*)

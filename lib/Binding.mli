@@ -465,13 +465,34 @@ class type electron_app = object
     -> (js_string t) Optdef.t
     -> ((js_string t) js_array t) Optdef.t
     -> (bool t) meth
-    (** This method sets the current executable as the default handler for
-        a protocol (aka URI scheme). It allows you to integrate your app
-        deeper into the operating system. Once registered, all links with
-        [your-protocol://] will be opened with the current executable.
+  (** This method sets the current executable as the default handler for
+      a protocol (aka URI scheme). It allows you to integrate your app
+      deeper into the operating system. Once registered, all links with
+      [your-protocol://] will be opened with the current executable.
 
-        The whole link, including protocol, will be passed to your application
-        as a parameter.
+      The whole link, including protocol, will be passed to your application
+      as a parameter.
+  *)
+
+  method removeAsDefaultProtocolClient : 
+    js_string t 
+    -> (js_string t) Optdef.t
+    -> ((js_string t) js_array t) Optdef.t
+    -> (bool t) meth
+  (** This method checks if the current executable as the default handler for a 
+      protocol (aka URI scheme). If so, it will remove the app as 
+      the default handler. 
+  *)
+
+  method isDefaultProtocolClient : 
+    js_string t 
+    -> (js_string t) Optdef.t
+    -> ((js_string t) js_array t) Optdef.t
+    -> (bool t) meth
+    (** This method checks if the current executable is the default 
+        handler for a protocol (aka URI scheme). 
+
+        If so, it will return [true]. Otherwise, it will return [false]. 
     *)
 
 end

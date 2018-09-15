@@ -119,3 +119,37 @@ let set_as_default_protocol_client_with ?path ?args app protocol_name =
 
 let set_as_default_protocol_client app protocol_name = 
   set_as_default_protocol_client_with app protocol_name
+
+let remove_as_default_protocol_client_with ?path ?args app protocol_name = 
+  let protocol = Js.string protocol_name in 
+  let p = Option.(path >|= Js.string |> to_optdef) in 
+  let a = Option.(
+      args 
+      >|= List.map Js.string 
+      >|= Array.of_list
+      >|= Js.array
+      |> to_optdef
+    ) 
+  in 
+  let result = app ## removeAsDefaultProtocolClient protocol p a 
+  in Js.to_bool result
+
+let remove_as_default_protocol_client app protocol_name = 
+  remove_as_default_protocol_client_with app protocol_name
+
+let is_default_protocol_client_with ?path ?args app protocol_name = 
+  let protocol = Js.string protocol_name in 
+  let p = Option.(path >|= Js.string |> to_optdef) in 
+  let a = Option.(
+      args 
+      >|= List.map Js.string 
+      >|= Array.of_list
+      >|= Js.array
+      |> to_optdef
+    ) 
+  in 
+  let result = app ## isDefaultProtocolClient protocol p a 
+  in Js.to_bool result
+
+let is_default_protocol_client app protocol_name = 
+  is_default_protocol_client_with app protocol_name
