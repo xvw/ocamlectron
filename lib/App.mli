@@ -231,3 +231,23 @@ val set_user_tasks : t -> Struct.Task.t list -> bool
     this method to ensure single instance.
 *)
 val make_single_instance : t -> (string list -> string -> unit) -> bool
+
+val release_single_instance : t -> unit 
+(** Releases all locks that were created by [make_single_instance]. 
+    This will allow multiple instances of the application to once again 
+    run side by side. 
+*)
+
+val disable_hardware_acceleration : t -> unit 
+(** Disables hardware acceleration for current app.
+
+    This method can only be called before app is ready. 
+*)
+
+val disable_domain_blocking_for_3D_apis : t -> unit 
+(** By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a 
+    per domain basis if the GPU processes crashes too frequently. 
+    This function disables that behaviour.
+
+    This method can only be called before app is ready.
+*)

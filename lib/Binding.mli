@@ -378,9 +378,6 @@ class type process = object
 
 end
 
-
-
-
 (** Parameters for [app#relaunch] *)
 class type electron_app_relaunch_options = object
   method args : js_string t readonly_prop
@@ -564,6 +561,23 @@ class type electron_app = object
     ((js_string t) js_array t -> js_string t -> unit) callback 
     -> (bool t) meth
 
+  method releaseSingleInstance : unit -> unit meth
+  (** Releases all locks that were created by [makeSingleInstance]. 
+      This will allow multiple instances of the application to once again 
+      run side by side. 
+  *)
 
+  method disableHardwareAcceleration : unit -> unit meth
+  (** Disables hardware acceleration for current app.
 
+      This method can only be called before app is ready. 
+  *)
+
+  method disableDomainBlockingFor3DAPIS : unit -> unit meth
+  (** By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a 
+      per domain basis if the GPU processes crashes too frequently. 
+      This function disables that behaviour.
+
+      This method can only be called before app is ready.
+  *)
 end

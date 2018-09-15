@@ -178,3 +178,8 @@ let make_single_instance app f =
   let result = 
     app ## makeSingleInstance (Js.wrap_callback pre_f)
   in Js.to_bool result
+
+let release_single_instance app =  app ## releaseSingleInstance ()
+let disable_hardware_acceleration app = app ## disableHardwareAcceleration ()
+let disable_domain_blocking_for_3D_apis app = 
+  app ## disableDomainBlockingFor3DAPIS ()
