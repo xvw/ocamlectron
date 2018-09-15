@@ -21,7 +21,7 @@ type architecture =
   | X32
   | X64
   | Unknown_arch of string
-let process : t = Js.Unsafe.global##._process
+let process : t = Js.Unsafe.global##.process
 
 let abort () = process ## abort ()
 
