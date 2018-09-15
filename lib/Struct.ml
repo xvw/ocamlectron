@@ -149,3 +149,36 @@ struct
   }
 
 end
+
+module Task = 
+struct 
+
+  type t = {
+    program : string 
+  ; arguments : string
+  ; title : string 
+  ; description : string
+  ; icon_path : string 
+  ; icon_index : int 
+  }
+
+  let to_object task = 
+    object%js 
+      val program = Js.string task.program
+      val arguments = Js.string task.arguments
+      val title = Js.string task.title 
+      val description = Js.string task.description
+      val iconPath = Js.string task.icon_path 
+      val iconIndex = task.icon_index
+    end
+
+  let from_object obj = {
+    program = Js.to_string (obj ##. program)
+  ; arguments = Js.to_string (obj ##. arguments)
+  ; title = Js.to_string (obj ##. title)
+  ; description = Js.to_string (obj ##. description)
+  ; icon_path = Js.to_string (obj ##. iconPath)
+  ; icon_index = obj ##. iconIndex
+  }
+
+end

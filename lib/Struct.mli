@@ -152,3 +152,43 @@ sig
   (** Converts [Binding.release] to [t] *)
 
 end
+
+module Task : 
+sig 
+
+  type t = {
+    program : string (** Path of the program to execute, usually you 
+                         should specify [process.execPath] which opens 
+                         the current program 
+                     *)
+
+  ; arguments : string  (** The command line arguments when [program] 
+                            is executed. 
+                        *)
+
+  ; title : string (** The string to be displayed in a [JumpList]. *)
+  ; description : string (** Description of this task. *)
+
+  ; icon_path : string (** The absolute path to an icon to be 
+                           displayed in a [JumpList], which can be an 
+                           arbitrary resource file that contains an icon. 
+                           You can usually specify [process.execPath] to 
+                           show the icon of the program. 
+                       *)
+
+  ; icon_index : int (** The icon index in the icon file. 
+                         If an icon file consists of two or more icons, 
+                         set this value to identify the icon. 
+                         If an icon file consists of one icon, 
+                         this value is 0. 
+                     *)
+
+  }
+
+  val to_object : t -> Binding.task Js.t 
+  (** Converts [t] to [Binding.task] *)
+
+  val from_object : Binding.task Js.t -> t 
+  (** Converts [Binding.task] to [t] *)
+
+end

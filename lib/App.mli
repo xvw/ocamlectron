@@ -196,3 +196,38 @@ val is_default_protocol_client : t -> string -> bool
 
     If so, it will return [true]. Otherwise, it will return [false].  
 *)
+
+val set_user_tasks : t -> Struct.Task.t list -> bool 
+(** {b only Windows}
+
+    Adds tasks to the Tasks category of the [JumpList] on Windows. 
+*)
+
+(** This method makes your application a Single Instance Application - 
+    instead of allowing multiple instances of your app to run, this will 
+    ensure that only a single instance of your app is running, and other 
+    instances signal this instance and exit.
+
+    [callback] will be called by the first instance with 
+    [allback(argv, workingDirectory)] when a second instance has been executed. 
+
+    [argv] is an Array of the second instance's command line arguments, and 
+    [workingDirectory] is its current working directory. Usually applications 
+    respond to this by making their primary window focused and non-minimized.
+
+    The [callback] is guaranteed to be executed after the [ready] event 
+    of [app] gets emitted.
+
+    This method returns [false] if your process is the primary instance of 
+    the application and your app should continue loading. And returns [true] 
+    if your process has sent its parameters to another instance, and you 
+    should immediately quit.
+
+    On {b macOS} the system enforces single instance automatically when 
+    users try to open a second instance of your app in Finder, and the 
+    [open-file] and [open-url] events will be emitted for that. 
+    However when users start your app in command line the system's 
+    single instance mechanism will be bypassed and you have to use 
+    this method to ensure single instance.
+*)
+val make_single_instance : t -> (string list -> string -> unit) -> bool

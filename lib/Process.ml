@@ -188,7 +188,7 @@ let kill ?signal pid =
 
 let pid () = process ##. pid
 let ppid () = process ##. ppid
-let platform = OS.current
+let platform = Os.current
 
 let release () =  
   let handler = process ##. release in 

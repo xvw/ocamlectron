@@ -153,3 +153,28 @@ let is_default_protocol_client_with ?path ?args app protocol_name =
 
 let is_default_protocol_client app protocol_name = 
   is_default_protocol_client_with app protocol_name
+
+
+let set_user_tasks app tasks = 
+  let task_list = 
+    tasks 
+    |> List.map Struct.Task.to_object
+    |> Array.of_list
+    |> Js.array
+  in 
+  let result = app ## setUserTasks task_list in 
+  Js.to_bool result
+
+
+let make_single_instance app f = 
+  let pre_f args workdir = 
+    let wd = Js.to_string workdir in 
+    let arguments = 
+      let a = Js.to_array args in 
+      let len = Array.length a in 
+      List.init len (fun i -> Js.to_string a.(i)) 
+    in f arguments wd
+  in 
+  let result = 
+    app ## makeSingleInstance (Js.wrap_callback pre_f)
+  in Js.to_bool result

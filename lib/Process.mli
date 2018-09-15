@@ -125,7 +125,7 @@ val pid : unit -> int
 val ppid : unit -> int
 (** Returns the PID of the current parent process. *)
 
-val platform : unit -> OS.t
+val platform : unit -> Os.t
 (** Returns a string identifying the operating system platform on which
     the Node.js process is running.
 *)
