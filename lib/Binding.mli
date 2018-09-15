@@ -13,6 +13,14 @@ class type versions = object
   (** Resolve the electron version *)
 end
 
+(** Memory Usage *)
+class type memory_usage = object 
+  method rss : int readonly_prop
+  method heapTotal : int readonly_prop
+  method heapUsed : int readonly_prop
+  method _external : int readonly_prop
+end
+
 
 (** Data about CPU usage *)
 class type cpu_usage = object 
@@ -180,6 +188,19 @@ class type process = object
 
   method kill : int -> (js_string t) Optdef.t -> unit meth
   (** Method sends the [signal] to the process identified by [pid]. *)
+
+  method memoryUsage : unit -> (memory_usage Js.t) meth
+  (** returns an object describing the memory usage of the Node.js 
+      process measured in bytes.
+  *)
+
+  method platform : (js_string t) readonly_prop
+  (** Returns a string identifying the operating system platform on 
+      which the Node.js process is running. 
+  *)
+
+  method pid : int readonly_prop
+  (** Returns the PID of the process. *)
 
   method defaultApp : (bool Optdef.t) readonly_prop
   (** When app is started by being passed as parameter to the 

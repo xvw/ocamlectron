@@ -114,6 +114,19 @@ val get_uid : unit -> int
 val kill : ?signal:Signal.t -> int -> unit
 (** Method sends the signal to the process identified by pid. *)
 
+val memory_usage : unit -> Struct.MemoryUsage.t
+(** Returns an object describing the memory usage of the Node.js 
+    process measured in bytes. 
+*)
+
+val pid : unit -> int
+(** Returns the PID of the process. *)
+
+val platform : unit -> OS.t
+(** Returns a string identifying the operating system platform on which
+    the Node.js process is running.
+*)
+
 val crash : unit -> unit 
 (** Causes the main thread of the current process crash. *)
 

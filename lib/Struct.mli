@@ -88,5 +88,21 @@ sig
   }
 
   val from_object : Binding.system_memory_info Js.t -> t
+  (** Converts [Binding.system_memory_info] to [t] *)
+
+end
+
+module MemoryUsage : 
+sig 
+
+  type t = {
+    rss : int 
+  ; heap_total : int 
+  ; heap_used : int 
+  ; external_ : int
+  }
+
+  val from_object : Binding.memory_usage Js.t -> t
+  (** Converts [Binding.memory_usage] to [t] *)
 
 end

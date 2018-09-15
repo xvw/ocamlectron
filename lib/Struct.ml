@@ -88,3 +88,22 @@ struct
   }
 
 end
+
+module MemoryUsage = 
+struct 
+
+  type t = {
+    rss : int 
+  ; heap_total : int 
+  ; heap_used : int 
+  ; external_ : int
+  }
+
+  let from_object obj = {
+    rss = obj ##. rss 
+  ; heap_total = obj ##. heapTotal 
+  ; heap_used = obj ##. heapUsed 
+  ; external_ = obj ##. _external
+  }
+
+end

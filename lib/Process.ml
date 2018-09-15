@@ -113,6 +113,10 @@ let system_memory_info () =
   let handler = process ## getSystemMemoryInfo () in 
   Struct.SystemMemoryInfo.from_object handler
 
+let memory_usage () = 
+  let handler = process ## memoryUsage () in 
+  Struct.MemoryUsage.from_object handler
+
 let hang () = process ## hang ()
 let set_fd_limit value = process ## setFdLimit (value)
 
@@ -181,3 +185,6 @@ let kill ?signal pid =
     Option.(signal >|= Signal.to_string >|= Js.string)
     |> Optdef.from_option
   in process ## kill pid sign
+
+let pid () = process ##. pid
+let platform = OS.current
