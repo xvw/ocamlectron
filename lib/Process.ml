@@ -138,6 +138,46 @@ let argv () =
   |> Js.to_array
   |> Array.map (Js.to_string)
 
+let exec_argv () = 
+  let raw_argv = process ##. execArgv in 
+  raw_argv
+  |> Js.to_array
+  |> Array.map (Js.to_string)
+
+let exec_path () = 
+  let result = process ##. execPath in 
+  Js.to_string result
+
+let exit_code () = process ##. exitCode 
+let set_exit_code code = process ##. exitCode := code
+
+let exit ?code () = 
+  match code with 
+  | Some x -> process ## exit (Optdef.pure x)
+  | None -> process ## exit (Optdef.pure (exit_code ()))
+
 let argv0 () =  
   let raw_arg = process ##. argv0 in 
   Js.to_string raw_arg
+
+let chdir dir = 
+  let cdir = Js.string dir in 
+  process ## chdir (cdir)
+
+let cwd () =  
+  let result = process ## cwd () in 
+  Js.to_string result
+
+let connected () = 
+  let result = process ##. connected in 
+  Js.to_bool result
+
+let debug_port () = process ##. debugPort
+let set_debug_port port = process ##.debugPort := port
+let get_uid () = process ## getuid ()
+
+let kill ?signal pid = 
+  let sign = 
+    Option.(signal >|= Signal.to_string >|= Js.string)
+    |> Optdef.from_option
+  in process ## kill pid sign

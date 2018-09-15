@@ -1,7 +1,7 @@
 (** The process object is a global that provides information about, 
     and control over, the current Node.js process.
 
-    You can find more information on this page :
+    You can find more information on this pages :
 
     - {{: https://nodejs.org/api/process.html }  NodeJS : documentation for [process] } 
 
@@ -59,6 +59,60 @@ val argv0 : unit -> string
 (**  a read-only copy of the original value of [argv[0]] passed 
      when Node.js starts. 
 *)
+
+val chdir : string -> unit
+(** changes the current working directory of the Node.js process or throws an 
+    exception if doing so fails (for instance, if the specified directory does not 
+    exist). 
+*)
+
+val cwd : unit -> string 
+(** Returns the current working directory of the Node.js process. *)
+
+val connected : unit -> bool 
+(** [true] the Node.js process is spawned with an IPC channel, otherwise 
+    [false].
+*)
+
+val debug_port : unit -> int 
+(** The port used by Node.js's debugger when enabled. *)
+
+val set_debug_port : int -> unit 
+(** Set the debug port. *)
+
+val exec_argv : unit -> string array
+(** The process.execArgv property returns the set of Node.js-specific 
+    command-line options passed when the Node.js process was launched. 
+    These options do not appear in the array returned by the [process.argv]
+    property, and do not include the Node.js executable, the name of 
+    the script, or any options following the script name. 
+
+    These options are useful in order to spawn child processes with 
+    the same execution environment as the parent. 
+*)
+
+val exec_path : unit -> string 
+(** Returns the absolute pathname of the executable that started the 
+     Node.js process. 
+*)
+
+val exit_code : unit -> int 
+(** A number which will be the process exit code, when the process either 
+      exits gracefully, or is exited via [process.exit()] without 
+      specifying a code.
+*)
+
+val set_exit_code : int -> unit 
+(** Change the default [exit_code] value. *)
+
+val exit : ?code:int -> unit -> unit
+(** Terminate the process synchronously with an exit status of code. *)
+
+val get_uid : unit -> int
+(** Returns the numeric user identity of the process. *)
+
+val kill : ?signal:Signal.t -> int -> unit
+(** Method sends the signal to the process identified by pid. *)
 
 val crash : unit -> unit 
 (** Causes the main thread of the current process crash. *)

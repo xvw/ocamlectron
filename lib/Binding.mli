@@ -133,6 +133,54 @@ class type process = object
        when Node.js starts. 
   *)
 
+  method chdir : js_string t -> unit meth
+  (** changes the current working directory of the Node.js process or throws an 
+      exception if doing so fails (for instance, if the specified directory does not 
+      exist). 
+  *)
+
+  method cwd : unit -> (js_string t) meth
+  (** Returns the current working directory of the Node.js process. *)
+
+  method connected : (bool t) readonly_prop
+  (** [true] the Node.js process is spawned with an IPC channel, otherwise 
+      [false].
+  *)
+
+  method debugPort : int prop
+  (** The port used by Node.js's debugger when enabled.  *)
+
+  method execArgv : (js_string t js_array t) readonly_prop
+  (** The process.execArgv property returns the set of Node.js-specific 
+      command-line options passed when the Node.js process was launched. 
+      These options do not appear in the array returned by the [process.argv]
+      property, and do not include the Node.js executable, the name of 
+      the script, or any options following the script name. 
+
+      These options are useful in order to spawn child processes with 
+      the same execution environment as the parent. 
+  *)
+
+  method execPath : (js_string t) readonly_prop
+  (** Returns the absolute pathname of the executable that started the 
+      Node.js process. 
+  *)
+
+  method exitCode : int prop
+  (** A number which will be the process exit code, when the process either 
+      exits gracefully, or is exited via [process.exit()] without 
+      specifying a code.
+  *)
+
+  method exit : int Optdef.t -> unit meth
+  (** Terminate the process synchronously with an exit status of code. *)
+
+  method getuid : unit -> int meth
+  (** Returns the numeric user identity of the process. *)
+
+  method kill : int -> (js_string t) Optdef.t -> unit meth
+  (** Method sends the [signal] to the process identified by [pid]. *)
+
   method defaultApp : (bool Optdef.t) readonly_prop
   (** When app is started by being passed as parameter to the 
       default app, this property is [true] in the main process, 
