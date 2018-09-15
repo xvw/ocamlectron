@@ -106,3 +106,49 @@ sig
   (** Converts [Binding.memory_usage] to [t] *)
 
 end
+
+module Release : 
+sig 
+
+  type lts = 
+    | Argon  (** for the 4.x LTS line beginning with 4.2.0. *)
+    | Boron  (** for the 6.x LTS line beginning with 6.9.0. *)
+    | Carbon (** for the 8.x LTS line beginning with 8.9.1. *)
+    | Unknown of string
+
+  type t = {
+    name : string (** A value that will always be ['node'] for Node.js. 
+                      For legacy io.js releases, this will be ['io.js']. 
+                  *)
+  ; source_url : string (** an absolute URL pointing to a [.tar.gz] file containing
+                            the source code of the current release. 
+                        *)
+  ; headers_url : string  (** an absolute URL pointing to a [.tar.gz] file 
+                              containing only the source header files for the 
+                              current release. 
+
+                              This file is significantly smaller than the full 
+                              source file and can be used for compiling Node.js
+                              native add-ons. 
+                          *)
+
+  ; lib_url : string option (**  an absolute URL pointing to a node.lib file matching 
+                                 the architecture and version of the current release. 
+                                 This file is used for compiling Node.js native add-ons. 
+                                 This property is only present on Windows builds of Node.js 
+                                 and will be missing on all other platforms. 
+                            *)
+
+  ; lts : lts option (** a string label identifying the LTS label for this release. 
+                         This property only exists for LTS releases and is undefined for 
+                         all other release types, including Current releases. 
+                     *)
+  }
+
+  val lts_from_string : string -> lts
+  (** Converts a [string] to an [lts] *)
+
+  val from_object : Binding.release Js.t -> t
+  (** Converts [Binding.release] to [t] *)
+
+end

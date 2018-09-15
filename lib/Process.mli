@@ -17,7 +17,7 @@ type t = Binding.process Js.t
 type process_kind = 
   | Browser 
   | Renderer
-  | Unknown_kind
+  | Unknown_kind of string
 
 (** Kind of Architecture *)
 type architecture = 
@@ -32,7 +32,7 @@ type architecture =
   | S390x 
   | X32
   | X64
-  | Unknown_architecture
+  | Unknown_arch of string
 
 (** {2 Objects} *)
 
@@ -122,9 +122,17 @@ val memory_usage : unit -> Struct.MemoryUsage.t
 val pid : unit -> int
 (** Returns the PID of the process. *)
 
+val ppid : unit -> int
+(** Returns the PID of the current parent process. *)
+
 val platform : unit -> OS.t
 (** Returns a string identifying the operating system platform on which
     the Node.js process is running.
+*)
+
+val release : unit -> Struct.Release.t
+(** returns an [Object] containing metadata related to the current release,
+    including URLs for the source tarball and headers-only tarball. 
 *)
 
 val crash : unit -> unit 

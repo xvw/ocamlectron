@@ -107,3 +107,45 @@ struct
   }
 
 end
+
+module Release =
+struct 
+
+  type lts = 
+    | Argon
+    | Boron
+    | Carbon
+    | Unknown of string
+
+  type t = {
+    name : string 
+  ; source_url : string 
+  ; headers_url : string 
+  ; lib_url : string option
+  ; lts : lts option
+  }
+
+  let lts_from_string = function 
+    | "Argon" -> Argon 
+    | "Boron" -> Boron 
+    | "Carbon" -> Carbon
+    | x -> Unknown x
+
+  let from_object obj = {
+    name = Js.to_string (obj ##. name)
+  ; source_url = Js.to_string (obj ##. sourceUrl)
+  ; headers_url = Js.to_string (obj ##. headersUrl)
+  ; lib_url = Optional.Optdef.(
+      obj ##. libUrl 
+      >|= Js.to_string 
+      |> to_option
+    )
+  ; lts = Optional.Optdef.(
+      obj ##. lts 
+      >|= Js.to_string 
+      >|= lts_from_string 
+      |> to_option
+    )
+  }
+
+end

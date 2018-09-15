@@ -6,7 +6,7 @@ type t = Binding.process Js.t
 type process_kind = 
   | Browser 
   | Renderer
-  | Unknown_kind
+  | Unknown_kind of string
 
 type architecture = 
   | Arm 
@@ -20,7 +20,7 @@ type architecture =
   | S390x 
   | X32
   | X64
-  | Unknown_architecture
+  | Unknown_arch of string
 let process : t = Js.Unsafe.global##._process
 
 let abort () = process ## abort ()
@@ -46,7 +46,7 @@ let kind () =
   match result with 
   | "browser" -> Browser
   | "renderer" -> Renderer
-  | _ -> Unknown_kind
+  | x -> Unknown_kind x
 
 let versions () = 
   let result = process ##. versions in 
@@ -134,7 +134,7 @@ let arch () =
   | "s390x" -> S390x 
   | "x32" -> X32
   | "x64" -> X64
-  | _ -> Unknown_architecture
+  | x -> Unknown_arch x
 
 let argv () =  
   let raw_argv = process ##. argv in 
@@ -187,4 +187,9 @@ let kill ?signal pid =
   in process ## kill pid sign
 
 let pid () = process ##. pid
+let ppid () = process ##. ppid
 let platform = OS.current
+
+let release () =  
+  let handler = process ##. release in 
+  Struct.Release.from_object handler
