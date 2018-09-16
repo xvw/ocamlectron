@@ -159,7 +159,7 @@ let is_default_protocol_client app protocol_name =
 let set_user_tasks app tasks = 
   let task_list = 
     tasks 
-    |> List.map Struct.Task.to_object
+    |> List.map Binding.Struct.Task.to_object
     |> Array.of_list
     |> Js.array
   in 

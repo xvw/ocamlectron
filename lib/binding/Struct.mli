@@ -1,7 +1,4 @@
 (** Mapping from JS Object to OCaml records *)
-
-open Binding
-
 module Versions : 
 sig 
 
@@ -43,7 +40,7 @@ sig
   ; other_transfer_count  : int (** Then number of I/O other transfers. *)
   }
 
-  val from_object : IOCounter.t -> t
+  val from_object : IOCounters.t -> t
   (** Converts [Binding.io_counters] to [t] *)
 
 end

@@ -135,15 +135,15 @@ struct
     name = Js.to_string (obj ##. name)
   ; source_url = Js.to_string (obj ##. sourceUrl)
   ; headers_url = Js.to_string (obj ##. headersUrl)
-  ; lib_url = Optional.Optdef.(
+  ; lib_url = Js.Optdef.(
       obj ##. libUrl 
-      >|= Js.to_string 
+      |> (fun x -> map x Js.to_string)
       |> to_option
     )
-  ; lts = Optional.Optdef.(
+  ; lts = Js.Optdef.(
       obj ##. lts 
-      >|= Js.to_string 
-      >|= lts_from_string 
+      |> (fun x -> map x Js.to_string)
+      |> (fun x -> map x lts_from_string)
       |> to_option
     )
   }

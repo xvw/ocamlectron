@@ -12,7 +12,9 @@
     versions
     memoryUsage
     cPUUsage
-    iOCounter
+    iOCounters
     processMemoryInfo
     systemMemoryInfo
+    browserWindow
+    webContents
   ))
