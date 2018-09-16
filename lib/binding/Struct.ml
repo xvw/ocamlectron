@@ -182,3 +182,112 @@ struct
   }
 
 end
+
+module BrowserWindow =
+struct
+
+  type options = {
+    width : int option
+  ; height : int option
+  ; x : int option
+  ; y : int option
+  ; use_content_size : bool option
+  ; center : bool option
+  ; min_width : int option
+  ; min_height : int option
+  ; max_width : int option
+  ; resizable : bool option
+  ; movable : bool option
+  ; minimizable : bool option
+  ; maximizable : bool option
+  ; closable : bool option
+  ; focusable : bool option
+  ; always_on_top : bool option
+  ; fullscreen : bool option
+  ; fullscreenable : bool option 
+  ; simple_fullscreen : bool option
+  ; skip_taskbar : bool option
+  ; kiosk : bool option
+  ; title : string option
+  ; show : bool option
+  ; frame : bool option
+  ; parent : BrowserWindow.t option
+  ; modal : bool option
+  ; accept_first_mouse : bool option
+  ; disable_auto_hide_cursor : bool option
+  ; auto_hide_menu_bar : bool option
+  ; enable_larger_than_screen :  bool option
+  ; background_color : string option
+  ; has_shadow : bool option
+  ; opacity : float option
+  ; dark_theme : bool option
+  ; transparent : bool option
+  ; _type : string option
+  ; title_bar_style : string option
+  ; fullscreen_window_title : bool option
+  ; thick_frame : bool option
+  ; vibrancy : string option
+  ; zoom_to_page_width : bool option
+  ; tabbing_identifier : string option
+  }
+
+
+  let f g v = 
+    let open Js.Optdef in 
+    map (option v) g
+
+  let id x = x
+
+  let make 
+      ?width 
+      ?height
+      ?position
+      ?use_content_size
+      ?center
+      ?min_width
+      ?min_height
+      ?max_width
+      ?resizable
+      ?movable
+      ?minimizable
+      ?maximizable
+      ?closable
+      ?focusable
+      ?always_on_top
+      ?fullscreen
+      ?fullscreenable 
+      ?simple_fullscreen
+      ?skip_taskbar
+      ?kiosk
+      ?title
+      ?show
+      ?frame
+      ?parent
+      ?modal
+      ?accept_first_mouse
+      ?disable_auto_hide_cursor
+      ?auto_hide_menu_bar
+      ?enable_larger_than_screen
+      ?background_color
+      ?has_shadow
+      ?opacity
+      ?dark_theme
+      ?transparent
+      ?_type
+      ?title_bar_style
+      ?fullscreen_window_title
+      ?thick_frame
+      ?vibrancy
+      ?zoom_to_page_width
+      ?tabbing_identifier
+      () = 
+    let options = object%js 
+      val width = f id width
+      val height = f id height
+      val x = f fst position 
+      val y = f snd position
+      val useContentSize = f Js.bool use_content_size
+      val center = f Js.bool center
+    end in new%js BrowserWindow.constr options
+
+end
