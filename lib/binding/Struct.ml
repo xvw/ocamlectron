@@ -247,6 +247,7 @@ struct
       ?min_width
       ?min_height
       ?max_width
+      ?max_height
       ?resizable
       ?movable
       ?minimizable
@@ -288,6 +289,43 @@ struct
       val y = f snd position
       val useContentSize = f Js.bool use_content_size
       val center = f Js.bool center
+      val minWidth = f id min_width
+      val minHeight = f id min_height
+      val maxWidth = f id max_width
+      val maxHeight = f id max_height
+      val resizable = f Js.bool resizable
+      val movable = f Js.bool movable
+      val minimizable = f Js.bool minimizable
+      val maximizable = f Js.bool maximizable
+      val closable = f Js.bool closable
+      val focusable = f Js.bool focusable
+      val alwaysOnTop = f Js.bool always_on_top
+      val fullscreen = f Js.bool fullscreen
+      val fullscreenable = f Js.bool fullscreenable
+      val simpleFullscreen = f Js.bool simple_fullscreen
+      val skipTaskbar = f Js.bool skip_taskbar
+      val kiosk = f Js.bool kiosk
+      val title = f Js.string title 
+      val show = f Js.bool show
+      val frame = f Js.bool frame
+      val parent = f id parent
+      val modal = f Js.bool modal 
+      val acceptFirstMouse = f Js.bool accept_first_mouse
+      val disableAutoHideCursor = f Js.bool disable_auto_hide_cursor
+      val autoHideMenuBar = f Js.bool auto_hide_menu_bar
+      val enableLargerThanScreen = f Js.bool enable_larger_than_screen
+      val backgroundColor = f Js.string background_color
+      val hasShadow = f Js.bool has_shadow
+      val opacity = f id opacity
+      val darkTheme = f Js.bool dark_theme
+      val transparent = f Js.bool transparent
+      val _type = f Js.string _type 
+      val titleBarStyle = f Js.string title_bar_style
+      val fullscreenWindowTitle = f Js.bool fullscreen_window_title
+      val thickFrame = f Js.bool thick_frame
+      val vibrancy = f Js.string vibrancy
+      val zoomToPageWidth = f Js.bool zoom_to_page_width
+      val tabbingIdentifier = f Js.string tabbing_identifier
     end in new%js BrowserWindow.constr options
 
 end

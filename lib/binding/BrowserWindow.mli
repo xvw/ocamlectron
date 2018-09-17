@@ -20,6 +20,7 @@ type options = <
 ; minWidth : int Optdef.t readonly_prop
 ; minHeight : int Optdef.t readonly_prop
 ; maxWidth : int Optdef.t readonly_prop
+; maxHeight : int Optdef.t readonly_prop
 ; resizable : bool t Optdef.t readonly_prop
 ; movable : bool t Optdef.t readonly_prop
 ; minimizable : bool t Optdef.t readonly_prop

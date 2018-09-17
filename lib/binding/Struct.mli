@@ -254,6 +254,7 @@ sig
     ?min_width:int ->
     ?min_height:int ->
     ?max_width:int ->
+    ?max_height:int ->
     ?resizable:bool ->
     ?movable:bool ->
     ?minimizable:bool ->

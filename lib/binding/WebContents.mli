@@ -3,7 +3,7 @@
     - {{: https://electronjs.org/docs/api/web-contents } Documentation for [WebContents]}
 *)
 
-open Js 
+
 
 
 class type web_contents = object 
