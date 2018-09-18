@@ -25,7 +25,6 @@ type vibrancy =
   | MediumLight 
   | UltraDark
 
-
 (** {2 Static Functions} *)
 
 (** Constructor for [BrowserWindow] *)
@@ -72,13 +71,13 @@ val make :
   ?vibrancy:vibrancy ->
   ?zoom_to_page_width:bool ->
   ?tabbing_identifier:string ->
-  unit -> 
+  Binding.BrowserWindow.constr -> 
   t
 
-val all : unit -> t list 
+val all : Binding.BrowserWindow.singleton Js.t -> t list 
 (** Returns all opened browser windows. *)
 
-val focused : unit -> t option
+val focused : Binding.BrowserWindow.singleton Js.t -> t option
 (** Returns the window that is focused in this application *)
 
 (** {2 Methods} *)

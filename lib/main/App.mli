@@ -8,8 +8,8 @@
 
 (** {2 Internals types} *)
 
-type t
-(** An abstract version of [Binding.Electron.app] *)
+type t = Binding.App.t
+(** An alias of [Binding.Electron.app] *)
 
 (** Presaved path_name *)
 type path_name = 

@@ -281,7 +281,7 @@ struct
       ?vibrancy
       ?zoom_to_page_width
       ?tabbing_identifier
-      () = 
+      constr = 
     let options = object%js 
       val width = f id width
       val height = f id height
@@ -326,7 +326,7 @@ struct
       val vibrancy = f Js.string vibrancy
       val zoomToPageWidth = f Js.bool zoom_to_page_width
       val tabbingIdentifier = f Js.string tabbing_identifier
-    end in new%js BrowserWindow.constr options
+    end in new%js constr options
 
 end
 

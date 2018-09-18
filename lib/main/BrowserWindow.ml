@@ -80,7 +80,7 @@ let make
     ?(vibrancy = AppearanceBased)
     ?zoom_to_page_width
     ?tabbing_identifier
-    () = 
+    constr = 
   Binding.Struct.BrowserWindow.make
     ?width 
     ?height
@@ -124,17 +124,13 @@ let make
     ~vibrancy:(vibrancy_to_string vibrancy)
     ?zoom_to_page_width
     ?tabbing_identifier
-    ()
+    constr
 
-let singleton : Binding.BrowserWindow.singleton Js.t = 
-  Js.Unsafe.global##._BrowserWindow
-
-
-let all () =  
+let all singleton =  
   singleton ## getAllWindows ()
   |> Js.to_array
   |> Array.to_list
 
-let focused () =  
+let focused singleton =  
   singleton ## getFocusedWindow ()
   |> Js.Opt.to_option

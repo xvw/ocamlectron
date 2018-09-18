@@ -288,7 +288,7 @@ sig
     ?vibrancy:string ->
     ?zoom_to_page_width:bool ->
     ?tabbing_identifier:string ->
-    unit -> 
+    BrowserWindow.constr -> 
     BrowserWindow.t
 
 end

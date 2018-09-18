@@ -121,8 +121,7 @@ class type singleton = object
 
 end
 
-(** Constructor for [BrowserWindow] *)
-val constr : (options t -> browser_window Js.t) constr
 
 (** Main type *)
 type t = browser_window Js.t
+type constr = (options Js.t -> t) Js.constr

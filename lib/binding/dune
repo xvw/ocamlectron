@@ -20,4 +20,6 @@
     position
     size 
     rectangle
+    electronMain
+    electronRender
   ))
