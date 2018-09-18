@@ -329,3 +329,72 @@ struct
     end in new%js BrowserWindow.constr options
 
 end
+
+module Size = 
+struct 
+
+  type t = {
+    width : int
+  ; height : int
+  }
+
+  let from_object obj = {
+    width = obj ##. width
+  ; height = obj ##. height
+  }
+
+  let to_object size = 
+    object%js 
+      val width = size.width
+      val height = size.height
+    end
+
+end
+
+module Rectangle = 
+struct 
+
+  type t = {
+    x : int
+  ; y : int
+  ; width : int
+  ; height : int
+  }
+
+  let from_object obj = {
+    x = obj ##. x 
+  ; y = obj ##. y
+  ; width = obj ##. width
+  ; height = obj ##. height
+  }
+
+  let to_object rectangle = 
+    object%js 
+      val x = rectangle.x 
+      val y = rectangle.y
+      val width = rectangle.width
+      val height = rectangle.height
+    end
+
+end
+
+module Position = 
+struct 
+
+  type t = {
+    x : int
+  ; y : int
+  }
+
+  let from_object obj = {
+    x = obj ##. x 
+  ; y = obj ##. y
+  }
+
+  let to_object position = 
+    object%js 
+      val x = position.x 
+      val y = position.y
+    end
+
+end

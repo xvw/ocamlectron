@@ -17,4 +17,7 @@
     systemMemoryInfo
     browserWindow
     webContents
+    position
+    size 
+    rectangle
   ))

@@ -292,3 +292,53 @@ sig
     BrowserWindow.t
 
 end
+
+module Size : 
+sig 
+
+  type t = {
+    width : int
+  ; height : int
+  }
+
+  val from_object : Size.t -> t
+  (** Converts a [Size.t] to [t] *)
+
+  val to_object : t -> Size.t
+  (** Converts a [t] to [Size.t] *)
+
+end
+
+module Position : 
+sig 
+
+  type t = {
+    x : int
+  ; y : int
+  }
+
+  val from_object : Position.t -> t
+  (** Converts a [Position.t] to [t] *)
+
+  val to_object : t -> Position.t
+  (** Converts a [t] to [Position.t] *)
+
+end
+
+module Rectangle : 
+sig 
+
+  type t = {
+    x : int
+  ; y : int
+  ; width : int
+  ; height : int
+  }
+
+  val from_object : Rectangle.t -> t
+  (** Converts a [Rectangle.t] to [t] *)
+
+  val to_object : t -> Rectangle.t
+  (** Converts a [t] to [Rectangle.t] *)
+
+end

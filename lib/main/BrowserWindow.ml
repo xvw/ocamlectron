@@ -125,3 +125,16 @@ let make
     ?zoom_to_page_width
     ?tabbing_identifier
     ()
+
+let singleton : Binding.BrowserWindow.singleton Js.t = 
+  Js.Unsafe.global##._BrowserWindow
+
+
+let all () =  
+  singleton ## getAllWindows ()
+  |> Js.to_array
+  |> Array.to_list
+
+let focused () =  
+  singleton ## getFocusedWindow ()
+  |> Js.Opt.to_option

@@ -26,7 +26,7 @@ type vibrancy =
   | UltraDark
 
 
-(** {2 Functions} *)
+(** {2 Static Functions} *)
 
 (** Constructor for [BrowserWindow] *)
 val make : 
@@ -74,3 +74,11 @@ val make :
   ?tabbing_identifier:string ->
   unit -> 
   t
+
+val all : unit -> t list 
+(** Returns all opened browser windows. *)
+
+val focused : unit -> t option
+(** Returns the window that is focused in this application *)
+
+(** {2 Methods} *)
