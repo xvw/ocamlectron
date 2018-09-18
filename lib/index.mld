@@ -1,0 +1,21 @@
+{1:index OCamlectron}
+
+Documentation should be written...
+
+
+
+{2 Direct documentation}
+
+
+{4 Public API}
+- {{: Common/index.html} OCamlectron.Common} - Shared modules between {b main} and 
+  {b render} processes
+- {{: Main/index.html} OCamlectron.Main} - {b Main} process libraries
+- {{: Render/index.html} OCamlectron.Render} - {b Render} process librairies
+
+
+{4 Internal packages}
+
+Internal packages are for "internal plumbing", you should not use them.
+
+- {{: Binding/index.html} OCamlectron.Binding} - LowLevel interface with JavaScript
