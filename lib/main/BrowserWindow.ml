@@ -191,3 +191,45 @@ let bounds_of win =
 let content_bounds_of win = 
   (win ## getContentBounds ())
   |> Binding.Struct.Rectangle.from_object
+
+let enable win = win ## setEnabled (Js._true)
+let disable win = win ## setEnabled (Js._false)
+
+let resize ?(animate = false) win width height = 
+  let flag = Js.Optdef.return (Js.bool animate) in 
+  win ## setSize width height flag
+
+let size_of win = 
+  let open Binding.Struct.Size in  
+  let value = win ## getSize () in 
+  match Js.to_array value with 
+  | [|w; h|] -> {width = w; height = h}
+  | _ -> {width = 0; height = 0}
+
+let resize_content ?(animate = false) win width height = 
+  let flag = Js.Optdef.return (Js.bool animate) in 
+  win ## setContentSize width height flag
+
+let content_size_of win = 
+  let open Binding.Struct.Size in  
+  let value = win ## getContentSize () in 
+  match Js.to_array value with 
+  | [|w; h|] -> {width = w; height = h}
+  | _ -> {width = 0; height = 0}
+
+let maximum_size win w h = win ## setMaximumSize w h 
+let minimum_size win w h = win ## setMinimumSize w h
+
+let maximum_size_of win = 
+  let open Binding.Struct.Size in  
+  let value = win ## getMaximumSize () in 
+  match Js.to_array value with 
+  | [|w; h|] -> {width = w; height = h}
+  | _ -> {width = 0; height = 0}
+
+let minimum_size_of win = 
+  let open Binding.Struct.Size in  
+  let value = win ## getMinimumSize () in 
+  match Js.to_array value with 
+  | [|w; h|] -> {width = w; height = h}
+  | _ -> {width = 0; height = 0}

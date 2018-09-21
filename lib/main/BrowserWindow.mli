@@ -173,3 +173,33 @@ val content_bounds : ?animate:bool -> t -> Binding.Struct.Rectangle.t -> unit
 
 val content_bounds_of : t -> Binding.Struct.Rectangle.t
 (** Returns content's bounds rectangle *)
+
+val enable : t -> unit 
+(** Enable the window *)
+
+val disable : t -> unit 
+(** Disable the window *)
+
+val resize : ?animate:bool -> t -> int -> int -> unit
+(** Resize the window *)
+
+val resize_content : ?animate:bool -> t -> int -> int -> unit
+(** Resize the window's content *)
+
+val size_of : t -> Binding.Struct.Size.t
+(** Returns the size of a window *)
+
+val content_size_of : t -> Binding.Struct.Size.t
+(** Returns the size of a window *)
+
+val maximum_size : t -> int -> int -> unit 
+(** Set the maximum size of the window *)
+
+val minimum_size : t -> int -> int -> unit 
+(** Set the minimum size of the window *)
+
+val maximum_size_of : t -> Binding.Struct.Size.t
+(** Returns the maximum size of a window *)
+
+val minimum_size_of : t -> Binding.Struct.Size.t
+(** Returns the minimum size of a window *)
