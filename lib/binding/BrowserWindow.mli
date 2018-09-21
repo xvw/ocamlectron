@@ -75,8 +75,8 @@ and browser_window = <
 ; minimize : unit -> unit meth 
 ; restore : unit -> unit meth 
 ; isMinimized : unit -> bool t meth 
-; setFullscreenFlag : bool t -> unit meth 
-; isFullscreen : unit -> unit meth 
+; setFullscreen : bool t -> unit meth 
+; isFullscreen : unit -> bool t meth 
 ; setSimpleFullscreen : bool t -> unit meth 
 ; isSimpleFullscreen : unit -> bool t meth 
 ; setAspectRatio : float -> Size.t Optdef.t -> unit meth 

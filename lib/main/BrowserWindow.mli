@@ -87,7 +87,7 @@ val destroy : t -> unit
     emitted for the web page, and close event will also not be emitted for 
     this window, but it guarantees the closed event will be emitted.
 *)
-  
+
 val close : t -> unit 
 (** Try to close the window. This has the same effect as a user manually clicking 
     the close button of the window. The web page may cancel the close though.
@@ -138,3 +138,18 @@ val restore : t -> unit
 
 val is_minimized : t -> bool 
 (** Whether the window is minimized. *)
+
+val fullscreen : t -> bool -> unit 
+(** Sets whether the window should be in fullscreen mode. *)
+
+val is_fullscreen : t -> bool 
+(** Whether the window is in fullscreen mode. *)
+
+val simple_fullscreen : t -> bool -> unit
+(** Enters or leaves simple fullscreen mode. {b only for MacOS} *)
+
+val is_simple_fullscreen : t -> bool 
+(** Whether the window is in simple (pre-Lion) fullscreen mode. {b only for MacOS} *)
+
+val aspect_ratio : ?extra_size:Binding.Struct.Size.t -> t -> float -> unit
+(** This will make a window maintain an aspect ratio.  *)

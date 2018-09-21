@@ -154,3 +154,16 @@ let unmaximize win = win ## unmaximize ()
 let show ?(focus=true) win = 
   if focus then win ## show () 
   else win ## showInactive ()
+
+let fullscreen win value = win ## setFullscreen (Js.bool value)
+let is_fullscreen win = Js.to_bool (win ## isFullscreen ())
+let simple_fullscreen win value = win ## setSimpleFullscreen (Js.bool value)
+let is_simple_fullscreen win = Js.to_bool (win ## isSimpleFullscreen ())
+
+let aspect_ratio ?extra_size win ratio = 
+  let open Common.Optional.Option in 
+  let size = 
+    extra_size 
+    >|= Binding.Struct.Size.to_object 
+    |> to_optdef 
+  in win ## setAspectRatio ratio size
