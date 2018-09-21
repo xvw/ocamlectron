@@ -167,3 +167,27 @@ let aspect_ratio ?extra_size win ratio =
     >|= Binding.Struct.Size.to_object 
     |> to_optdef 
   in win ## setAspectRatio ratio size
+
+let close_preview win = win ## closeFilePreview ()
+let preview_file ?display_name win path = 
+  let open Common.Optional.Option in 
+  let name = display_name >|= Js.string |> to_optdef in 
+  win ## previewFile (Js.string path) name
+
+let bounds ?(animate = false) win rectangle = 
+  let rect = Binding.Struct.Rectangle.to_object rectangle in 
+  let flag = Js.bool animate in 
+  win ## setBounds rect (Js.Optdef.return flag)
+
+let content_bounds ?(animate = false) win rectangle = 
+  let rect = Binding.Struct.Rectangle.to_object rectangle in 
+  let flag = Js.bool animate in 
+  win ## setContentBounds rect (Js.Optdef.return flag)
+
+let bounds_of win = 
+  (win ## getBounds ())
+  |> Binding.Struct.Rectangle.from_object
+
+let content_bounds_of win = 
+  (win ## getContentBounds ())
+  |> Binding.Struct.Rectangle.from_object

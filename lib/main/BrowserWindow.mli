@@ -153,3 +153,23 @@ val is_simple_fullscreen : t -> bool
 
 val aspect_ratio : ?extra_size:Binding.Struct.Size.t -> t -> float -> unit
 (** This will make a window maintain an aspect ratio.  *)
+
+val preview_file : ?display_name:string -> t -> string -> unit
+(** Uses Quick Look to preview a file at a given path. *)
+
+val close_preview : t -> unit
+(** Closes the currently open Quick Look panel. *)
+
+val bounds : ?animate:bool -> t -> Binding.Struct.Rectangle.t -> unit
+(** Resizes and moves the window to the supplied bounds. *)
+
+val bounds_of : t -> Binding.Struct.Rectangle.t
+(** Returns bounds rectangle *)
+
+val content_bounds : ?animate:bool -> t -> Binding.Struct.Rectangle.t -> unit
+(** Resizes and moves the window's client area (e.g. the web page) to 
+    the supplied bounds. 
+*)
+
+val content_bounds_of : t -> Binding.Struct.Rectangle.t
+(** Returns content's bounds rectangle *)
