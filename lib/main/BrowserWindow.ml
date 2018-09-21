@@ -131,6 +131,26 @@ let all singleton =
   |> Js.to_array
   |> Array.to_list
 
-let focused singleton =  
+let are_focused singleton =  
   singleton ## getFocusedWindow ()
   |> Js.Opt.to_option
+
+let destroy win = win ## destroy ()
+let close win = win ## close ()
+let focus win = win ## focus () 
+let blur win = win ## blur ()
+let is_focused win = Js.to_bool (win ## isFocused ())
+let is_destroyed win = Js.to_bool (win ## isDestroyed ())
+let hide win = win ## hide ()
+let is_visible win = Js.to_bool (win ## isVisible ())
+let is_modal win = Js.to_bool (win ## isModal ())
+let maximize win = win ## maximize ()
+let minimize win = win ## minimize ()
+let is_maximized win = Js.to_bool (win ## isMaximized ())
+let is_minimized win = Js.to_bool (win ## isMinimized ())
+let restore win = win ## restore ()
+let unmaximize win = win ## unmaximize ()
+
+let show ?(focus=true) win = 
+  if focus then win ## show () 
+  else win ## showInactive ()

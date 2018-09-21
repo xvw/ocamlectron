@@ -107,7 +107,41 @@ and browser_window = <
 ; isFullscreenable : unit -> bool t meth 
 ; setClosable : bool t -> unit meth
 ; isClosable : unit -> bool t meth
-; 
+; setAlwaysOnTop : bool t -> js_string t Optdef.t -> int Optdef.t -> unit meth
+; isAlwaysOnTop : unit -> bool t meth
+; center : unit -> unit 
+; setPosition : int -> int -> bool t Optdef.t -> unit meth
+; getPosition : unit -> int js_array t meth 
+; setTitle : js_string t -> unit meth 
+; getTitle : unit -> js_string t meth
+; setSheetOffset : float -> float Optdef.t -> unit meth 
+; flashFrame : bool t -> unit meth 
+; setSkipTaskbar : bool t -> unit meth 
+; setKiosk : bool t -> unit meth 
+; isKiosk : unit -> bool t meth
+; focusOnWebView : unit -> unit meth 
+; blurWebView : unit -> unit meth 
+; loadUrl : js_string t -> unit meth 
+; loadFile : js_string t -> unit meth
+; reload : unit -> unit meth
+; setProgressBar : float -> unit meth 
+; setHasShadow : bool t -> unit meth
+; hasShadow : unit -> bool t meth 
+; setOpacity : float -> unit meth
+; getOpacity : unit -> float meth 
+; setAutoHideMenuBar : bool t -> unit meth 
+; isMenuBarAutoHide : unit -> bool t meth 
+; setMenuBarVisibility : bool t -> unit meth 
+; isMenuBarVisible : unit -> bool t meth 
+; setVisibileOnAllWorkspaces : bool t -> unit meth 
+; isVisibleOnAllWorkspaces : unit -> bool t meth 
+; setIgnoreMouseEvents : bool t -> unit meth 
+; setContentProtection : bool t -> unit meth 
+; setFocusable : bool t -> unit meth 
+; setParentWindow : browser_window t -> unit meth
+; getParentWindow : unit -> browser_window t meth
+; getChildWindows : unit -> browser_window t js_array t meth
+; setAutoHideCursor : bool t -> unit meth 
 >
 
 (** Singleton of [BrowserWindow] *)
