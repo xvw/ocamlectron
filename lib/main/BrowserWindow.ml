@@ -233,3 +233,6 @@ let minimum_size_of win =
   match Js.to_array value with 
   | [|w; h|] -> {width = w; height = h}
   | _ -> {width = 0; height = 0}
+
+let resizable win flag = win ## setResizable (Js.bool flag)
+let is_resizable win = Js.to_bool (win ## isResizable ())

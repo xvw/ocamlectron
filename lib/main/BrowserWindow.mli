@@ -203,3 +203,9 @@ val maximum_size_of : t -> Binding.Struct.Size.t
 
 val minimum_size_of : t -> Binding.Struct.Size.t
 (** Returns the minimum size of a window *)
+
+val resizable : t -> bool -> unit 
+(** Set if a window is resizable. *)
+
+val is_resizable : t -> bool
+(** Returns if a window is resizable. *)
