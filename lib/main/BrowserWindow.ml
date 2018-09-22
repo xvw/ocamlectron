@@ -18,6 +18,16 @@ type vibrancy =
   | MediumLight 
   | UltraDark
 
+type level = 
+  | Normal 
+  | Floating 
+  | TornOffMenu 
+  | ModalPanel
+  | MainMenu 
+  | Status 
+  | PopUpMenu 
+  | ScreenSaver
+
 let title_bar_style_to_string = function 
   | Default -> "default"
   | Hidden -> "hidden"
@@ -36,6 +46,15 @@ let vibrancy_to_string = function
   | MediumLight -> "medium-light"
   | UltraDark -> "ultra-dark"
 
+let level_to_string = function 
+  | Normal -> "normal"
+  | Floating -> "floating"
+  | TornOffMenu -> "torn-off-menu"
+  | ModalPanel -> "modal-panel"
+  | MainMenu -> "main-menu"
+  | Status -> "status"
+  | PopUpMenu -> "pop-up-menu"
+  | ScreenSaver -> "screen-saver"
 
 let make 
     ?width 
@@ -135,6 +154,7 @@ let are_focused singleton =
   singleton ## getFocusedWindow ()
   |> Js.Opt.to_option
 
+let id win = win ##. id 
 let destroy win = win ## destroy ()
 let close win = win ## close ()
 let focus win = win ## focus () 
@@ -236,3 +256,21 @@ let minimum_size_of win =
 
 let resizable win flag = win ## setResizable (Js.bool flag)
 let is_resizable win = Js.to_bool (win ## isResizable ())
+let movable win flag = win ## setMovable (Js.bool flag)
+let is_movable win = Js.to_bool (win ## isMovable ())
+let minimizable win flag = win ## setMinimizable (Js.bool flag)
+let is_minimizable win = Js.to_bool (win ## isMinimizable ())
+let maximizable win flag = win ## setMaximizable (Js.bool flag)
+let is_maximizable win = Js.to_bool (win ## isMaximizable ())
+let fullscreenable win flag = win ## setFullscreenable (Js.bool flag)
+let is_fullscreenable win = Js.to_bool (win ## isFullscreenable ())
+let closable win flag = win ## setClosable (Js.bool flag)
+let is_closable win = Js.to_bool (win ## isClosable ())
+let is_always_on_top win = Js.to_bool (win ## isAlwaysOnTop ())
+
+let always_on_top ?(level = Floating) ?(relative_level=0) win flag = 
+  let l = Js.string (level_to_string level) in
+  win ## setAlwaysOnTop 
+    (Js.bool flag) 
+    (Js.Optdef.return l) 
+    (Js.Optdef.return relative_level)

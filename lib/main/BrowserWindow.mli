@@ -25,6 +25,16 @@ type vibrancy =
   | MediumLight 
   | UltraDark
 
+type level = 
+  | Normal 
+  | Floating 
+  | TornOffMenu 
+  | ModalPanel
+  | MainMenu 
+  | Status 
+  | PopUpMenu 
+  | ScreenSaver
+
 (** {2 Static Functions} *)
 
 (** Constructor for [BrowserWindow] *)
@@ -81,6 +91,9 @@ val are_focused : Binding.BrowserWindow.singleton Js.t -> t option
 (** Returns the window that is focused in this application *)
 
 (** {2 Methods} *)
+
+val id : t -> int 
+(** A Integer representing the unique ID of the window. *)
 
 val destroy : t -> unit 
 (** Force closing the window, the unload and beforeunload event won't be 
@@ -208,4 +221,40 @@ val resizable : t -> bool -> unit
 (** Set if a window is resizable. *)
 
 val is_resizable : t -> bool
-(** Returns if a window is resizable. *)
+(** Returns true if a window is resizable. *)
+
+val movable : t -> bool -> unit 
+(** Set if a window is movable. *)
+
+val is_movable : t -> bool 
+(** Returns true if a window is movable. *)
+
+val minimizable : t -> bool -> unit 
+(** Set if a window is minimizable. *)
+
+val is_minimizable : t -> bool 
+(** Returns true if a window is minimizable. *)
+
+val maximizable : t -> bool -> unit 
+(** Set if a window is maximizable. *)
+
+val is_maximizable : t -> bool 
+(** Returns true if a window is maximizable. *)
+
+val fullscreenable : t -> bool -> unit 
+(** Set if a window is fullscreenable. *)
+
+val is_fullscreenable : t -> bool 
+(** Returns true if a window is fullscreenable. *)
+
+val closable : t -> bool -> unit 
+(** Set if a window is closable. *)
+
+val is_closable : t -> bool 
+(** Returns true if a window is closable. *)
+
+val always_on_top : ?level:level -> ?relative_level:int -> t -> bool ->  unit 
+(** Set if a window is always on top. *)
+
+val is_always_on_top : t -> bool
+(** Returns true if a window is always on top. *)

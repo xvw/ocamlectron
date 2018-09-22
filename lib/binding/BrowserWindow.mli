@@ -58,7 +58,8 @@ type options = <
 
 (** Define a windows  *)
 and browser_window = <
-  destroy: unit -> unit meth 
+  id : int readonly_prop
+; destroy: unit -> unit meth 
 ; close : unit -> unit meth
 ; focus : unit -> unit meth 
 ; blur : unit -> unit meth 
