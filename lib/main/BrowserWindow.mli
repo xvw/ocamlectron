@@ -315,3 +315,30 @@ val reload : t -> unit
 
 val progressbar : t -> float -> unit 
 (** Sets progress value in progress bar. Valid range is [0, 1.0]. *)
+
+val shadow : t -> bool -> unit 
+(** Sets whether the window should have a shadow. 
+    On Windows and Linux does nothing.
+*)
+
+val has_shadow : t -> bool 
+(** Whether the window has a shadow. *)
+
+val opacity : t -> float -> unit 
+(** Sets the opacity of the window (between 0.0 and 1.0). 
+    On Linux does nothing. 
+*)
+
+val opacity_of : t -> float 
+(** Retreives the opacity of the window *)
+
+val parent : t -> t option -> unit 
+(** Sets parent as current window's parent window, 
+    passing null will turn current window into a top-level window. 
+*)
+
+val parent_of : t -> t option 
+(** The parent window. *)
+
+val childs_of : t -> t list
+(** All child windows. *)

@@ -130,19 +130,9 @@ and browser_window = <
 ; hasShadow : unit -> bool t meth 
 ; setOpacity : float -> unit meth
 ; getOpacity : unit -> float meth 
-; setAutoHideMenuBar : bool t -> unit meth 
-; isMenuBarAutoHide : unit -> bool t meth 
-; setMenuBarVisibility : bool t -> unit meth 
-; isMenuBarVisible : unit -> bool t meth 
-; setVisibileOnAllWorkspaces : bool t -> unit meth 
-; isVisibleOnAllWorkspaces : unit -> bool t meth 
-; setIgnoreMouseEvents : bool t -> unit meth 
-; setContentProtection : bool t -> unit meth 
-; setFocusable : bool t -> unit meth 
-; setParentWindow : browser_window t -> unit meth
-; getParentWindow : unit -> browser_window t meth
+; setParentWindow : browser_window t Opt.t -> unit meth
+; getParentWindow : unit -> browser_window t Opt.t meth
 ; getChildWindows : unit -> browser_window t js_array t meth
-; setAutoHideCursor : bool t -> unit meth 
 >
 
 (** Singleton of [BrowserWindow] *)

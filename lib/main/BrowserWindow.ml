@@ -323,3 +323,20 @@ let load_file win file =
 
 let reload win = win ## reload ()
 let progressbar win value = win ## setProgressBar value
+let shadow win value = win ## setHasShadow (Js.bool value)
+let has_shadow win = Js.to_bool (win ## hasShadow ())
+let opacity win value = win ## setOpacity (value)
+let opacity_of win = win ## getOpacity ()
+
+let parent win p = 
+  let sp = Js.Opt.option p in 
+  win ## setParentWindow sp
+
+let parent_of win = 
+  (win ## getParentWindow ())
+  |> Js.Opt.to_option
+
+let childs_of win = 
+  (win ## getChildWindows ())
+  |> Js.to_array
+  |> Array.to_list
