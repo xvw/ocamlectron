@@ -5,135 +5,136 @@
 
 open Js
 
+(** Define a windows  *)
+class type browser_window = object
+  inherit EventEmitter.emitter
+  method id : int readonly_prop
+  method destroy: unit -> unit meth 
+  method close : unit -> unit meth
+  method focus : unit -> unit meth 
+  method blur : unit -> unit meth 
+  method isFocused : unit -> bool t meth 
+  method isDestroyed : unit -> bool t meth 
+  method show : unit -> unit meth 
+  method showInactive : unit -> unit meth
+  method hide : unit -> unit meth 
+  method isVisible : unit -> bool t meth 
+  method isModal : unit -> bool t meth 
+  method maximize : unit -> unit meth 
+  method unmaximize : unit -> unit meth 
+  method isMaximized : unit -> bool t meth 
+  method minimize : unit -> unit meth 
+  method restore : unit -> unit meth 
+  method isMinimized : unit -> bool t meth 
+  method setFullscreen : bool t -> unit meth 
+  method isFullscreen : unit -> bool t meth 
+  method setSimpleFullscreen : bool t -> unit meth 
+  method isSimpleFullscreen : unit -> bool t meth 
+  method setAspectRatio : float -> Size.t Optdef.t -> unit meth 
+  method previewFile : js_string t -> js_string t Optdef.t -> unit meth 
+  method closeFilePreview : unit -> unit meth 
+  method setBounds : Rectangle.t -> bool t Optdef.t -> unit meth 
+  method getBounds : unit -> Rectangle.t meth 
+  method setContentBounds : Rectangle.t -> bool t Optdef.t -> unit meth 
+  method getContentBounds : unit -> Rectangle.t meth 
+  method setEnabled : bool t -> unit meth
+  method setSize : int -> int -> bool t Optdef.t -> unit meth
+  method getSize : unit -> int js_array t meth 
+  method setContentSize : int -> int -> bool t Optdef.t -> unit meth
+  method getContentSize : unit -> int js_array t meth
+  method setMinimumSize : int -> int -> unit meth 
+  method getMinimumSize : unit -> int js_array t meth 
+  method setMaximumSize : int -> int -> unit meth 
+  method getMaximumSize : unit -> int js_array t meth 
+  method setResizable : bool t -> unit meth 
+  method isResizable : unit -> bool t meth 
+  method setMovable : bool t -> unit meth 
+  method isMovable : unit -> bool t meth
+  method setMinimizable : bool t -> unit meth
+  method isMinimizable : unit -> bool t meth
+  method setMaximizable : bool t -> unit meth
+  method isMaximizable : unit -> bool t meth
+  method setFullscreenable : bool t -> unit meth
+  method isFullscreenable : unit -> bool t meth 
+  method setClosable : bool t -> unit meth
+  method isClosable : unit -> bool t meth
+  method setAlwaysOnTop : bool t -> js_string t Optdef.t -> int Optdef.t -> unit meth
+  method isAlwaysOnTop : unit -> bool t meth
+  method center : unit -> unit meth
+  method setPosition : int -> int -> bool t Optdef.t -> unit meth
+  method getPosition : unit -> int js_array t meth 
+  method setTitle : js_string t -> unit meth 
+  method getTitle : unit -> js_string t meth
+  method setSheetOffset : float -> float Optdef.t -> unit meth 
+  method flashFrame : bool t -> unit meth 
+  method setSkipTaskbar : bool t -> unit meth 
+  method setKiosk : bool t -> unit meth 
+  method isKiosk : unit -> bool t meth
+  method focusOnWebView : unit -> unit meth 
+  method blurWebView : unit -> unit meth 
+  method loadURL : js_string t -> unit meth 
+  method loadFile : js_string t -> unit meth
+  method reload : unit -> unit meth
+  method setProgressBar : float -> unit meth 
+  method setHasShadow : bool t -> unit meth
+  method hasShadow : unit -> bool t meth 
+  method setOpacity : float -> unit meth
+  method getOpacity : unit -> float meth 
+  method setParentWindow : browser_window t Opt.t -> unit meth
+  method getParentWindow : unit -> browser_window t Opt.t meth
+  method getChildWindows : unit -> browser_window t js_array t meth
+end
+
 (** Constructors parameters :
 
     - {{: https://electronjs.org/docs/api/browser-window#new-browserwindowoptions }  Documentations of options } 
 
 *)
-type options = <
-  width : int Optdef.t readonly_prop
-; height : int Optdef.t readonly_prop
-; x : int Optdef.t readonly_prop
-; y : int Optdef.t readonly_prop
-; useContentSize : bool t Optdef.t readonly_prop
-; center : bool t Optdef.t readonly_prop
-; minWidth : int Optdef.t readonly_prop
-; minHeight : int Optdef.t readonly_prop
-; maxWidth : int Optdef.t readonly_prop
-; maxHeight : int Optdef.t readonly_prop
-; resizable : bool t Optdef.t readonly_prop
-; movable : bool t Optdef.t readonly_prop
-; minimizable : bool t Optdef.t readonly_prop
-; maximizable : bool t Optdef.t readonly_prop
-; closable : bool t Optdef.t readonly_prop
-; focusable : bool t Optdef.t readonly_prop
-; alwaysOnTop : bool t Optdef.t readonly_prop
-; fullscreen : bool t Optdef.t readonly_prop
-; fullscreenable : bool t Optdef.t readonly_prop 
-; simpleFullscreen : bool t Optdef.t readonly_prop
-; skipTaskbar : bool t Optdef.t readonly_prop
-; kiosk : bool t Optdef.t readonly_prop
-; title : js_string t Optdef.t readonly_prop
-; show : bool t Optdef.t readonly_prop
-; frame : bool t Optdef.t readonly_prop
-; parent : browser_window t Optdef.t readonly_prop
-; modal : bool t Optdef.t readonly_prop
-; acceptFirstMouse : bool t Optdef.t readonly_prop
-; disableAutoHideCursor : bool t Optdef.t readonly_prop
-; autoHideMenuBar : bool t Optdef.t readonly_prop
-; enableLargerThanScreen :  bool t Optdef.t readonly_prop
-; backgroundColor : js_string t Optdef.t readonly_prop
-; hasShadow : bool t Optdef.t readonly_prop
-; opacity : float Optdef.t readonly_prop
-; darkTheme : bool t Optdef.t readonly_prop
-; transparent : bool t Optdef.t readonly_prop
-; _type : js_string t Optdef.t readonly_prop
-; titleBarStyle : js_string t Optdef.t readonly_prop
-; fullscreenWindowTitle : bool t Optdef.t readonly_prop
-; thickFrame : bool t Optdef.t readonly_prop
-; vibrancy : js_string t Optdef.t readonly_prop
-; zoomToPageWidth : bool t Optdef.t readonly_prop
-; tabbingIdentifier : js_string t Optdef.t readonly_prop
->
-
-(** Define a windows  *)
-and browser_window = <
-  id : int readonly_prop
-; destroy: unit -> unit meth 
-; close : unit -> unit meth
-; focus : unit -> unit meth 
-; blur : unit -> unit meth 
-; isFocused : unit -> bool t meth 
-; isDestroyed : unit -> bool t meth 
-; show : unit -> unit meth 
-; showInactive : unit -> unit meth
-; hide : unit -> unit meth 
-; isVisible : unit -> bool t meth 
-; isModal : unit -> bool t meth 
-; maximize : unit -> unit meth 
-; unmaximize : unit -> unit meth 
-; isMaximized : unit -> bool t meth 
-; minimize : unit -> unit meth 
-; restore : unit -> unit meth 
-; isMinimized : unit -> bool t meth 
-; setFullscreen : bool t -> unit meth 
-; isFullscreen : unit -> bool t meth 
-; setSimpleFullscreen : bool t -> unit meth 
-; isSimpleFullscreen : unit -> bool t meth 
-; setAspectRatio : float -> Size.t Optdef.t -> unit meth 
-; previewFile : js_string t -> js_string t Optdef.t -> unit meth 
-; closeFilePreview : unit -> unit meth 
-; setBounds : Rectangle.t -> bool t Optdef.t -> unit meth 
-; getBounds : unit -> Rectangle.t meth 
-; setContentBounds : Rectangle.t -> bool t Optdef.t -> unit meth 
-; getContentBounds : unit -> Rectangle.t meth 
-; setEnabled : bool t -> unit meth
-; setSize : int -> int -> bool t Optdef.t -> unit meth
-; getSize : unit -> int js_array t meth 
-; setContentSize : int -> int -> bool t Optdef.t -> unit meth
-; getContentSize : unit -> int js_array t meth
-; setMinimumSize : int -> int -> unit meth 
-; getMinimumSize : unit -> int js_array t meth 
-; setMaximumSize : int -> int -> unit meth 
-; getMaximumSize : unit -> int js_array t meth 
-; setResizable : bool t -> unit meth 
-; isResizable : unit -> bool t meth 
-; setMovable : bool t -> unit meth 
-; isMovable : unit -> bool t meth
-; setMinimizable : bool t -> unit meth
-; isMinimizable : unit -> bool t meth
-; setMaximizable : bool t -> unit meth
-; isMaximizable : unit -> bool t meth
-; setFullscreenable : bool t -> unit meth
-; isFullscreenable : unit -> bool t meth 
-; setClosable : bool t -> unit meth
-; isClosable : unit -> bool t meth
-; setAlwaysOnTop : bool t -> js_string t Optdef.t -> int Optdef.t -> unit meth
-; isAlwaysOnTop : unit -> bool t meth
-; center : unit -> unit meth
-; setPosition : int -> int -> bool t Optdef.t -> unit meth
-; getPosition : unit -> int js_array t meth 
-; setTitle : js_string t -> unit meth 
-; getTitle : unit -> js_string t meth
-; setSheetOffset : float -> float Optdef.t -> unit meth 
-; flashFrame : bool t -> unit meth 
-; setSkipTaskbar : bool t -> unit meth 
-; setKiosk : bool t -> unit meth 
-; isKiosk : unit -> bool t meth
-; focusOnWebView : unit -> unit meth 
-; blurWebView : unit -> unit meth 
-; loadUrl : js_string t -> unit meth 
-; loadFile : js_string t -> unit meth
-; reload : unit -> unit meth
-; setProgressBar : float -> unit meth 
-; setHasShadow : bool t -> unit meth
-; hasShadow : unit -> bool t meth 
-; setOpacity : float -> unit meth
-; getOpacity : unit -> float meth 
-; setParentWindow : browser_window t Opt.t -> unit meth
-; getParentWindow : unit -> browser_window t Opt.t meth
-; getChildWindows : unit -> browser_window t js_array t meth
->
+class type options = object
+  method width : int Optdef.t readonly_prop
+  method height : int Optdef.t readonly_prop
+  method x : int Optdef.t readonly_prop
+  method y : int Optdef.t readonly_prop
+  method useContentSize : bool t Optdef.t readonly_prop
+  method center : bool t Optdef.t readonly_prop
+  method minWidth : int Optdef.t readonly_prop
+  method minHeight : int Optdef.t readonly_prop
+  method maxWidth : int Optdef.t readonly_prop
+  method maxHeight : int Optdef.t readonly_prop
+  method resizable : bool t Optdef.t readonly_prop
+  method movable : bool t Optdef.t readonly_prop
+  method minimizable : bool t Optdef.t readonly_prop
+  method maximizable : bool t Optdef.t readonly_prop
+  method closable : bool t Optdef.t readonly_prop
+  method focusable : bool t Optdef.t readonly_prop
+  method alwaysOnTop : bool t Optdef.t readonly_prop
+  method fullscreen : bool t Optdef.t readonly_prop
+  method fullscreenable : bool t Optdef.t readonly_prop 
+  method simpleFullscreen : bool t Optdef.t readonly_prop
+  method skipTaskbar : bool t Optdef.t readonly_prop
+  method kiosk : bool t Optdef.t readonly_prop
+  method title : js_string t Optdef.t readonly_prop
+  method show : bool t Optdef.t readonly_prop
+  method frame : bool t Optdef.t readonly_prop
+  method parent : browser_window t Optdef.t readonly_prop
+  method modal : bool t Optdef.t readonly_prop
+  method acceptFirstMouse : bool t Optdef.t readonly_prop
+  method disableAutoHideCursor : bool t Optdef.t readonly_prop
+  method autoHideMenuBar : bool t Optdef.t readonly_prop
+  method enableLargerThanScreen :  bool t Optdef.t readonly_prop
+  method backgroundColor : js_string t Optdef.t readonly_prop
+  method hasShadow : bool t Optdef.t readonly_prop
+  method opacity : float Optdef.t readonly_prop
+  method darkTheme : bool t Optdef.t readonly_prop
+  method transparent : bool t Optdef.t readonly_prop
+  method _type : js_string t Optdef.t readonly_prop
+  method titleBarStyle : js_string t Optdef.t readonly_prop
+  method fullscreenWindowTitle : bool t Optdef.t readonly_prop
+  method thickFrame : bool t Optdef.t readonly_prop
+  method vibrancy : js_string t Optdef.t readonly_prop
+  method zoomToPageWidth : bool t Optdef.t readonly_prop
+  method tabbingIdentifier : js_string t Optdef.t readonly_prop
+end
 
 (** Singleton of [BrowserWindow] *)
 class type singleton = object 

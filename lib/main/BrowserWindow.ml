@@ -315,7 +315,7 @@ let blur_webview win = win ## blurWebView ()
 
 let load_url win url = 
   let u = Js.string url in 
-  win ## loadUrl u
+  win ## loadURL u
 
 let load_file win file = 
   let f = Js.string file in 
