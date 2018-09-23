@@ -274,3 +274,52 @@ let always_on_top ?(level = Floating) ?(relative_level=0) win flag =
     (Js.bool flag) 
     (Js.Optdef.return l) 
     (Js.Optdef.return relative_level)
+
+let center win = win ## center ()
+
+let position ?(animate = false) win x y = 
+  let flag = Js.Optdef.return (Js.bool animate) in 
+  win ## setPosition x y flag
+
+let position_of win = 
+  let open Binding.Struct.Position in  
+  let value = win ## getMinimumSize () in 
+  match Js.to_array value with 
+  | [|w; h|] -> {x = w; y = h}
+  | _ -> {x = 0; y = 0}
+
+let title win t = win ## setTitle (Js.string t)
+let title_of win = Js.to_string (win ## getTitle ())
+
+let sheet_offset ?offset_x win offset_y = 
+  let offsetx = Js.Optdef.option offset_x in 
+  win ## setSheetOffset offset_y offsetx
+
+let start_flash_frame win = win ## flashFrame (Js._true)
+let stop_flash_frame win = win ## flashFrame (Js._false)
+
+let skip_taskbar win value = 
+  let flag = Js.bool value in 
+  win ## setSkipTaskbar flag
+
+let kiosk win value = 
+  let flag = Js.bool value in 
+  win ## setKiosk flag
+
+let is_kiosk win = 
+  (win ## isKiosk ())
+  |> Js.to_bool
+
+let focus_webview win = win ## focusOnWebView ()
+let blur_webview win = win ## blurWebView ()
+
+let load_url win url = 
+  let u = Js.string url in 
+  win ## loadUrl u
+
+let load_file win file = 
+  let f = Js.string file in 
+  win ## loadFile f 
+
+let reload win = win ## reload ()
+let progressbar win value = win ## setProgressBar value

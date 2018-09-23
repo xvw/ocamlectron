@@ -258,3 +258,60 @@ val always_on_top : ?level:level -> ?relative_level:int -> t -> bool ->  unit
 
 val is_always_on_top : t -> bool
 (** Returns true if a window is always on top. *)
+
+val center : t -> unit 
+(** Center the window. *)
+
+val position : ?animate:bool -> t -> int -> int -> unit
+(** Moves window to a position  and y. *)
+
+val position_of : t -> Binding.Struct.Position.t
+(** Returns the position of the window. *)
+
+val title : t -> string -> unit 
+(** Changes the title of native window to title. *)
+
+val title_of : t -> string
+(** Returns the title of the native window. *)
+
+val sheet_offset : ?offset_x:float -> t -> float -> unit 
+(** Changes the attachment point for sheets on {b macOS}. 
+    By default, sheets are attached just below the window frame, 
+    but you may want to display them beneath a HTML-rendered toolbar. 
+    For example: 
+*)
+
+val start_flash_frame : t -> unit 
+(** Starts flashing the window to attract user's attention. *)
+
+val stop_flash_frame : t -> unit 
+(** Stops flashing the window to attract user's attention. *)
+
+val skip_taskbar : t -> bool -> unit 
+(** Makes the window not show in the taskbar. *)
+
+val kiosk : t -> bool -> unit 
+(** Enter or leave kiosk mode. *)
+
+val is_kiosk : t -> bool
+(** Returns if the window is in Kiosk mode. *)
+
+val focus_webview : t -> unit 
+(** Focus activity on webview of the window. *)
+
+val blur_webview : t -> unit 
+(** Blur activity on webview of the window.  *)
+
+val load_url : t -> string -> unit 
+(** The url can be a remote address (e.g. http://) 
+    or a path to a local HTML file using the file:// protocol. 
+*)
+
+val load_file : t -> string -> unit 
+(** Load a file in the web content. *)
+
+val reload : t -> unit 
+(** Reload the loaded file of the window. *)
+
+val progressbar : t -> float -> unit 
+(** Sets progress value in progress bar. Valid range is [0, 1.0]. *)

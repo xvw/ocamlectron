@@ -110,7 +110,7 @@ and browser_window = <
 ; isClosable : unit -> bool t meth
 ; setAlwaysOnTop : bool t -> js_string t Optdef.t -> int Optdef.t -> unit meth
 ; isAlwaysOnTop : unit -> bool t meth
-; center : unit -> unit 
+; center : unit -> unit meth
 ; setPosition : int -> int -> bool t Optdef.t -> unit meth
 ; getPosition : unit -> int js_array t meth 
 ; setTitle : js_string t -> unit meth 
