@@ -1,7 +1,4 @@
 (** Mapping from JS Object to OCaml records *)
-
-open Binding
-
 module Versions : 
 sig 
 
@@ -43,7 +40,7 @@ sig
   ; other_transfer_count  : int (** Then number of I/O other transfers. *)
   }
 
-  val from_object : IOCounter.t -> t
+  val from_object : IOCounters.t -> t
   (** Converts [Binding.io_counters] to [t] *)
 
 end
@@ -192,5 +189,156 @@ sig
 
   val from_object : Task.t -> t 
   (** Converts [Binding.task] to [t] *)
+
+end
+
+module BrowserWindow : 
+sig 
+
+  (** Constructors parameters :
+
+      - {{: https://electronjs.org/docs/api/browser-window#new-browserwindowoptions }  Documentations of options } 
+
+  *)
+  type options = {
+    width : int option
+  ; height : int option
+  ; x : int option
+  ; y : int option
+  ; use_content_size : bool option
+  ; center : bool option
+  ; min_width : int option
+  ; min_height : int option
+  ; max_width : int option
+  ; resizable : bool option
+  ; movable : bool option
+  ; minimizable : bool option
+  ; maximizable : bool option
+  ; closable : bool option
+  ; focusable : bool option
+  ; always_on_top : bool option
+  ; fullscreen : bool option
+  ; fullscreenable : bool option 
+  ; simple_fullscreen : bool option
+  ; skip_taskbar : bool option
+  ; kiosk : bool option
+  ; title : string option
+  ; show : bool option
+  ; frame : bool option
+  ; parent : BrowserWindow.t option
+  ; modal : bool option
+  ; accept_first_mouse : bool option
+  ; disable_auto_hide_cursor : bool option
+  ; auto_hide_menu_bar : bool option
+  ; enable_larger_than_screen :  bool option
+  ; background_color : string option
+  ; has_shadow : bool option
+  ; opacity : float option
+  ; dark_theme : bool option
+  ; transparent : bool option
+  ; _type : string option
+  ; title_bar_style : string option
+  ; fullscreen_window_title : bool option
+  ; thick_frame : bool option
+  ; vibrancy : string option
+  ; zoom_to_page_width : bool option
+  ; tabbing_identifier : string option
+  }
+
+  val make : 
+    ?width:int -> 
+    ?height:int ->
+    ?position:(int * int) ->
+    ?use_content_size:bool ->
+    ?center:bool ->
+    ?min_width:int ->
+    ?min_height:int ->
+    ?max_width:int ->
+    ?max_height:int ->
+    ?resizable:bool ->
+    ?movable:bool ->
+    ?minimizable:bool ->
+    ?maximizable:bool ->
+    ?closable:bool ->
+    ?focusable:bool ->
+    ?always_on_top:bool ->
+    ?fullscreen:bool ->
+    ?fullscreenable:bool -> 
+    ?simple_fullscreen:bool ->
+    ?skip_taskbar:bool ->
+    ?kiosk:bool ->
+    ?title:string ->
+    ?show:bool ->
+    ?frame:bool ->
+    ?parent:BrowserWindow.t ->
+    ?modal:bool ->
+    ?accept_first_mouse:bool ->
+    ?disable_auto_hide_cursor:bool ->
+    ?auto_hide_menu_bar:bool ->
+    ?enable_larger_than_screen: bool ->
+    ?background_color:string ->
+    ?has_shadow:bool ->
+    ?opacity:float ->
+    ?dark_theme:bool ->
+    ?transparent:bool ->
+    ?_type:string ->
+    ?title_bar_style:string ->
+    ?fullscreen_window_title:bool ->
+    ?thick_frame:bool ->
+    ?vibrancy:string ->
+    ?zoom_to_page_width:bool ->
+    ?tabbing_identifier:string ->
+    BrowserWindow.constr -> 
+    BrowserWindow.t
+
+end
+
+module Size : 
+sig 
+
+  type t = {
+    width : int
+  ; height : int
+  }
+
+  val from_object : Size.t -> t
+  (** Converts a [Size.t] to [t] *)
+
+  val to_object : t -> Size.t
+  (** Converts a [t] to [Size.t] *)
+
+end
+
+module Position : 
+sig 
+
+  type t = {
+    x : int
+  ; y : int
+  }
+
+  val from_object : Position.t -> t
+  (** Converts a [Position.t] to [t] *)
+
+  val to_object : t -> Position.t
+  (** Converts a [t] to [Position.t] *)
+
+end
+
+module Rectangle : 
+sig 
+
+  type t = {
+    x : int
+  ; y : int
+  ; width : int
+  ; height : int
+  }
+
+  val from_object : Rectangle.t -> t
+  (** Converts a [Rectangle.t] to [t] *)
+
+  val to_object : t -> Rectangle.t
+  (** Converts a [t] to [Rectangle.t] *)
 
 end

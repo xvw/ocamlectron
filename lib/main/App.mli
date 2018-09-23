@@ -6,12 +6,10 @@
     {{: https://electronjs.org/docs/api/app }  ElectronJS : documentation for [app] }
 *)
 
-open Common
-
 (** {2 Internals types} *)
 
-type t
-(** An abstract version of [Binding.Electron.app] *)
+type t = Binding.App.t
+(** An alias of [Binding.Electron.app] *)
 
 (** Presaved path_name *)
 type path_name = 
@@ -199,7 +197,7 @@ val is_default_protocol_client : t -> string -> bool
     If so, it will return [true]. Otherwise, it will return [false].  
 *)
 
-val set_user_tasks : t -> Struct.Task.t list -> bool 
+val set_user_tasks : t -> Binding.Struct.Task.t list -> bool 
 (** {b only Windows}
 
     Adds tasks to the Tasks category of the [JumpList] on Windows. 

@@ -174,7 +174,7 @@ class type process = object
   method getCPUUsage : unit -> CPUUsage.t meth
   (** Returns [cpu_usage] *)
 
-  method getIOCounters : unit -> IOCounter.t meth
+  method getIOCounters : unit -> IOCounters.t meth
   (** {b only Windows and Linux}
 
       Returns [io_counters] 

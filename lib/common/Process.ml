@@ -50,7 +50,7 @@ let kind () =
 
 let versions () = 
   let result = process ##. versions in 
-  Struct.Versions.from_object result
+  Binding.Struct.Versions.from_object result
 
 let chrome_version () = 
   let result = process ##. versions ##. chrome in 
@@ -92,7 +92,7 @@ let crash () = process ## crash ()
 
 let cpu_usage () = 
   let handler = process ## getCPUUsage () in 
-  Struct.CPUUsage.from_object handler
+  Binding.Struct.CPUUsage.from_object handler
 let percent_cpu_usage () = 
   let handler = process ## getCPUUsage () in 
   handler ##. percentCPUUsage
@@ -103,19 +103,19 @@ let cpu_idle_wakeup () =
 
 let io_counters () = 
   let handler = process ## getIOCounters () in 
-  Struct.IOCounters.from_object handler
+  Binding.Struct.IOCounters.from_object handler
 
 let process_memory_info () = 
   let handler = process ## getProcessMemoryInfo () in 
-  Struct.ProcessMemoryInfo.from_object handler
+  Binding.Struct.ProcessMemoryInfo.from_object handler
 
 let system_memory_info () =  
   let handler = process ## getSystemMemoryInfo () in 
-  Struct.SystemMemoryInfo.from_object handler
+  Binding.Struct.SystemMemoryInfo.from_object handler
 
 let memory_usage () = 
   let handler = process ## memoryUsage () in 
-  Struct.MemoryUsage.from_object handler
+  Binding.Struct.MemoryUsage.from_object handler
 
 let hang () = process ## hang ()
 let set_fd_limit value = process ## setFdLimit (value)
@@ -192,4 +192,4 @@ let platform = Os.current
 
 let release () =  
   let handler = process ##. release in 
-  Struct.Release.from_object handler
+  Binding.Struct.Release.from_object handler
