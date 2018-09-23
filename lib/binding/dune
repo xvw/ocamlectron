@@ -5,6 +5,7 @@
   (preprocess (pps js_of_ocaml-ppx lwt_ppx))
   (libraries js_of_ocaml-lwt)
   (modules_without_implementation 
+    eventEmitter
     process
     app
     task

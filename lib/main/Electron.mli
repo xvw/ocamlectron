@@ -3,13 +3,14 @@
 (** {2 Internals types} *)
 
 type t = Binding.ElectronMain.t
+val obj : t
 
 (** {2 Constructors} *)
 
-val browser_window : t -> Constructor.browser_window
-val browser_window_singleton : t -> Constructor.browser_window_singleton
+val browser_window : Constructor.browser_window
+val browser_window_singleton : Constructor.browser_window_singleton
 
 
 (** {2 Properties} *)
 
-val app : t -> App.t
+val app : App.t

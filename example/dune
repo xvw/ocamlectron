@@ -1,0 +1,7 @@
+(executable
+  (name app)
+  (js_of_ocaml (flags :standard))
+  (preprocess (pps js_of_ocaml-ppx))
+  (libraries js_of_ocaml ocamlectron.common ocamlectron.main)
+  (modules app)
+)

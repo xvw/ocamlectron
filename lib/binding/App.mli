@@ -8,6 +8,8 @@ open Js
 
 class type app = object
 
+  inherit EventEmitter.emitter
+
   method quit : unit -> unit meth
   (** Try to close all windows. The [before-quit] event will be emitted first.
       If all windows are successfully closed, the [will-quit] event will be
