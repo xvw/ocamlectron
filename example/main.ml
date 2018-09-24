@@ -1,21 +1,10 @@
 open Electron_main
+let log x = ignore (Common.Tools.log x)
 
-let () = 
-  App.(on Ready (fun () -> 
-      let win = 
-        BrowserWindow.make 
-          ~width:800 
-          ~height:600 
-          ()
-      in 
-      BrowserWindow.load_file win "index.html"; 
-      BrowserWindow.(on win Closed (
-          fun () -> 
-            ignore (Common.Tools.log "foo"))
-        )))
+let create_window () = 
+  let win = BrowserWindow.make  ~width:800 ~height:600 () in 
+  BrowserWindow.load_file win "index.html"; 
+  BrowserWindow.(on win Closed (fun () -> log "foo"))
 
-let () = 
-  App.(on Quit (fun e i ->
-      ignore (Common.Tools.log e);
-      ignore (Common.Tools.log i)
-    ))
+let () =  App.(on Ready create_window)
+let () =  App.(on Quit (fun e i -> log e; log i))
