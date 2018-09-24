@@ -32,6 +32,12 @@ let on =
     let callback = Js.wrap_callback f in 
     app ## on event_str callback
 
+let once = 
+  fun (event : 'a event) (f : 'a) ->
+    let event_str = ev_to_string event in
+    let callback = Js.wrap_callback f in 
+    app ## once event_str callback
+
 type path_name = 
   | Home 
   | AppData 

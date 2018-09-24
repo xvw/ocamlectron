@@ -35,6 +35,40 @@ type level =
   | PopUpMenu 
   | ScreenSaver
 
+(** {2 Events} *)
+
+type _ event = 
+  | PageTitleUpdated : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | Close : (Binding.Event.t -> unit) event
+  | Closed : (unit -> unit) event 
+  | SessionEnd : (unit -> unit) event 
+  | Unresponsive : (unit -> unit) event 
+  | Responsive : (unit -> unit) event 
+  | Blur : (unit -> unit) event 
+  | Focus : (unit -> unit) event 
+  | Show : (unit -> unit) event 
+  | Hide : (unit -> unit) event 
+  | ReadyToShow : (unit -> unit) event 
+  | Maximize : (unit -> unit) event 
+  | Unmaximize : (unit -> unit) event 
+  | Minimize : (unit -> unit) event 
+  | Restore : (unit -> unit) event 
+  | Resize : (unit -> unit) event 
+  | Move : (unit -> unit) event 
+  | Moved : (unit -> unit) event 
+  | EnterFullScreen : (unit -> unit) event 
+  | LeaveFullScreen : (unit -> unit) event 
+  | EnterHTMLFullScreen : (unit -> unit) event  
+  | LeaveHTMLFullScreen : (unit -> unit) event 
+  | AppCommand : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | ScrollTouchBegin : (unit -> unit) event 
+  | ScrollTouchEnd : (unit -> unit) event 
+  | ScrollTouchEdge : (unit -> unit) event 
+  | Swipe : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+
+val on : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
+val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
+
 (** {2 Static Functions} *)
 
 (** Constructor for [BrowserWindow] *)

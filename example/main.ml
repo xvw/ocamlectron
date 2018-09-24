@@ -8,8 +8,11 @@ let () =
           ~height:600 
           ()
       in 
-      BrowserWindow.load_file win "index.html"
-    ))
+      BrowserWindow.load_file win "index.html"; 
+      BrowserWindow.(on win Closed (
+          fun () -> 
+            ignore (Common.Tools.log "foo"))
+        )))
 
 let () = 
   App.(on Quit (fun e i ->

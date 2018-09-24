@@ -2,6 +2,76 @@ type t = Binding.BrowserWindow.t
 let electron : Binding.ElectronMain.t = Electron.obj
 let singleton = electron ##. _BrowserWindow
 
+type _ event = 
+  | PageTitleUpdated : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | Close : (Binding.Event.t -> unit) event
+  | Closed : (unit -> unit) event 
+  | SessionEnd : (unit -> unit) event 
+  | Unresponsive : (unit -> unit) event 
+  | Responsive : (unit -> unit) event 
+  | Blur : (unit -> unit) event 
+  | Focus : (unit -> unit) event 
+  | Show : (unit -> unit) event 
+  | Hide : (unit -> unit) event 
+  | ReadyToShow : (unit -> unit) event 
+  | Maximize : (unit -> unit) event 
+  | Unmaximize : (unit -> unit) event 
+  | Minimize : (unit -> unit) event 
+  | Restore : (unit -> unit) event 
+  | Resize : (unit -> unit) event 
+  | Move : (unit -> unit) event 
+  | Moved : (unit -> unit) event 
+  | EnterFullScreen : (unit -> unit) event 
+  | LeaveFullScreen : (unit -> unit) event 
+  | EnterHTMLFullScreen : (unit -> unit) event  
+  | LeaveHTMLFullScreen : (unit -> unit) event 
+  | AppCommand : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | ScrollTouchBegin : (unit -> unit) event 
+  | ScrollTouchEnd : (unit -> unit) event 
+  | ScrollTouchEdge : (unit -> unit) event 
+  | Swipe : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+
+let ev_to_string : type a. a event -> Js.js_string Js.t = function 
+  | PageTitleUpdated -> Common.Event.make "page-title-updated"
+  | Close -> Common.Event.make "close"
+  | Closed -> Common.Event.make "closed"
+  | SessionEnd -> Common.Event.make "session-end"
+  | Unresponsive -> Common.Event.make "unresponsive"
+  | Responsive -> Common.Event.make "responsive"
+  | Blur -> Common.Event.make "blur"
+  | Focus -> Common.Event.make "focus"
+  | Show -> Common.Event.make "show"
+  | Hide -> Common.Event.make "hide"
+  | ReadyToShow -> Common.Event.make "ready-to-show"
+  | Maximize -> Common.Event.make "maximize"
+  | Unmaximize -> Common.Event.make "unmaximize"
+  | Minimize -> Common.Event.make "minimize"
+  | Restore -> Common.Event.make "restore"
+  | Resize -> Common.Event.make "resize"
+  | Move -> Common.Event.make "move"
+  | Moved -> Common.Event.make "moved"
+  | EnterFullScreen -> Common.Event.make "enter-full-screen"
+  | LeaveFullScreen -> Common.Event.make "leave-full-screen"
+  | EnterHTMLFullScreen -> Common.Event.make "enter-html-full-screen"
+  | LeaveHTMLFullScreen -> Common.Event.make "leave-html-full-screen"
+  | AppCommand -> Common.Event.make "app-command"
+  | ScrollTouchBegin -> Common.Event.make "scroll-touch-begin"
+  | ScrollTouchEnd -> Common.Event.make "scroll-touch-end"
+  | ScrollTouchEdge -> Common.Event.make "scroll-touch-edge"
+  | Swipe -> Common.Event.make "swipe"
+
+let on = 
+  fun (win : t) (event : 'a event) (f : 'a) ->
+    let event_str = ev_to_string event in
+    let callback = Js.wrap_callback f in 
+    win ## on event_str callback
+
+let once = 
+  fun (win : t) (event : 'a event) (f : 'a) ->
+    let event_str = ev_to_string event in
+    let callback = Js.wrap_callback f in 
+    win ## once event_str callback
+
 type title_bar_style = 
   | Default 
   | Hidden 

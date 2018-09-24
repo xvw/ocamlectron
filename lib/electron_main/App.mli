@@ -46,6 +46,7 @@ type _ event =
   | Activate : (Binding.Event.t -> bool Js.t -> unit) event
 
 val on : ('a -> 'b) event -> ('a -> 'b) -> unit
+val once : ('a -> 'b) event -> ('a -> 'b) -> unit
 
 
 (** {2 Methods} *)
