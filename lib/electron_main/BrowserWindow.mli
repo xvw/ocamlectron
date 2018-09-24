@@ -81,13 +81,13 @@ val make :
   ?vibrancy:vibrancy ->
   ?zoom_to_page_width:bool ->
   ?tabbing_identifier:string ->
-  Binding.BrowserWindow.constr -> 
+  unit -> 
   t
 
-val all : Binding.BrowserWindow.singleton Js.t -> t list 
+val all : unit -> t list 
 (** Returns all opened browser windows. *)
 
-val are_focused : Binding.BrowserWindow.singleton Js.t -> t option
+val focused : unit -> t option
 (** Returns the window that is focused in this application *)
 
 (** {2 Methods} *)

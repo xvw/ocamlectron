@@ -1,4 +1,6 @@
 type t = Binding.BrowserWindow.t
+let electron : Binding.ElectronMain.t = Electron.obj
+let singleton = electron ##. _BrowserWindow
 
 type title_bar_style = 
   | Default 
@@ -99,7 +101,7 @@ let make
     ?(vibrancy = AppearanceBased)
     ?zoom_to_page_width
     ?tabbing_identifier
-    constr = 
+    () = 
   Binding.Struct.BrowserWindow.make
     ?width 
     ?height
@@ -143,14 +145,14 @@ let make
     ~vibrancy:(vibrancy_to_string vibrancy)
     ?zoom_to_page_width
     ?tabbing_identifier
-    constr
+    (electron ##. _BrowserWindow_fromOpts)
 
-let all singleton =  
+let all () =  
   singleton ## getAllWindows ()
   |> Js.to_array
   |> Array.to_list
 
-let are_focused singleton =  
+let focused () =  
   singleton ## getFocusedWindow ()
   |> Js.Opt.to_option
 

@@ -1,19 +1,18 @@
 open Electron_main
-let browser_window = Electron.browser_window 
-let app = Electron.app
-
-open Common.Tools
 
 let () = 
-  Common.Event.(on app (make "ready") (fun _ -> 
-      let win = BrowserWindow.make 
+  App.(on Ready (fun () -> 
+      let win = 
+        BrowserWindow.make 
           ~width:800 
-          ~height:600
-          browser_window 
+          ~height:600 
+          ()
       in 
-      let () = on 
-          win (make "closed") 
-          (fun _ -> ignore (log (Js.string "fin"))) 
-      in
       BrowserWindow.load_file win "index.html"
+    ))
+
+let () = 
+  App.(on Quit (fun e i ->
+      ignore (Common.Tools.log e);
+      ignore (Common.Tools.log i)
     ))
