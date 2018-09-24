@@ -15,9 +15,11 @@ clean:
 	dune clean
 
 clean_bc:
-	rm -f example/app.bc.js
+	rm -f example/*.bc.js
 
-example: all
+install_example: all
 	(cd example; npm install)
-	dune build example/app.bc.js
-	cp _build/default/example/app.bc.js example/app.bc.js
+
+example: all 
+	dune build example/main.bc.js
+	cp _build/default/example/main.bc.js example/main.bc.js

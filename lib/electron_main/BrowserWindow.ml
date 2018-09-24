@@ -317,9 +317,7 @@ let load_url win url =
   let u = Js.string url in 
   win ## loadURL u
 
-let load_file win file = 
-  let f = Js.string file in 
-  win ## loadFile f 
+let load_file win file = load_url win (Common.Tools.relativize file)
 
 let reload win = win ## reload ()
 let progressbar win value = win ## setProgressBar value
