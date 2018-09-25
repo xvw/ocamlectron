@@ -6,6 +6,7 @@
   (libraries js_of_ocaml-lwt)
   (modules_without_implementation 
     eventEmitter
+    event
     process
     app
     task

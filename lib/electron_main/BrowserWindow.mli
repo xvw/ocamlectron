@@ -35,6 +35,73 @@ type level =
   | PopUpMenu 
   | ScreenSaver
 
+(** {2 Events} *)
+
+type _ event = 
+  | PageTitleUpdated : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | Close : (Binding.Event.t -> unit) event
+  | Closed : (unit -> unit) event 
+  | SessionEnd : (unit -> unit) event 
+  | Unresponsive : (unit -> unit) event 
+  | Responsive : (unit -> unit) event 
+  | Blur : (unit -> unit) event 
+  | Focus : (unit -> unit) event 
+  | Show : (unit -> unit) event 
+  | Hide : (unit -> unit) event 
+  | ReadyToShow : (unit -> unit) event 
+  | Maximize : (unit -> unit) event 
+  | Unmaximize : (unit -> unit) event 
+  | Minimize : (unit -> unit) event 
+  | Restore : (unit -> unit) event 
+  | Resize : (unit -> unit) event 
+  | Move : (unit -> unit) event 
+  | Moved : (unit -> unit) event 
+  | EnterFullScreen : (unit -> unit) event 
+  | LeaveFullScreen : (unit -> unit) event 
+  | EnterHTMLFullScreen : (unit -> unit) event  
+  | LeaveHTMLFullScreen : (unit -> unit) event 
+  | AppCommand : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | ScrollTouchBegin : (unit -> unit) event 
+  | ScrollTouchEnd : (unit -> unit) event 
+  | ScrollTouchEdge : (unit -> unit) event 
+  | Swipe : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+
+val on : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
+val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
+
+(** {3 Lwt Js events for [BrowserWindow.t]} *)
+
+module Lwt_events : 
+sig 
+  val page_title_updated : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val close : ?use_capture:bool -> t -> (Binding.Event.t -> unit) Lwt.t
+  val closed : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val session_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val unresponsive : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val responsive : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val blur : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val focus : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val show : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val hide : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val ready_to_show : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val maximize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val unmaximize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val minimize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val restore : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val resize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val move : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val moved : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val enter_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val leave_fullScreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val enter_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t  
+  val leave_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val app_command : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val scroll_touch_begin : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val scroll_touch_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val scroll_touch_edge : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val swipe : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+end
+
 (** {2 Static Functions} *)
 
 (** Constructor for [BrowserWindow] *)
@@ -81,13 +148,13 @@ val make :
   ?vibrancy:vibrancy ->
   ?zoom_to_page_width:bool ->
   ?tabbing_identifier:string ->
-  Binding.BrowserWindow.constr -> 
+  unit -> 
   t
 
-val all : Binding.BrowserWindow.singleton Js.t -> t list 
+val all : unit -> t list 
 (** Returns all opened browser windows. *)
 
-val are_focused : Binding.BrowserWindow.singleton Js.t -> t option
+val focused : unit -> t option
 (** Returns the window that is focused in this application *)
 
 (** {2 Methods} *)

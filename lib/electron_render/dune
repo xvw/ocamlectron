@@ -1,5 +1,5 @@
 (library
-  (name render)
+  (name electron_render)
   (public_name ocamlectron.render)
   (synopsis "Render process")
   (preprocess (pps js_of_ocaml-ppx lwt_ppx))

@@ -10,8 +10,8 @@ Documentation should be written...
 {4 Public API}
 - {{: Common/index.html} OCamlectron.Common} - Shared modules between {b main} and 
   {b render} processes
-- {{: Main/index.html} OCamlectron.Main} - {b Main} process libraries
-- {{: Render/index.html} OCamlectron.Render} - {b Render} process librairies
+- {{: Electron_main/index.html} OCamlectron.Electron_main} - {b Main} process libraries
+- {{: Electron_render/index.html} OCamlectron.Electron_render} - {b Render} process librairies
 
 
 {4 Internal packages}
