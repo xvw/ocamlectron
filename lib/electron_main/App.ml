@@ -17,14 +17,14 @@ type _ event =
   | Activate : (Binding.Event.t -> bool Js.t -> unit) event
 
 let ev_to_string : type a. a event -> Js.js_string Js.t = function 
-  | Ready -> Event.make "ready"
-  | WindowAllClosed -> Event.make "window-all-closed"
-  | BeforeQuit -> Event.make "before-quit"
-  | WillQuit -> Event.make "will-quit"
-  | Quit -> Event.make "quit"
-  | OpenFile -> Event.make "open-file"
-  | OpenUrl -> Event.make "open-url"
-  | Activate -> Event.make "activate"
+  | Ready -> Js.string "ready"
+  | WindowAllClosed -> Js.string "window-all-closed"
+  | BeforeQuit -> Js.string "before-quit"
+  | WillQuit -> Js.string "will-quit"
+  | Quit -> Js.string "quit"
+  | OpenFile -> Js.string "open-file"
+  | OpenUrl -> Js.string "open-url"
+  | Activate -> Js.string "activate"
 
 let on = 
   fun (event : 'a event) (f : 'a) ->
@@ -37,6 +37,20 @@ let once =
     let event_str = ev_to_string event in
     let callback = Js.wrap_callback f in 
     app ## once event_str callback
+
+module Lwt_events = 
+struct 
+  let target = app
+  let ready = Event.make "ready"
+  let window_all_closed = Event.make "window-all-closed"
+  let before_quit = Event.make "before-quit"
+  let will_quit = Event.make "will-quit"
+  let quit = Event.make "quit"
+  let open_file = Event.make "open-file"
+  let open_url = Event.make "open-url"
+  let activate = Event.make "activate"
+
+end
 
 type path_name = 
   | Home 

@@ -1,7 +1,29 @@
-type event = Js.js_string Js.t
+type 'a t = Js.js_string Js.t
+type listener_id = (unit -> unit)
 
-let make str = Js.string str 
+let on (source : #Binding.EventEmitter.emitter Js.t) (event : ('a -> 'b) t) (f : ('a -> 'b)) = 
+  let callback = Js.wrap_callback f in 
+  let () = source ## on event callback in 
+  fun () -> source ## off event callback
 
-let on (target : #Binding.EventEmitter.emitter Js.t) event callback = 
-  target ## on event (Js.wrap_callback (fun () -> callback target))
+let off f = f ()
+let make_s : (string -> 'a t) = Js.string
 
+let make_lwt event source = 
+  let elt = ref Js.null in 
+  let task, await = Lwt.task () in 
+  let cancel () = Js.Opt.iter !elt off in 
+  let () = Lwt.on_cancel task cancel in 
+  let () = 
+    elt := Js.some (
+        on source event (fun ev -> 
+            let () = cancel () in 
+            Lwt.wakeup await ev
+          )
+      )
+  in task
+
+let make event = 
+  fun ?use_capture source -> 
+    match use_capture with 
+    | _ -> make_lwt (make_s event) source

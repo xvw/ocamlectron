@@ -9,5 +9,6 @@ class type emitter = object
   method on : js_string t -> 'a callback -> unit meth
   method once : js_string t -> 'a callback -> unit meth
   method off : js_string t -> 'a callback -> unit meth
+  method removeListener : js_string t -> 'a callback -> unit meth
   method addListener : js_string t -> 'a callback -> unit meth
 end

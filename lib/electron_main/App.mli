@@ -48,6 +48,20 @@ type _ event =
 val on : ('a -> 'b) event -> ('a -> 'b) -> unit
 val once : ('a -> 'b) event -> ('a -> 'b) -> unit
 
+(** {3 Lwt Js events for [App.t]} *)
+
+module Lwt_events : 
+sig 
+  val target : t
+  val ready : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val window_all_closed : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val before_quit : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val will_quit : ?use_capture:bool -> t -> (Binding.Event.t -> unit) Lwt.t
+  val quit : ?use_capture:bool -> t -> (Binding.Event.t -> int -> unit) Lwt.t
+  val open_file : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val open_url : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val activate : ?use_capture:bool -> t -> (Binding.Event.t -> bool Js.t -> unit) Lwt.t
+end
 
 (** {2 Methods} *)
 

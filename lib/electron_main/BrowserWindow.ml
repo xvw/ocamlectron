@@ -32,33 +32,33 @@ type _ event =
   | Swipe : (Binding.Event.t -> Js.js_string Js.t -> unit) event
 
 let ev_to_string : type a. a event -> Js.js_string Js.t = function 
-  | PageTitleUpdated -> Common.Event.make "page-title-updated"
-  | Close -> Common.Event.make "close"
-  | Closed -> Common.Event.make "closed"
-  | SessionEnd -> Common.Event.make "session-end"
-  | Unresponsive -> Common.Event.make "unresponsive"
-  | Responsive -> Common.Event.make "responsive"
-  | Blur -> Common.Event.make "blur"
-  | Focus -> Common.Event.make "focus"
-  | Show -> Common.Event.make "show"
-  | Hide -> Common.Event.make "hide"
-  | ReadyToShow -> Common.Event.make "ready-to-show"
-  | Maximize -> Common.Event.make "maximize"
-  | Unmaximize -> Common.Event.make "unmaximize"
-  | Minimize -> Common.Event.make "minimize"
-  | Restore -> Common.Event.make "restore"
-  | Resize -> Common.Event.make "resize"
-  | Move -> Common.Event.make "move"
-  | Moved -> Common.Event.make "moved"
-  | EnterFullScreen -> Common.Event.make "enter-full-screen"
-  | LeaveFullScreen -> Common.Event.make "leave-full-screen"
-  | EnterHTMLFullScreen -> Common.Event.make "enter-html-full-screen"
-  | LeaveHTMLFullScreen -> Common.Event.make "leave-html-full-screen"
-  | AppCommand -> Common.Event.make "app-command"
-  | ScrollTouchBegin -> Common.Event.make "scroll-touch-begin"
-  | ScrollTouchEnd -> Common.Event.make "scroll-touch-end"
-  | ScrollTouchEdge -> Common.Event.make "scroll-touch-edge"
-  | Swipe -> Common.Event.make "swipe"
+  | PageTitleUpdated -> Js.string "page-title-updated"
+  | Close -> Js.string "close"
+  | Closed -> Js.string "closed"
+  | SessionEnd -> Js.string "session-end"
+  | Unresponsive -> Js.string "unresponsive"
+  | Responsive -> Js.string "responsive"
+  | Blur -> Js.string "blur"
+  | Focus -> Js.string "focus"
+  | Show -> Js.string "show"
+  | Hide -> Js.string "hide"
+  | ReadyToShow -> Js.string "ready-to-show"
+  | Maximize -> Js.string "maximize"
+  | Unmaximize -> Js.string "unmaximize"
+  | Minimize -> Js.string "minimize"
+  | Restore -> Js.string "restore"
+  | Resize -> Js.string "resize"
+  | Move -> Js.string "move"
+  | Moved -> Js.string "moved"
+  | EnterFullScreen -> Js.string "enter-full-screen"
+  | LeaveFullScreen -> Js.string "leave-full-screen"
+  | EnterHTMLFullScreen -> Js.string "enter-html-full-screen"
+  | LeaveHTMLFullScreen -> Js.string "leave-html-full-screen"
+  | AppCommand -> Js.string "app-command"
+  | ScrollTouchBegin -> Js.string "scroll-touch-begin"
+  | ScrollTouchEnd -> Js.string "scroll-touch-end"
+  | ScrollTouchEdge -> Js.string "scroll-touch-edge"
+  | Swipe -> Js.string "swipe"
 
 let on = 
   fun (win : t) (event : 'a event) (f : 'a) ->
@@ -71,6 +71,40 @@ let once =
     let event_str = ev_to_string event in
     let callback = Js.wrap_callback f in 
     win ## once event_str callback
+
+
+module Lwt_events = 
+struct
+
+  open Common
+  let page_title_updated = Event.make "page-title-updated"
+  let close = Event.make "close"
+  let closed = Event.make "closed"
+  let session_end = Event.make "session-end"
+  let unresponsive = Event.make "unresponsive"
+  let responsive = Event.make "responsive"
+  let blur = Event.make "blur"
+  let focus = Event.make "focus"
+  let show = Event.make "show"
+  let hide = Event.make "hide"
+  let ready_to_show = Event.make "ready_to_show"
+  let maximize = Event.make "maximize"
+  let unmaximize = Event.make "unmaximize"
+  let minimize = Event.make "minimize"
+  let restore = Event.make "restore"
+  let resize = Event.make "resize"
+  let move = Event.make "move"
+  let moved = Event.make "moved"
+  let enter_fullscreen = Event.make "enter-fullscreen"
+  let leave_fullScreen = Event.make "leave-fullscreen"
+  let enter_html_fullscreen = Event.make "enter-html-fullscreen"
+  let leave_html_fullscreen = Event.make "leave-html-fullscreen"
+  let app_command = Event.make "app-command"
+  let scroll_touch_begin = Event.make "scroll-touch-begin"
+  let scroll_touch_end = Event.make "scroll-touch-end"
+  let scroll_touch_edge = Event.make "scroll-touch-edge"
+  let swipe = Event.make "swipe"
+end
 
 type title_bar_style = 
   | Default 

@@ -69,6 +69,39 @@ type _ event =
 val on : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 
+(** {3 Lwt Js events for [BrowserWindow.t]} *)
+
+module Lwt_events : 
+sig 
+  val page_title_updated : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val close : ?use_capture:bool -> t -> (Binding.Event.t -> unit) Lwt.t
+  val closed : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val session_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val unresponsive : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
+  val responsive : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val blur : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val focus : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val show : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val hide : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val ready_to_show : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val maximize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val unmaximize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val minimize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val restore : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val resize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val move : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val moved : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val enter_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val leave_fullScreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val enter_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t  
+  val leave_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val app_command : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val scroll_touch_begin : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val scroll_touch_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val scroll_touch_edge : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
+  val swipe : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+end
+
 (** {2 Static Functions} *)
 
 (** Constructor for [BrowserWindow] *)
