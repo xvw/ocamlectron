@@ -111,11 +111,11 @@ end
 module Release =
 struct 
 
-  type lts = 
-    | Argon
-    | Boron
-    | Carbon
-    | Unknown of string
+  type lts = [ 
+      `Argon
+    | `Boron
+    | `Carbon
+    | `Unknown of string ]
 
   type t = {
     name : string 
@@ -126,10 +126,10 @@ struct
   }
 
   let lts_from_string = function 
-    | "Argon" -> Argon 
-    | "Boron" -> Boron 
-    | "Carbon" -> Carbon
-    | x -> Unknown x
+    | "Argon" -> `Argon 
+    | "Boron" -> `Boron 
+    | "Carbon" -> `Carbon
+    | x -> `Unknown x
 
   let from_object obj = {
     name = Js.to_string (obj ##. name)
@@ -397,4 +397,43 @@ struct
       val y = position.y
     end
 
+end
+
+module PrinterInfo = 
+struct 
+  type t = {
+    name : string 
+  ; description : string 
+  ; status : int 
+  ; is_default : bool
+  }
+
+  let from_object obj = {
+    name = Js.to_string (obj ##. name)
+  ; description = Js.to_string (obj ##. description)
+  ; status = obj ##. status 
+  ; is_default = Js.to_bool (obj ##. isDefault)
+  }
+end
+
+module Error = 
+struct 
+
+  type t = {
+    message : string 
+  ; code : string 
+  ; stack : string
+  }
+
+  let from_object obj = {
+    message = Js.to_string (obj ##. message)
+  ; code = Js.to_string ( obj ##. code)
+  ; stack = Js.to_string ( obj ##. stack)
+  }
+
+  let to_object error = object%js
+    val message = Js.string error.message 
+    val code = Js.string error.code
+    val stack = Js.string error.stack
+  end
 end

@@ -24,4 +24,5 @@
     rectangle
     electronMain
     electronRender
+    printerInfo
   ))

@@ -3,24 +3,26 @@ open Binding.Builtin
 
 type t = Binding.Process.t
 
-type process_kind = 
-  | Browser 
-  | Renderer
-  | Unknown_kind of string
+type process_kind = [ 
+    `Browser 
+  | `Renderer
+  | `Unknown of string
+]
 
-type architecture = 
-  | Arm 
-  | Arm64 
-  | Ia32 
-  | Mips 
-  | Mipsel 
-  | Ppc 
-  | Ppc64 
-  | S390
-  | S390x 
-  | X32
-  | X64
-  | Unknown_arch of string
+type architecture = [
+    `Arm 
+  | `Arm64 
+  | `Ia32 
+  | `Mips 
+  | `Mipsel 
+  | `Ppc 
+  | `Ppc64 
+  | `S390
+  | `S390x 
+  | `X32
+  | `X64
+  | `Unknown of string
+]
 let process : t = Js.Unsafe.global##.process
 
 let abort () = process ## abort ()
@@ -44,9 +46,9 @@ let resources_path () =
 let kind () = 
   let result = Js.to_string (process ##. _type) in 
   match result with 
-  | "browser" -> Browser
-  | "renderer" -> Renderer
-  | x -> Unknown_kind x
+  | "browser" -> `Browser
+  | "renderer" -> `Renderer
+  | x -> `Unknown x
 
 let versions () = 
   let result = process ##. versions in 
@@ -123,18 +125,18 @@ let set_fd_limit value = process ## setFdLimit (value)
 let arch () = 
   let result = process ##. arch in
   match Js.to_string result with 
-  | "arm" -> Arm
-  | "arm64" -> Arm64 
-  | "ia32" -> Ia32
-  | "mips" -> Mips 
-  | "mispel" -> Mipsel
-  | "ppc" -> Ppc 
-  | "ppc64" -> Ppc64 
-  | "s390" -> S390 
-  | "s390x" -> S390x 
-  | "x32" -> X32
-  | "x64" -> X64
-  | x -> Unknown_arch x
+  | "arm" -> `Arm
+  | "arm64" -> `Arm64 
+  | "ia32" -> `Ia32
+  | "mips" -> `Mips 
+  | "mispel" -> `Mipsel
+  | "ppc" -> `Ppc 
+  | "ppc64" -> `Ppc64 
+  | "s390" -> `S390 
+  | "s390x" -> `S390x 
+  | "x32" -> `X32
+  | "x64" -> `X64
+  | x -> `Unknown x
 
 let argv () =  
   let raw_argv = process ##. argv in 

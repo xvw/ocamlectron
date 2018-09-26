@@ -14,25 +14,27 @@ type t = Binding.Process.t
 (** An alias of [Binding.process] *)
 
 (** The current process type *)
-type process_kind = 
-  | Browser 
-  | Renderer
-  | Unknown_kind of string
+type process_kind = [ 
+    `Browser 
+  | `Renderer
+  | `Unknown of string
+]
 
 (** Kind of Architecture *)
-type architecture = 
-  | Arm 
-  | Arm64 
-  | Ia32 
-  | Mips 
-  | Mipsel 
-  | Ppc 
-  | Ppc64 
-  | S390
-  | S390x 
-  | X32
-  | X64
-  | Unknown_arch of string
+type architecture = [
+    `Arm 
+  | `Arm64 
+  | `Ia32 
+  | `Mips 
+  | `Mipsel 
+  | `Ppc 
+  | `Ppc64 
+  | `S390
+  | `S390x 
+  | `X32
+  | `X64
+  | `Unknown of string
+]
 
 (** {2 Objects} *)
 

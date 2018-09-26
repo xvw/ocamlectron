@@ -37,3 +37,27 @@ sig
   val iteri : (int -> 'a -> unit) -> 'a t -> unit 
 
 end
+
+module Buffer : 
+sig 
+
+  class type buffer = object 
+    (** To be done *)
+  end
+
+  type t = buffer Js.t
+
+end
+
+module Error : 
+sig 
+
+  class type error = object
+    method message : js_string t readonly_prop
+    method stack: js_string t readonly_prop
+    method code : js_string t readonly_prop
+  end
+
+  type t = error Js.t
+
+end

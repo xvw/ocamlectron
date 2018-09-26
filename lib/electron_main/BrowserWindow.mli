@@ -8,32 +8,35 @@
 type t = Binding.BrowserWindow.t
 
 type title_bar_style = 
-  | Default 
-  | Hidden 
-  | HiddenInset
-  | CustomButtonOnHover
+  [ `Default 
+  | `Hidden 
+  | `HiddenInset
+  | `CustomButtonOnHover
+  ]
 
 type vibrancy = 
-  | AppearanceBased 
-  | Light 
-  | Dark 
-  | TitleBar 
-  | Selection
-  | Menu 
-  | Popover 
-  | Sidebar 
-  | MediumLight 
-  | UltraDark
+  [ `AppearanceBased 
+  | `Light 
+  | `Dark 
+  | `TitleBar 
+  | `Selection
+  | `Menu 
+  | `Popover 
+  | `Sidebar 
+  | `MediumLight 
+  | `UltraDark 
+  ]
 
 type level = 
-  | Normal 
-  | Floating 
-  | TornOffMenu 
-  | ModalPanel
-  | MainMenu 
-  | Status 
-  | PopUpMenu 
-  | ScreenSaver
+  [ `Normal 
+  | `Floating 
+  | `TornOffMenu 
+  | `ModalPanel
+  | `MainMenu 
+  | `Status 
+  | `PopUpMenu 
+  | `ScreenSaver 
+  ]
 
 (** {2 Events} *)
 

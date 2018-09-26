@@ -107,60 +107,63 @@ struct
 end
 
 type title_bar_style = 
-  | Default 
-  | Hidden 
-  | HiddenInset
-  | CustomButtonOnHover
+  [ `Default 
+  | `Hidden 
+  | `HiddenInset
+  | `CustomButtonOnHover
+  ]
 
 type vibrancy = 
-  | AppearanceBased 
-  | Light 
-  | Dark 
-  | TitleBar 
-  | Selection
-  | Menu 
-  | Popover 
-  | Sidebar 
-  | MediumLight 
-  | UltraDark
+  [ `AppearanceBased 
+  | `Light 
+  | `Dark 
+  | `TitleBar 
+  | `Selection
+  | `Menu 
+  | `Popover 
+  | `Sidebar 
+  | `MediumLight 
+  | `UltraDark 
+  ]
 
 type level = 
-  | Normal 
-  | Floating 
-  | TornOffMenu 
-  | ModalPanel
-  | MainMenu 
-  | Status 
-  | PopUpMenu 
-  | ScreenSaver
+  [ `Normal 
+  | `Floating 
+  | `TornOffMenu 
+  | `ModalPanel
+  | `MainMenu 
+  | `Status 
+  | `PopUpMenu 
+  | `ScreenSaver 
+  ]
 
 let title_bar_style_to_string = function 
-  | Default -> "default"
-  | Hidden -> "hidden"
-  | HiddenInset -> "hiddenInset"
-  | CustomButtonOnHover -> "customButtonsOnHover"
+  | `Default -> "default"
+  | `Hidden -> "hidden"
+  | `HiddenInset -> "hiddenInset"
+  | `CustomButtonOnHover -> "customButtonsOnHover"
 
 let vibrancy_to_string = function 
-  | AppearanceBased -> "appearance-based"
-  | Light -> "light"
-  | Dark  -> "dark"
-  | TitleBar -> "titlebar"
-  | Selection -> "selection"
-  | Menu -> "menu"
-  | Popover  -> "popover"
-  | Sidebar  -> "sidebar"
-  | MediumLight -> "medium-light"
-  | UltraDark -> "ultra-dark"
+  | `AppearanceBased -> "appearance-based"
+  | `Light -> "light"
+  | `Dark  -> "dark"
+  | `TitleBar -> "titlebar"
+  | `Selection -> "selection"
+  | `Menu -> "menu"
+  | `Popover  -> "popover"
+  | `Sidebar  -> "sidebar"
+  | `MediumLight -> "medium-light"
+  | `UltraDark -> "ultra-dark"
 
 let level_to_string = function 
-  | Normal -> "normal"
-  | Floating -> "floating"
-  | TornOffMenu -> "torn-off-menu"
-  | ModalPanel -> "modal-panel"
-  | MainMenu -> "main-menu"
-  | Status -> "status"
-  | PopUpMenu -> "pop-up-menu"
-  | ScreenSaver -> "screen-saver"
+  | `Normal -> "normal"
+  | `Floating -> "floating"
+  | `TornOffMenu -> "torn-off-menu"
+  | `ModalPanel -> "modal-panel"
+  | `MainMenu -> "main-menu"
+  | `Status -> "status"
+  | `PopUpMenu -> "pop-up-menu"
+  | `ScreenSaver -> "screen-saver"
 
 let make 
     ?width 
@@ -199,10 +202,10 @@ let make
     ?dark_theme
     ?transparent
     ?_type
-    ?(title_bar_style = Default)
+    ?(title_bar_style = `Default)
     ?fullscreen_window_title
     ?thick_frame
-    ?(vibrancy = AppearanceBased)
+    ?(vibrancy = `AppearanceBased)
     ?zoom_to_page_width
     ?tabbing_identifier
     () = 
@@ -374,7 +377,7 @@ let closable win flag = win ## setClosable (Js.bool flag)
 let is_closable win = Js.to_bool (win ## isClosable ())
 let is_always_on_top win = Js.to_bool (win ## isAlwaysOnTop ())
 
-let always_on_top ?(level = Floating) ?(relative_level=0) win flag = 
+let always_on_top ?(level = `Floating) ?(relative_level=0) win flag = 
   let l = Js.string (level_to_string level) in
   win ## setAlwaysOnTop 
     (Js.bool flag) 

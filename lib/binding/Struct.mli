@@ -81,11 +81,11 @@ end
 module Release : 
 sig 
 
-  type lts = 
-    | Argon
-    | Boron
-    | Carbon
-    | Unknown
+  type lts = [ 
+      `Argon
+    | `Boron
+    | `Carbon
+    | `Unknown of string ]
 
   type t = {
     name : string
@@ -247,4 +247,30 @@ sig
 
   val from_object : Rectangle.t -> t
   val to_object : t -> Rectangle.t
+end
+
+module PrinterInfo : sig 
+
+  type t = {
+    name : string 
+  ; description : string 
+  ; status : int 
+  ; is_default : bool
+  }
+
+  val from_object : PrinterInfo.t -> t
+end
+
+module Error :
+sig 
+
+  type t = {
+    message : string 
+  ; code : string 
+  ; stack : string
+  }
+
+  val from_object : Builtin.Error.t -> t 
+  val to_object : t -> Builtin.Error.t
+
 end
