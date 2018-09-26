@@ -53,7 +53,3 @@ val make_browser_window :
   ?tabbing_identifier:string ->
   unit 
   -> Electron_api.BrowserWindow.t
-
-(** {2 Functors} 
-    Functors to structure Electron Application
-*)

@@ -8,14 +8,14 @@ Documentation should be written...
 
 
 {4 Public API}
-- {{: Common/index.html} OCamlectron.Common} - Shared modules between {b main} and 
+- {{: Electron_api/index.html} OCamlectron.api} - Shared modules between {b main} and 
   {b render} processes
-- {{: Electron_main/index.html} OCamlectron.Electron_main} - {b Main} process libraries
-- {{: Electron_render/index.html} OCamlectron.Electron_render} - {b Render} process librairies
+- {{: Electron_main/index.html} OCamlectron.main} - {b Main} process libraries
+- {{: Electron_render/index.html} OCamlectron.render} - {b Render} process librairies
 
 
 {4 Internal packages}
 
 Internal packages are for "internal plumbing", you should not use them.
 
-- {{: Binding/index.html} OCamlectron.Binding} - LowLevel interface with JavaScript
+- {{: Electron_plumbing/index.html} OCamlectron.plumbing} - LowLevel interface with JavaScript
