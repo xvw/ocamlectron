@@ -10,8 +10,8 @@
 
 (** {2 Internals types} *)
 
-type t = Binding.Process.t
-(** An alias of [Binding.process] *)
+type t = Electron_plumbing.Process.t
+(** An alias of [Electron_plumbing.process] *)
 
 (** The current process type *)
 type process_kind = [ 
@@ -116,7 +116,7 @@ val get_uid : unit -> int
 val kill : ?signal:Signal.t -> int -> unit
 (** Method sends the signal to the process identified by pid. *)
 
-val memory_usage : unit -> Binding.Struct.MemoryUsage.t
+val memory_usage : unit -> Electron_plumbing.Struct.MemoryUsage.t
 (** Returns an object describing the memory usage of the Node.js 
     process measured in bytes. 
 *)
@@ -132,7 +132,7 @@ val platform : unit -> Os.t
     the Node.js process is running.
 *)
 
-val release : unit -> Binding.Struct.Release.t
+val release : unit -> Electron_plumbing.Struct.Release.t
 (** returns an [Object] containing metadata related to the current release,
     including URLs for the source tarball and headers-only tarball. 
 *)
@@ -155,7 +155,7 @@ val resources_path : unit -> string
 val kind : unit -> process_kind
 (** The current process's type.*)
 
-val versions : unit -> Binding.Struct.Versions.t
+val versions : unit -> Electron_plumbing.Struct.Versions.t
 (** Get the versions object *)
 
 val chrome_version : unit -> string 
@@ -210,7 +210,7 @@ val disable_trace_deprecation : unit -> unit
 val trace_deprecation_enabled : unit -> bool
 (** Returns [true] if [tracing deprecation] is enabled, [false] otherwise *)
 
-val cpu_usage : unit -> Binding.Struct.CPUUsage.t
+val cpu_usage : unit -> Electron_plumbing.Struct.CPUUsage.t
 (** Get the [CPUUSage] object *)
 
 val percent_cpu_usage : unit -> int 
@@ -224,18 +224,18 @@ val cpu_idle_wakeup : unit -> int
     Will always return [0] on Windows. 
 *)
 
-val io_counters : unit -> Binding.Struct.IOCounters.t
+val io_counters : unit -> Electron_plumbing.Struct.IOCounters.t
 (** {b only Windows and Linux}
 
     Get the [IOCounters] object 
 *)
 
-val process_memory_info : unit -> Binding.Struct.ProcessMemoryInfo.t 
+val process_memory_info : unit -> Electron_plumbing.Struct.ProcessMemoryInfo.t 
 (** Returns an object giving memory usage statistics about the 
     current process. Note that all statistics are reported in Kilobytes. 
 *)
 
-val system_memory_info : unit -> Binding.Struct.SystemMemoryInfo.t
+val system_memory_info : unit -> Electron_plumbing.Struct.SystemMemoryInfo.t
 (** Returns an object giving memory usage statistics about the entire 
     system. Note that all statistics are reported in Kilobytes.
 *)

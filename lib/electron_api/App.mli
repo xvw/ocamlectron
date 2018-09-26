@@ -8,11 +8,9 @@
 
 (** {2 Internals types} *)
 
-type t = Binding.App.t
+type t = Electron_plumbing.App.t
 
-val app : t
-
-(** An alias of [Binding.Electron.app] *)
+(** An alias of [Electron_plumbing.Electron.app] *)
 
 (** Presaved path_name *)
 type path_name = 
@@ -39,51 +37,50 @@ type _ event =
   | Ready : (unit -> unit) event
   | WindowAllClosed : (unit -> unit) event
   | BeforeQuit : (unit -> unit) event 
-  | WillQuit : (Binding.Event.t -> unit) event
-  | Quit : (Binding.Event.t -> int -> unit) event
-  | OpenFile : (Binding.Event.t -> Js.js_string Js.t -> unit) event
-  | OpenUrl : (Binding.Event.t -> Js.js_string Js.t -> unit) event
-  | Activate : (Binding.Event.t -> bool Js.t -> unit) event
+  | WillQuit : (Electron_plumbing.Event.t -> unit) event
+  | Quit : (Electron_plumbing.Event.t -> int -> unit) event
+  | OpenFile : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
+  | OpenUrl : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
+  | Activate : (Electron_plumbing.Event.t -> bool Js.t -> unit) event
 
-val on : ('a -> 'b) event -> ('a -> 'b) -> unit
-val once : ('a -> 'b) event -> ('a -> 'b) -> unit
+val on : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
+val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 
 (** {3 Lwt Js events for [App.t]} *)
 
 module Lwt_events : 
 sig 
-  val target : t
   val ready : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
   val window_all_closed : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
   val before_quit : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
-  val will_quit : ?use_capture:bool -> t -> (Binding.Event.t -> unit) Lwt.t
-  val quit : ?use_capture:bool -> t -> (Binding.Event.t -> int -> unit) Lwt.t
-  val open_file : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-  val open_url : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-  val activate : ?use_capture:bool -> t -> (Binding.Event.t -> bool Js.t -> unit) Lwt.t
+  val will_quit : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> unit) Lwt.t
+  val quit : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> int -> unit) Lwt.t
+  val open_file : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val open_url : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val activate : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> bool Js.t -> unit) Lwt.t
 end
 
 (** {2 Methods} *)
 
-val quit : unit -> unit
+val quit : t -> unit
 (** Try to close all windows. The [before-quit] event will be emitted first.
     If all windows are successfully closed, the [will-quit] event will be 
     emitted and by default the application will terminate. 
 *)
 
-val exit : ?code:int -> unit -> unit
+val exit : ?code:int -> t -> unit
 (** Exits immediately with [code]. Default [code] is [0].
     All windows will be closed immediately without asking user and the 
     [before-quit] and [will-quit] events will not be emitted.
 *)
 
-val relaunch : unit -> unit 
+val relaunch : t -> unit 
 (** Relaunches the app when current instance exits. 
     By default the new instance will use the same working directory and 
     command line arguments with current instance. 
 *)
 
-val relaunch_with : args:string -> ?exec_path:string -> unit -> unit 
+val relaunch_with : args:string -> ?exec_path:string -> t -> unit 
 (** Relaunches the app when current instance exits. 
     By default the new instance will use the same working directory and 
     command line arguments with current instance. When [args] is specified,
@@ -99,72 +96,72 @@ val relaunch_with : args:string -> ?exec_path:string -> unit -> unit
     will be started after current instance exited.
 *)
 
-val is_ready : unit -> bool
+val is_ready : t -> bool
 (** Returns [true] if Electron has finished initializing, [false]
     otherwise.
 *)
 
-val focus : unit -> unit 
+val focus : t -> unit 
 (** On Linux, focuses on the first visible window. On macOS, makes the 
     application the active app. On Windows, focuses on the application's 
     first window. 
 *)
 
-val hide : unit -> unit 
+val hide : t -> unit 
 (** {b only macOS}
 
     Hides all application windows without minimizing them.
 *)
 
-val show : unit -> unit 
+val show : t -> unit 
 (** {b only macOS}
 
     Shows application windows after they were hidden. Does not 
     automatically focus them.
 *)
 
-val get_app_path : unit -> string 
+val get_app_path : t -> string 
 (** Returns the current application directory. *)
 
-val get_path : path_name -> string
+val get_path : t -> path_name -> string
 (** Returns a path to a special directory or file associated with name. *)
 
-val set_path : path_name -> string -> unit
+val set_path : t -> path_name -> string -> unit
 (** Overrides the path to a special directory or file associated with name. 
     If the path specifies a directory that does not exist, the directory 
     will be created by this method .
 *)
 
-val get_version : unit -> string
+val get_version : t -> string
 (** Returns the version of the loaded application. If no 
     version is found in the application's package.json file, the 
     version of the current bundle or executable is returned.
 *)
 
-val get_name : unit -> string 
+val get_name : t -> string 
 (** Returns the current application's name, which is the name in 
     the application's package.json file 
 *)
 
-val set_name : string -> unit
+val set_name : t -> string -> unit
 (** Overrides the current application's name. *)
 
-val get_locale : unit -> string
+val get_locale : t -> string
 (** Returns the current application locale. *)
 
-val add_recent_document : string -> unit 
+val add_recent_document : t -> string -> unit 
 (** {b only macOS and Windows}
 
     Adds [path] to the recent documents list.
 *)
 
-val clear_recent_documents : unit -> unit
+val clear_recent_documents : t -> unit
 (** {b only macOS and Windows}
 
     Clears the recent documents list.
 *)
 
-val set_as_default_protocol_client : string -> bool
+val set_as_default_protocol_client : t -> string -> bool
 (** This method sets the current executable as the default handler for 
     a protocol (aka URI scheme). It allows you to integrate your app 
     deeper into the operating system. Once registered, all links with 
@@ -177,6 +174,7 @@ val set_as_default_protocol_client : string -> bool
 val set_as_default_protocol_client_with : 
   ?path:string 
   -> ?args:(string list)
+  -> t
   -> string 
   -> bool
 (** {b only Windows}
@@ -193,6 +191,7 @@ val set_as_default_protocol_client_with :
 val remove_as_default_protocol_client_with : 
   ?path:string 
   -> ?args:(string list)
+  -> t
   -> string 
   -> bool
 (** {b only Windows}
@@ -202,7 +201,7 @@ val remove_as_default_protocol_client_with :
     the default handler. 
 *)
 
-val remove_as_default_protocol_client : string -> bool
+val remove_as_default_protocol_client : t -> string -> bool
 (** This method checks if the current executable as the default handler for a 
     protocol (aka URI scheme). If so, it will remove the app as 
     the default handler. 
@@ -211,6 +210,7 @@ val remove_as_default_protocol_client : string -> bool
 val is_default_protocol_client_with : 
   ?path:string 
   -> ?args:(string list)
+  -> t
   -> string 
   -> bool
 (** {b only Windows}
@@ -221,14 +221,14 @@ val is_default_protocol_client_with :
     If so, it will return [true]. Otherwise, it will return [false]. 
 *)
 
-val is_default_protocol_client : string -> bool
+val is_default_protocol_client : t -> string -> bool
 (** This method checks if the current executable is the default 
     handler for a protocol (aka URI scheme). 
 
     If so, it will return [true]. Otherwise, it will return [false].  
 *)
 
-val set_user_tasks : Binding.Struct.Task.t list -> bool 
+val set_user_tasks : t -> Electron_plumbing.Struct.Task.t list -> bool 
 (** {b only Windows}
 
     Adds tasks to the Tasks category of the [JumpList] on Windows. 
@@ -261,21 +261,21 @@ val set_user_tasks : Binding.Struct.Task.t list -> bool
     single instance mechanism will be bypassed and you have to use 
     this method to ensure single instance.
 *)
-val make_single_instance : (string list -> string -> unit) -> bool
+val make_single_instance : t -> (string list -> string -> unit) -> bool
 
-val release_single_instance : unit -> unit 
+val release_single_instance : t -> unit 
 (** Releases all locks that were created by [make_single_instance]. 
     This will allow multiple instances of the application to once again 
     run side by side. 
 *)
 
-val disable_hardware_acceleration : unit -> unit 
+val disable_hardware_acceleration : t -> unit 
 (** Disables hardware acceleration for current app.
 
     This method can only be called before app is ready. 
 *)
 
-val disable_domain_blocking_for_3D_apis : unit -> unit 
+val disable_domain_blocking_for_3D_apis : t -> unit 
 (** By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a 
     per domain basis if the GPU processes crashes too frequently. 
     This function disables that behaviour.

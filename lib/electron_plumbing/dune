@@ -1,6 +1,6 @@
 (library
-  (name binding)
-  (public_name ocamlectron.binding)
+  (name electron_plumbing)
+  (public_name ocamlectron.plumbing)
   (synopsis "Lowlevel framework")
   (preprocess (pps js_of_ocaml-ppx lwt_ppx))
   (libraries js_of_ocaml-lwt)

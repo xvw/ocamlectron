@@ -3,5 +3,5 @@
   (public_name ocamlectron.main)
   (synopsis "Main process")
   (preprocess (pps js_of_ocaml-ppx lwt_ppx))
-  (libraries js_of_ocaml-lwt binding common)
+  (libraries js_of_ocaml-lwt electron_plumbing electron_api)
 )

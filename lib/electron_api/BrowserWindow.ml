@@ -1,6 +1,7 @@
+module Binding = Electron_plumbing
+
 type t = Binding.BrowserWindow.t
-let electron : Binding.ElectronMain.t = Electron.obj
-let singleton = electron ##. _BrowserWindow
+let singleton electron = electron ##. _BrowserWindow
 
 type _ event = 
   | PageTitleUpdated : (Binding.Event.t -> Js.js_string Js.t -> unit) event
@@ -75,8 +76,6 @@ let once =
 
 module Lwt_events = 
 struct
-
-  open Common
   let page_title_updated = Event.make "page-title-updated"
   let close = Event.make "close"
   let closed = Event.make "closed"
@@ -208,7 +207,7 @@ let make
     ?(vibrancy = `AppearanceBased)
     ?zoom_to_page_width
     ?tabbing_identifier
-    () = 
+    electron = 
   Binding.Struct.BrowserWindow.make
     ?width 
     ?height
@@ -254,13 +253,13 @@ let make
     ?tabbing_identifier
     (electron ##. _BrowserWindow_fromOpts)
 
-let all () =  
-  singleton ## getAllWindows ()
+let all electron =  
+  (singleton electron) ## getAllWindows ()
   |> Js.to_array
   |> Array.to_list
 
-let focused () =  
-  singleton ## getFocusedWindow ()
+let focused electron =  
+  (singleton electron) ## getFocusedWindow ()
   |> Js.Opt.to_option
 
 let id win = win ##. id 
@@ -290,7 +289,7 @@ let simple_fullscreen win value = win ## setSimpleFullscreen (Js.bool value)
 let is_simple_fullscreen win = Js.to_bool (win ## isSimpleFullscreen ())
 
 let aspect_ratio ?extra_size win ratio = 
-  let open Common.Optional.Option in 
+  let open Optional.Option in 
   let size = 
     extra_size 
     >|= Binding.Struct.Size.to_object 
@@ -299,7 +298,7 @@ let aspect_ratio ?extra_size win ratio =
 
 let close_preview win = win ## closeFilePreview ()
 let preview_file ?display_name win path = 
-  let open Common.Optional.Option in 
+  let open Optional.Option in 
   let name = display_name >|= Js.string |> to_optdef in 
   win ## previewFile (Js.string path) name
 
@@ -426,7 +425,7 @@ let load_url win url =
   let u = Js.string url in 
   win ## loadURL u
 
-let load_file win file = load_url win (Common.Tools.relativize file)
+let load_file win file = load_url win (Tools.relativize file)
 
 let reload win = win ## reload ()
 let progressbar win value = win ## setProgressBar value

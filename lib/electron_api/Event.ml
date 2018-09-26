@@ -1,7 +1,9 @@
+module EventEmitter = Electron_plumbing.EventEmitter
+
 type 'a t = Js.js_string Js.t
 type listener_id = (unit -> unit)
 
-let on (source : #Binding.EventEmitter.emitter Js.t) (event : ('a -> 'b) t) (f : ('a -> 'b)) = 
+let on (source : #EventEmitter.emitter Js.t) (event : ('a -> 'b) t) (f : ('a -> 'b)) = 
   let callback = Js.wrap_callback f in 
   let () = source ## on event callback in 
   fun () -> source ## off event callback

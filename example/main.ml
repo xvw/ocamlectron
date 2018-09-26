@@ -1,11 +1,15 @@
 open Electron_main
-let log x = ignore (Common.Tools.log x)
+module Api = Electron_api
+
+let electron = Electron.obj
+
+let log x = ignore (Api.Tools.log x)
 
 let create_window _ _ = 
-  let win = BrowserWindow.make  ~width:800 ~height:600 () in 
+  let win = Api.BrowserWindow.make  ~width:800 ~height:600 electron in 
   log "foo";
-  BrowserWindow.load_file win "index.html"; 
-  BrowserWindow.(once win Closed (fun () -> log "foo")); 
+  Api.BrowserWindow.load_file win "index.html"; 
+  Api.BrowserWindow.(once win Closed (fun () -> log "foo")); 
   Lwt.return_unit
 
 let quit_app _ _  = 
@@ -13,11 +17,11 @@ let quit_app _ _  =
   Lwt.return_unit
 
 let () =  
-  let open App.Lwt_events in
-  Lwt_js_events.async_loop ready target create_window
+  let open Api.App.Lwt_events in
+  Lwt_js_events.async_loop ready Electron.app create_window
   |> ignore
 
 let () =  
-  let open App.Lwt_events in
-  Lwt_js_events.async_loop quit target quit_app
+  let open Api.App.Lwt_events in
+  Lwt_js_events.async_loop quit Electron.app quit_app
   |> ignore

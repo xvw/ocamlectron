@@ -1,7 +1,7 @@
 open Optional
-open Binding.Builtin
+open Electron_plumbing.Builtin
 
-type t = Binding.Process.t
+type t = Electron_plumbing.Process.t
 
 type process_kind = [ 
     `Browser 
@@ -52,7 +52,7 @@ let kind () =
 
 let versions () = 
   let result = process ##. versions in 
-  Binding.Struct.Versions.from_object result
+  Electron_plumbing.Struct.Versions.from_object result
 
 let chrome_version () = 
   let result = process ##. versions ##. chrome in 
@@ -94,7 +94,7 @@ let crash () = process ## crash ()
 
 let cpu_usage () = 
   let handler = process ## getCPUUsage () in 
-  Binding.Struct.CPUUsage.from_object handler
+  Electron_plumbing.Struct.CPUUsage.from_object handler
 let percent_cpu_usage () = 
   let handler = process ## getCPUUsage () in 
   handler ##. percentCPUUsage
@@ -105,19 +105,19 @@ let cpu_idle_wakeup () =
 
 let io_counters () = 
   let handler = process ## getIOCounters () in 
-  Binding.Struct.IOCounters.from_object handler
+  Electron_plumbing.Struct.IOCounters.from_object handler
 
 let process_memory_info () = 
   let handler = process ## getProcessMemoryInfo () in 
-  Binding.Struct.ProcessMemoryInfo.from_object handler
+  Electron_plumbing.Struct.ProcessMemoryInfo.from_object handler
 
 let system_memory_info () =  
   let handler = process ## getSystemMemoryInfo () in 
-  Binding.Struct.SystemMemoryInfo.from_object handler
+  Electron_plumbing.Struct.SystemMemoryInfo.from_object handler
 
 let memory_usage () = 
   let handler = process ## memoryUsage () in 
-  Binding.Struct.MemoryUsage.from_object handler
+  Electron_plumbing.Struct.MemoryUsage.from_object handler
 
 let hang () = process ## hang ()
 let set_fd_limit value = process ## setFdLimit (value)
@@ -194,4 +194,4 @@ let platform = Os.current
 
 let release () =  
   let handler = process ##. release in 
-  Binding.Struct.Release.from_object handler
+  Electron_plumbing.Struct.Release.from_object handler

@@ -5,7 +5,7 @@
 
 (** {2 Internals types} *)
 
-type t = Binding.BrowserWindow.t
+type t = Electron_plumbing.BrowserWindow.t
 
 type title_bar_style = 
   [ `Default 
@@ -41,8 +41,8 @@ type level =
 (** {2 Events} *)
 
 type _ event = 
-  | PageTitleUpdated : (Binding.Event.t -> Js.js_string Js.t -> unit) event
-  | Close : (Binding.Event.t -> unit) event
+  | PageTitleUpdated : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
+  | Close : (Electron_plumbing.Event.t -> unit) event
   | Closed : (unit -> unit) event 
   | SessionEnd : (unit -> unit) event 
   | Unresponsive : (unit -> unit) event 
@@ -63,11 +63,11 @@ type _ event =
   | LeaveFullScreen : (unit -> unit) event 
   | EnterHTMLFullScreen : (unit -> unit) event  
   | LeaveHTMLFullScreen : (unit -> unit) event 
-  | AppCommand : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | AppCommand : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
   | ScrollTouchBegin : (unit -> unit) event 
   | ScrollTouchEnd : (unit -> unit) event 
   | ScrollTouchEdge : (unit -> unit) event 
-  | Swipe : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | Swipe : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
 
 val on : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
@@ -76,8 +76,8 @@ val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 
 module Lwt_events : 
 sig 
-  val page_title_updated : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-  val close : ?use_capture:bool -> t -> (Binding.Event.t -> unit) Lwt.t
+  val page_title_updated : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val close : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> unit) Lwt.t
   val closed : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
   val session_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
   val unresponsive : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
@@ -98,11 +98,11 @@ sig
   val leave_fullScreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
   val enter_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t  
   val leave_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val app_command : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val app_command : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
   val scroll_touch_begin : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
   val scroll_touch_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
   val scroll_touch_edge : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val swipe : ?use_capture:bool -> t -> (Binding.Event.t -> Js.js_string Js.t -> unit) Lwt.t
+  val swipe : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
 end
 
 (** {2 Static Functions} *)
@@ -151,13 +151,26 @@ val make :
   ?vibrancy:vibrancy ->
   ?zoom_to_page_width:bool ->
   ?tabbing_identifier:string ->
-  unit -> 
-  t
+  <
+    _BrowserWindow_fromOpts : 
+      Electron_plumbing.BrowserWindow.constr Js.readonly_prop
+  ; .. > Js.t
+  -> t
 
-val all : unit -> t list 
+val all : 
+  <
+    _BrowserWindow : Electron_plumbing.BrowserWindow.singleton Js.t Js.readonly_prop
+  ; .. 
+  > Js.t 
+  -> t list 
 (** Returns all opened browser windows. *)
 
-val focused : unit -> t option
+val focused : 
+  <
+    _BrowserWindow : Electron_plumbing.BrowserWindow.singleton Js.t Js.readonly_prop
+  ; .. 
+  > Js.t 
+  -> t option
 (** Returns the window that is focused in this application *)
 
 (** {2 Methods} *)
@@ -234,7 +247,7 @@ val simple_fullscreen : t -> bool -> unit
 val is_simple_fullscreen : t -> bool 
 (** Whether the window is in simple (pre-Lion) fullscreen mode. {b only for MacOS} *)
 
-val aspect_ratio : ?extra_size:Binding.Struct.Size.t -> t -> float -> unit
+val aspect_ratio : ?extra_size:Electron_plumbing.Struct.Size.t -> t -> float -> unit
 (** This will make a window maintain an aspect ratio.  *)
 
 val preview_file : ?display_name:string -> t -> string -> unit
@@ -243,18 +256,18 @@ val preview_file : ?display_name:string -> t -> string -> unit
 val close_preview : t -> unit
 (** Closes the currently open Quick Look panel. *)
 
-val bounds : ?animate:bool -> t -> Binding.Struct.Rectangle.t -> unit
+val bounds : ?animate:bool -> t -> Electron_plumbing.Struct.Rectangle.t -> unit
 (** Resizes and moves the window to the supplied bounds. *)
 
-val bounds_of : t -> Binding.Struct.Rectangle.t
+val bounds_of : t -> Electron_plumbing.Struct.Rectangle.t
 (** Returns bounds rectangle *)
 
-val content_bounds : ?animate:bool -> t -> Binding.Struct.Rectangle.t -> unit
+val content_bounds : ?animate:bool -> t -> Electron_plumbing.Struct.Rectangle.t -> unit
 (** Resizes and moves the window's client area (e.g. the web page) to 
     the supplied bounds. 
 *)
 
-val content_bounds_of : t -> Binding.Struct.Rectangle.t
+val content_bounds_of : t -> Electron_plumbing.Struct.Rectangle.t
 (** Returns content's bounds rectangle *)
 
 val enable : t -> unit 
@@ -269,10 +282,10 @@ val resize : ?animate:bool -> t -> int -> int -> unit
 val resize_content : ?animate:bool -> t -> int -> int -> unit
 (** Resize the window's content *)
 
-val size_of : t -> Binding.Struct.Size.t
+val size_of : t -> Electron_plumbing.Struct.Size.t
 (** Returns the size of a window *)
 
-val content_size_of : t -> Binding.Struct.Size.t
+val content_size_of : t -> Electron_plumbing.Struct.Size.t
 (** Returns the size of a window *)
 
 val maximum_size : t -> int -> int -> unit 
@@ -281,10 +294,10 @@ val maximum_size : t -> int -> int -> unit
 val minimum_size : t -> int -> int -> unit 
 (** Set the minimum size of the window *)
 
-val maximum_size_of : t -> Binding.Struct.Size.t
+val maximum_size_of : t -> Electron_plumbing.Struct.Size.t
 (** Returns the maximum size of a window *)
 
-val minimum_size_of : t -> Binding.Struct.Size.t
+val minimum_size_of : t -> Electron_plumbing.Struct.Size.t
 (** Returns the minimum size of a window *)
 
 val resizable : t -> bool -> unit 
@@ -335,7 +348,7 @@ val center : t -> unit
 val position : ?animate:bool -> t -> int -> int -> unit
 (** Moves window to a position  and y. *)
 
-val position_of : t -> Binding.Struct.Position.t
+val position_of : t -> Electron_plumbing.Struct.Position.t
 (** Returns the position of the window. *)
 
 val title : t -> string -> unit 
