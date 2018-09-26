@@ -83,6 +83,7 @@ class type browser_window = object
   method setParentWindow : browser_window t Opt.t -> unit meth
   method getParentWindow : unit -> browser_window t Opt.t meth
   method getChildWindows : unit -> browser_window t js_array t meth
+  method webContents : WebContents.t readonly_prop
 end
 
 (** Constructors parameters :

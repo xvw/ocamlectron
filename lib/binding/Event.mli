@@ -6,4 +6,3 @@ class type event = object
 end
 
 type t = event Js.t
-(** Main type *)

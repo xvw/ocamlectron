@@ -5,5 +5,4 @@ class type rectangle = object
   inherit Position.position
 end
 
-(** Main type *)
 type t = rectangle Js.t

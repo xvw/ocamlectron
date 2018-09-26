@@ -9,5 +9,4 @@ class type memory_usage = object
   method _external : int readonly_prop
 end
 
-(** Main type *)
 type t = memory_usage Js.t

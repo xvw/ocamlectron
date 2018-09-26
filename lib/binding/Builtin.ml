@@ -1,5 +1,16 @@
 open Js
 
+module Promise = 
+struct 
+
+  class type ['a] promise = object 
+    method _then : ('a -> 'b promise t) -> 'b promise t meth
+  end
+
+  type 'a t = 'a promise Js.t
+end
+
+
 module Set = 
 struct 
 

@@ -7,5 +7,4 @@ class type position = object
   method y : int readonly_prop
 end
 
-(** Main type *)
 type t = position Js.t
