@@ -224,3 +224,22 @@ let reload ?(ignoring_cache = false) win =
   if ignoring_cache 
   then win ## reloadIgnoringCache () 
   else win ## reload ()
+
+let can_go_back win = Js.to_bool (win ## canGoBack ())
+let can_go_forward win = Js.to_bool (win ## canGoForward ())
+let can_go_to_offset win offset = Js.to_bool (win ## canGoToOffset offset)
+let clear_history win = win ## clearHistory ()
+let back win = win ## goBack () 
+let forward win = win ## goForward ()
+let go_to_index win index = win ## goToIndex index 
+let go_to_offset win offset = win ## goToOffset offset
+let is_crashed win = Js.to_bool (win ## isCrashed ())
+let user_agent win agent = (win ## setUserAgent (s agent))
+let user_agent_of win = s' (win ## getUserAgent ())
+let insert_css win css = (win ## insertCSS (s css))
+
+let execute_javascript ?user_gesture ?callback (win : #kind Js.t) js = 
+  let open Optional.Option in 
+  let ug = user_gesture >|= Js.bool |> to_optdef in 
+  let cb = callback >|= Js.wrap_callback |> to_optdef in 
+  win ## executeJavaScript (s js) ug cb

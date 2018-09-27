@@ -217,3 +217,47 @@ val stop : #kind Js.t -> unit
 
 val reload : ?ignoring_cache:bool -> #kind Js.t -> unit 
 (** Reloads the current web page. *)
+
+val can_go_back : #kind Js.t -> bool
+(** Whether the browser can go back to previous web page. *)
+
+val can_go_forward : #kind Js.t -> bool 
+(** Whether the browser can go forward to next web page. *)
+
+val can_go_to_offset : #kind Js.t -> int -> bool
+(** Whether the web page can go to offset. *)
+
+val clear_history : #kind Js.t -> unit
+(** Clears the navigation history. *)
+
+val back : #kind Js.t -> unit 
+(** Makes the browser go back a web page. *)
+
+val forward : #kind Js.t -> unit 
+(** Makes the browser go forward a web page. *)
+
+val go_to_index : #kind Js.t -> int -> unit 
+(** Navigates browser to the specified absolute web page index. *)
+
+val go_to_offset : #kind Js.t -> int -> unit 
+(** Navigates to the specified offset from the "current entry". *)
+
+val is_crashed : #kind Js.t -> bool 
+(** Whether the renderer process has crashed. *)
+
+val user_agent : #kind Js.t -> string -> unit 
+(** Overrides the user agent for this web page. *)
+
+val user_agent_of : #kind Js.t -> string 
+(** The user agent for this web page. *)
+
+val insert_css : #kind Js.t -> string -> unit 
+(** Injects CSS into the current web page. *)
+
+val execute_javascript :
+  ?user_gesture:bool 
+  -> ?callback:('a -> 'b) 
+  -> #kind Js.t 
+  -> string
+  -> 'c Electron_plumbing.Builtin.Promise.t
+(** Evaluates code in page. *)

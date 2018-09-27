@@ -30,7 +30,7 @@ class type web_contents = object
   method clearHistory : unit -> unit meth
   method goBack : unit -> unit meth 
   method goForward : unit -> unit meth 
-  method goToIndex : unit -> unit meth 
+  method goToIndex : int -> unit meth 
   method goToOffset : int -> unit meth 
   method isCrashed : unit -> bool t meth 
   method setUserAgent : js_string t -> unit meth 
@@ -153,8 +153,8 @@ class type web_contents = object
   method executeJavaScript : 
     js_string t 
     -> bool t Optdef.t 
-    -> (unit -> 'a) callback Optdef.t 
-    -> 'b Builtin.Promise.t meth
+    -> ('a -> 'b) callback Optdef.t 
+    -> 'c Builtin.Promise.t meth
 end
 
 (** Main type *)
