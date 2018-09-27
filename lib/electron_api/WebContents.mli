@@ -261,3 +261,73 @@ val execute_javascript :
   -> string
   -> 'c Electron_plumbing.Builtin.Promise.t
 (** Evaluates code in page. *)
+
+val ignore_menu_shortcuts : #kind Js.t -> [`Ignore | `Keep] -> unit
+(** Ignore application menu shortcuts while this web contents is focused. *)
+
+val audio : #kind Js.t -> [`Mute | `Enabled] -> unit
+(** Mute the audio on the current web page. *)
+
+val is_audio_muted : #kind Js.t -> bool
+(** Whether this page has been muted. *)
+
+val zoom_factor : #kind Js.t -> float -> unit 
+(** Changes the zoom factor to the specified factor. Zoom factor is zoom 
+    percent divided by 100, so 300% = 3.0. 
+*)
+
+val zoom_factor_of : #kind Js.t -> (float -> unit) -> unit
+(** Sends a request to get current zoom factor, the callback will be 
+    called with callback(zoomFactor).  
+*)
+
+val zoom_level : #kind Js.t -> int -> unit 
+(** Changes the zoom level to the specified level. The original size is 0 and each 
+    increment above or below represents zooming 20% larger or smaller to default 
+    limits of 300% and 50% of original size, respectively. The formula for this 
+    is scale := 1.2 ^ level. 
+*)
+
+val zoom_level_of : #kind Js.t -> (int -> unit) -> unit 
+(** Sends a request to get current zoom level, the callback will be called with 
+    callback(zoomLevel). 
+*)
+
+val visual_zoom_level_limits : #kind Js.t -> int -> int -> unit
+(** Sets the maximum and minimum pinch-to-zoom level. *)
+
+val layout_zoom_level_limits : #kind Js.t -> int -> int -> unit
+(** Sets the maximum and minimum pinch-to-zoom level. *)
+
+val undo : #kind Js.t -> unit 
+(** Executes the editing command undo in web page. *)
+
+val redo : #kind Js.t -> unit 
+(** Executes the editing command redo in web page. *)
+
+val cut : #kind Js.t -> unit 
+(** Executes the editing command cut in web page. *)
+
+val copy : #kind Js.t -> unit 
+(** Executes the editing command copy in web page. *)
+
+val paste : ?match_style:bool -> #kind Js.t -> unit 
+(** Executes the editing command paste in web page. *)
+
+val copy_image : #kind Js.t -> int -> int -> unit 
+(** Copy the image at the given position to the clipboard. *)
+
+val delete : #kind Js.t -> unit 
+(** Executes the editing command delete in web page. *)
+
+val select_all : #kind Js.t -> unit 
+(** Executes the editing command select_all in web page. *)
+
+val unselect : #kind Js.t -> unit 
+(** Executes the editing command unselect in web page. *)
+
+val replace : ?misspelling:bool -> #kind Js.t -> string -> unit 
+(** Executes the editing command replace in web page. *)
+
+val insert_text : #kind Js.t -> string -> unit
+(** Inserts text to the focused element. *)

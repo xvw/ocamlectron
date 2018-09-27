@@ -243,3 +243,39 @@ let execute_javascript ?user_gesture ?callback (win : #kind Js.t) js =
   let ug = user_gesture >|= Js.bool |> to_optdef in 
   let cb = callback >|= Js.wrap_callback |> to_optdef in 
   win ## executeJavaScript (s js) ug cb
+
+let ignore_menu_shortcuts win = function 
+  | `Ignore -> win ## setIgnoreMenuShortcuts (Js._true)
+  | `Keep -> win ## setIgnoreMenuShortcuts (Js._false)
+
+let audio win = function 
+  | `Mute -> win ## setAudioMuted (Js._true)
+  | `Enabled -> win ## setAudioMuted (Js._false)
+
+let is_audio_muted win = Js.to_bool (win ## isAudioMuted ())
+let zoom_factor win value = win ## setZoomFactor value
+let zoom_factor_of win callback = win ## getZoomFactor (Js.wrap_callback callback)
+let zoom_level win value = win ## setZoomLevel value
+let zoom_level_of win callback = win ## getZoomLevel (Js.wrap_callback callback)
+let visual_zoom_level_limits win min max = win ## setVisualZoomLevelLimits min max
+let layout_zoom_level_limits win min max = win ## setLayoutZoomLevelLimits min max
+let undo win = win ## undo ()
+let redo win = win ## redo ()
+let cut win = win ## cut () 
+let copy win = win ## copy ()
+let delete win = win ## delete () 
+let select_all win = win ## selectAll () 
+let unselect win = win ## unselect () 
+let copy_image win x y = win ## copyImageAt x y 
+let insert_text win txt = win ## insertText (s txt)
+
+let replace ?(misspelling = false) win text = 
+  let str = Js.string text in 
+  if misspelling 
+  then win ## replaceMisspelling str 
+  else win ## replace str
+
+let paste ?(match_style = false) win =
+  if match_style
+  then win ## pasteAndMatchStyle ()
+  else win ## paste () 
