@@ -1,17 +1,17 @@
 open Optional
-module Binding = Electron_plumbing
 
-type t = Binding.App.t
+
+type t = Electron_plumbing.App.t
 
 type _ event = 
-  | Ready : (unit -> unit) event
-  | WindowAllClosed : (unit -> unit) event
-  | BeforeQuit : (unit -> unit) event 
-  | WillQuit : (Binding.Event.t -> unit) event
-  | Quit : (Binding.Event.t -> int -> unit) event
-  | OpenFile : (Binding.Event.t -> Js.js_string Js.t -> unit) event
-  | OpenUrl : (Binding.Event.t -> Js.js_string Js.t -> unit) event
-  | Activate : (Binding.Event.t -> bool Js.t -> unit) event
+  | Ready : (Event.js -> unit) event
+  | WindowAllClosed : (Event.js -> unit) event
+  | BeforeQuit : (Event.js -> unit) event 
+  | WillQuit : (Event.js -> unit) event
+  | Quit : (Event.js -> int -> unit) event
+  | OpenFile : (Event.js -> Js.js_string Js.t -> unit) event
+  | OpenUrl : (Event.js -> Js.js_string Js.t -> unit) event
+  | Activate : (Event.js -> bool Js.t -> unit) event
 
 let ev_to_string : type a. a event -> Js.js_string Js.t = function 
   | Ready -> Js.string "ready"
@@ -34,19 +34,6 @@ let once =
     let event_str = ev_to_string event in
     let callback = Js.wrap_callback f in 
     app ## once event_str callback
-
-module Lwt_events = 
-struct 
-  let ready = Event.make "ready"
-  let window_all_closed = Event.make "window-all-closed"
-  let before_quit = Event.make "before-quit"
-  let will_quit = Event.make "will-quit"
-  let quit = Event.make "quit"
-  let open_file = Event.make "open-file"
-  let open_url = Event.make "open-url"
-  let activate = Event.make "activate"
-
-end
 
 type path_name = 
   | Home 
@@ -204,7 +191,7 @@ let is_default_protocol_client app protocol_name =
 let set_user_tasks app tasks = 
   let task_list = 
     tasks 
-    |> List.map Binding.Struct.Task.to_object
+    |> List.map Electron_plumbing.Struct.Task.to_object
     |> Array.of_list
     |> Js.array
   in 

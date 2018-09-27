@@ -1,36 +1,34 @@
-module Binding = Electron_plumbing
-
-type t = Binding.BrowserWindow.t
+type t = Electron_plumbing.BrowserWindow.t
 let singleton electron = electron ##. _BrowserWindow
 
 type _ event = 
-  | PageTitleUpdated : (Binding.Event.t -> Js.js_string Js.t -> unit) event
-  | Close : (Binding.Event.t -> unit) event
-  | Closed : (unit -> unit) event 
-  | SessionEnd : (unit -> unit) event 
-  | Unresponsive : (unit -> unit) event 
-  | Responsive : (unit -> unit) event 
-  | Blur : (unit -> unit) event 
-  | Focus : (unit -> unit) event 
-  | Show : (unit -> unit) event 
-  | Hide : (unit -> unit) event 
-  | ReadyToShow : (unit -> unit) event 
-  | Maximize : (unit -> unit) event 
-  | Unmaximize : (unit -> unit) event 
-  | Minimize : (unit -> unit) event 
-  | Restore : (unit -> unit) event 
-  | Resize : (unit -> unit) event 
-  | Move : (unit -> unit) event 
-  | Moved : (unit -> unit) event 
-  | EnterFullScreen : (unit -> unit) event 
-  | LeaveFullScreen : (unit -> unit) event 
-  | EnterHTMLFullScreen : (unit -> unit) event  
-  | LeaveHTMLFullScreen : (unit -> unit) event 
-  | AppCommand : (Binding.Event.t -> Js.js_string Js.t -> unit) event
-  | ScrollTouchBegin : (unit -> unit) event 
-  | ScrollTouchEnd : (unit -> unit) event 
-  | ScrollTouchEdge : (unit -> unit) event 
-  | Swipe : (Binding.Event.t -> Js.js_string Js.t -> unit) event
+  | PageTitleUpdated : (Event.js -> Js.js_string Js.t -> unit) event
+  | Close : (Event.js -> unit) event
+  | Closed : (Event.js -> unit) event 
+  | SessionEnd : (Event.js -> unit) event 
+  | Unresponsive : (Event.js -> unit) event 
+  | Responsive : (Event.js -> unit) event 
+  | Blur : (Event.js -> unit) event 
+  | Focus : (Event.js -> unit) event 
+  | Show : (Event.js -> unit) event 
+  | Hide : (Event.js -> unit) event 
+  | ReadyToShow : (Event.js -> unit) event 
+  | Maximize : (Event.js -> unit) event 
+  | Unmaximize : (Event.js -> unit) event 
+  | Minimize : (Event.js -> unit) event 
+  | Restore : (Event.js -> unit) event 
+  | Resize : (Event.js -> unit) event 
+  | Move : (Event.js -> unit) event 
+  | Moved : (Event.js -> unit) event 
+  | EnterFullScreen : (Event.js -> unit) event 
+  | LeaveFullScreen : (Event.js -> unit) event 
+  | EnterHTMLFullScreen : (Event.js -> unit) event  
+  | LeaveHTMLFullScreen : (Event.js -> unit) event 
+  | AppCommand : (Event.js -> Js.js_string Js.t -> unit) event
+  | ScrollTouchBegin : (Event.js -> unit) event 
+  | ScrollTouchEnd : (Event.js -> unit) event 
+  | ScrollTouchEdge : (Event.js -> unit) event 
+  | Swipe : (Event.js -> Js.js_string Js.t -> unit) event
 
 let ev_to_string : type a. a event -> Js.js_string Js.t = function 
   | PageTitleUpdated -> Js.string "page-title-updated"
@@ -72,38 +70,6 @@ let once =
     let event_str = ev_to_string event in
     let callback = Js.wrap_callback f in 
     win ## once event_str callback
-
-
-module Lwt_events = 
-struct
-  let page_title_updated = Event.make "page-title-updated"
-  let close = Event.make "close"
-  let closed = Event.make "closed"
-  let session_end = Event.make "session-end"
-  let unresponsive = Event.make "unresponsive"
-  let responsive = Event.make "responsive"
-  let blur = Event.make "blur"
-  let focus = Event.make "focus"
-  let show = Event.make "show"
-  let hide = Event.make "hide"
-  let ready_to_show = Event.make "ready_to_show"
-  let maximize = Event.make "maximize"
-  let unmaximize = Event.make "unmaximize"
-  let minimize = Event.make "minimize"
-  let restore = Event.make "restore"
-  let resize = Event.make "resize"
-  let move = Event.make "move"
-  let moved = Event.make "moved"
-  let enter_fullscreen = Event.make "enter-fullscreen"
-  let leave_fullScreen = Event.make "leave-fullscreen"
-  let enter_html_fullscreen = Event.make "enter-html-fullscreen"
-  let leave_html_fullscreen = Event.make "leave-html-fullscreen"
-  let app_command = Event.make "app-command"
-  let scroll_touch_begin = Event.make "scroll-touch-begin"
-  let scroll_touch_end = Event.make "scroll-touch-end"
-  let scroll_touch_edge = Event.make "scroll-touch-edge"
-  let swipe = Event.make "swipe"
-end
 
 type title_bar_style = 
   [ `Default 
@@ -208,7 +174,7 @@ let make
     ?zoom_to_page_width
     ?tabbing_identifier
     electron = 
-  Binding.Struct.BrowserWindow.make
+  Electron_plumbing.Struct.BrowserWindow.make
     ?width 
     ?height
     ?position
@@ -292,7 +258,7 @@ let aspect_ratio ?extra_size win ratio =
   let open Optional.Option in 
   let size = 
     extra_size 
-    >|= Binding.Struct.Size.to_object 
+    >|= Electron_plumbing.Struct.Size.to_object 
     |> to_optdef 
   in win ## setAspectRatio ratio size
 
@@ -303,22 +269,22 @@ let preview_file ?display_name win path =
   win ## previewFile (Js.string path) name
 
 let bounds ?(animate = false) win rectangle = 
-  let rect = Binding.Struct.Rectangle.to_object rectangle in 
+  let rect = Electron_plumbing.Struct.Rectangle.to_object rectangle in 
   let flag = Js.bool animate in 
   win ## setBounds rect (Js.Optdef.return flag)
 
 let content_bounds ?(animate = false) win rectangle = 
-  let rect = Binding.Struct.Rectangle.to_object rectangle in 
+  let rect = Electron_plumbing.Struct.Rectangle.to_object rectangle in 
   let flag = Js.bool animate in 
   win ## setContentBounds rect (Js.Optdef.return flag)
 
 let bounds_of win = 
   (win ## getBounds ())
-  |> Binding.Struct.Rectangle.from_object
+  |> Electron_plumbing.Struct.Rectangle.from_object
 
 let content_bounds_of win = 
   (win ## getContentBounds ())
-  |> Binding.Struct.Rectangle.from_object
+  |> Electron_plumbing.Struct.Rectangle.from_object
 
 let enable win = win ## setEnabled (Js._true)
 let disable win = win ## setEnabled (Js._false)
@@ -328,7 +294,7 @@ let resize ?(animate = false) win width height =
   win ## setSize width height flag
 
 let size_of win = 
-  let open Binding.Struct.Size in  
+  let open Electron_plumbing.Struct.Size in  
   let value = win ## getSize () in 
   match Js.to_array value with 
   | [|w; h|] -> {width = w; height = h}
@@ -339,7 +305,7 @@ let resize_content ?(animate = false) win width height =
   win ## setContentSize width height flag
 
 let content_size_of win = 
-  let open Binding.Struct.Size in  
+  let open Electron_plumbing.Struct.Size in  
   let value = win ## getContentSize () in 
   match Js.to_array value with 
   | [|w; h|] -> {width = w; height = h}
@@ -349,14 +315,14 @@ let maximum_size win w h = win ## setMaximumSize w h
 let minimum_size win w h = win ## setMinimumSize w h
 
 let maximum_size_of win = 
-  let open Binding.Struct.Size in  
+  let open Electron_plumbing.Struct.Size in  
   let value = win ## getMaximumSize () in 
   match Js.to_array value with 
   | [|w; h|] -> {width = w; height = h}
   | _ -> {width = 0; height = 0}
 
 let minimum_size_of win = 
-  let open Binding.Struct.Size in  
+  let open Electron_plumbing.Struct.Size in  
   let value = win ## getMinimumSize () in 
   match Js.to_array value with 
   | [|w; h|] -> {width = w; height = h}
@@ -390,7 +356,7 @@ let position ?(animate = false) win x y =
   win ## setPosition x y flag
 
 let position_of win = 
-  let open Binding.Struct.Position in  
+  let open Electron_plumbing.Struct.Position in  
   let value = win ## getMinimumSize () in 
   match Js.to_array value with 
   | [|w; h|] -> {x = w; y = h}
@@ -446,3 +412,6 @@ let childs_of win =
   (win ## getChildWindows ())
   |> Js.to_array
   |> Array.to_list
+
+let web_contents win = 
+  win ##. webContents

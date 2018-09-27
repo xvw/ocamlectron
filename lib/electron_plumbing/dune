@@ -25,4 +25,5 @@
     electronMain
     electronRender
     printerInfo
+    referer
   ))

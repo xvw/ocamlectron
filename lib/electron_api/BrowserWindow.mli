@@ -41,69 +41,37 @@ type level =
 (** {2 Events} *)
 
 type _ event = 
-  | PageTitleUpdated : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
-  | Close : (Electron_plumbing.Event.t -> unit) event
-  | Closed : (unit -> unit) event 
-  | SessionEnd : (unit -> unit) event 
-  | Unresponsive : (unit -> unit) event 
-  | Responsive : (unit -> unit) event 
-  | Blur : (unit -> unit) event 
-  | Focus : (unit -> unit) event 
-  | Show : (unit -> unit) event 
-  | Hide : (unit -> unit) event 
-  | ReadyToShow : (unit -> unit) event 
-  | Maximize : (unit -> unit) event 
-  | Unmaximize : (unit -> unit) event 
-  | Minimize : (unit -> unit) event 
-  | Restore : (unit -> unit) event 
-  | Resize : (unit -> unit) event 
-  | Move : (unit -> unit) event 
-  | Moved : (unit -> unit) event 
-  | EnterFullScreen : (unit -> unit) event 
-  | LeaveFullScreen : (unit -> unit) event 
-  | EnterHTMLFullScreen : (unit -> unit) event  
-  | LeaveHTMLFullScreen : (unit -> unit) event 
-  | AppCommand : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
-  | ScrollTouchBegin : (unit -> unit) event 
-  | ScrollTouchEnd : (unit -> unit) event 
-  | ScrollTouchEdge : (unit -> unit) event 
-  | Swipe : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
+  | PageTitleUpdated : (Event.js -> Js.js_string Js.t -> unit) event
+  | Close : (Event.js -> unit) event
+  | Closed : (Event.js -> unit) event 
+  | SessionEnd : (Event.js -> unit) event 
+  | Unresponsive : (Event.js -> unit) event 
+  | Responsive : (Event.js -> unit) event 
+  | Blur : (Event.js -> unit) event 
+  | Focus : (Event.js -> unit) event 
+  | Show : (Event.js -> unit) event 
+  | Hide : (Event.js -> unit) event 
+  | ReadyToShow : (Event.js -> unit) event 
+  | Maximize : (Event.js -> unit) event 
+  | Unmaximize : (Event.js -> unit) event 
+  | Minimize : (Event.js -> unit) event 
+  | Restore : (Event.js -> unit) event 
+  | Resize : (Event.js -> unit) event 
+  | Move : (Event.js -> unit) event 
+  | Moved : (Event.js -> unit) event 
+  | EnterFullScreen : (Event.js -> unit) event 
+  | LeaveFullScreen : (Event.js -> unit) event 
+  | EnterHTMLFullScreen : (Event.js -> unit) event  
+  | LeaveHTMLFullScreen : (Event.js -> unit) event 
+  | AppCommand : (Event.js -> Js.js_string Js.t -> unit) event
+  | ScrollTouchBegin : (Event.js -> unit) event 
+  | ScrollTouchEnd : (Event.js -> unit) event 
+  | ScrollTouchEdge : (Event.js -> unit) event 
+  | Swipe : (Event.js -> Js.js_string Js.t -> unit) event
 
 val on : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 
-(** {3 Lwt Js events for [BrowserWindow.t]} *)
-
-module Lwt_events : 
-sig 
-  val page_title_updated : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-  val close : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> unit) Lwt.t
-  val closed : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
-  val session_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
-  val unresponsive : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
-  val responsive : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val blur : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val focus : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val show : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val hide : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val ready_to_show : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val maximize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val unmaximize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val minimize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val restore : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val resize : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val move : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val moved : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val enter_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val leave_fullScreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val enter_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t  
-  val leave_html_fullscreen : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val app_command : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-  val scroll_touch_begin : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val scroll_touch_end : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val scroll_touch_edge : ?use_capture:bool -> t -> (unit -> unit) Lwt.t 
-  val swipe : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-end
 
 (** {2 Static Functions} *)
 
@@ -425,3 +393,6 @@ val parent_of : t -> t option
 
 val childs_of : t -> t list
 (** All child windows. *)
+
+val web_contents : t -> Electron_plumbing.WebContents.t
+(** Get the webContents object *)

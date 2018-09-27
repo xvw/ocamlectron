@@ -34,31 +34,17 @@ type path_name =
 (** {2 Events} *)
 
 type _ event = 
-  | Ready : (unit -> unit) event
-  | WindowAllClosed : (unit -> unit) event
-  | BeforeQuit : (unit -> unit) event 
-  | WillQuit : (Electron_plumbing.Event.t -> unit) event
-  | Quit : (Electron_plumbing.Event.t -> int -> unit) event
-  | OpenFile : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
-  | OpenUrl : (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) event
-  | Activate : (Electron_plumbing.Event.t -> bool Js.t -> unit) event
+  | Ready : (Event.js -> unit) event
+  | WindowAllClosed : (Event.js -> unit) event
+  | BeforeQuit : (Event.js -> unit) event 
+  | WillQuit : (Event.js -> unit) event
+  | Quit : (Event.js -> int -> unit) event
+  | OpenFile : (Event.js -> Js.js_string Js.t -> unit) event
+  | OpenUrl : (Event.js -> Js.js_string Js.t -> unit) event
+  | Activate : (Event.js -> bool Js.t -> unit) event
 
 val on : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 val once : t -> ('a -> 'b) event -> ('a -> 'b) -> unit
-
-(** {3 Lwt Js events for [App.t]} *)
-
-module Lwt_events : 
-sig 
-  val ready : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
-  val window_all_closed : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
-  val before_quit : ?use_capture:bool -> t -> (unit -> unit) Lwt.t
-  val will_quit : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> unit) Lwt.t
-  val quit : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> int -> unit) Lwt.t
-  val open_file : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-  val open_url : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> Js.js_string Js.t -> unit) Lwt.t
-  val activate : ?use_capture:bool -> t -> (Electron_plumbing.Event.t -> bool Js.t -> unit) Lwt.t
-end
 
 (** {2 Methods} *)
 

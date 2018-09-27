@@ -25,8 +25,8 @@ end = struct
   let start () =  
     let open Api.App in 
     let app = Electron.app in 
-    on app Ready (fun () -> create_window ()); 
-    on app WindowAllClosed (fun () ->
+    on app Ready (fun _event -> create_window ()); 
+    on app WindowAllClosed (fun _event ->
         if not Api.Os.(current () = Darwin) 
         then quit app
       ); 

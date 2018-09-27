@@ -1,6 +1,7 @@
 module EventEmitter = Electron_plumbing.EventEmitter
 
 type 'a t = Js.js_string Js.t
+type js =  Electron_plumbing.Event.t
 type listener_id = (unit -> unit)
 
 let on (source : #EventEmitter.emitter Js.t) (event : ('a -> 'b) t) (f : ('a -> 'b)) = 

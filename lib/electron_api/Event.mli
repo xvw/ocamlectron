@@ -4,6 +4,7 @@
 
 type 'a t
 type listener_id = (unit -> unit)
+type js = Electron_plumbing.Event.t
 
 val on : 
   #Electron_plumbing.EventEmitter.emitter Js.t 
