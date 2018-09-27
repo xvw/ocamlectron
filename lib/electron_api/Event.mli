@@ -18,3 +18,5 @@ val make : string
   -> ?use_capture:bool 
   -> #Electron_plumbing.EventEmitter.emitter Js.t 
   -> ('a -> 'b) Lwt.t
+
+val prevent_default : js -> unit

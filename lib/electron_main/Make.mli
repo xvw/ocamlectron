@@ -11,6 +11,12 @@ sig
   val file : string
   (** The boot file *)
 
+  val init : Electron.t -> Electron_api.App.t -> Electron_api.BrowserWindow.t -> unit
+  (** An initialize function (called when the app is ready and the window launched) *)
+
+  val exit : (int * (int -> unit)) option
+  (** Normal exit process, int is the [exitCode] *)
+
 end
 
 (** {2 Functors} *)

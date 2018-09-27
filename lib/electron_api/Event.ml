@@ -30,3 +30,6 @@ let make event =
   fun ?use_capture source -> 
     match use_capture with 
     | _ -> make_lwt (make_s event) source
+
+let prevent_default event = 
+  event ## preventDefault ()
