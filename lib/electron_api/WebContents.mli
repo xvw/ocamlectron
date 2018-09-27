@@ -168,3 +168,52 @@ type _ event =
 
 val on : #kind Js.t -> ('a -> 'b) event -> ('a -> 'b) -> unit
 val once : #kind Js.t -> ('a -> 'b) event -> ('a -> 'b) -> unit
+
+(** {2 methods} *)
+
+val load_url : #kind Js.t -> string -> unit 
+(** The url can be a remote address (e.g. http://) 
+    or a path to a local HTML file using the file:// protocol. 
+*)
+
+val load_file : #kind Js.t -> string -> unit
+(** Load a file in the web content. *)
+
+val download_url : #kind Js.t -> string -> unit 
+(** Initiates a download of the resource at url without navigating. 
+    The will-download event of session will be triggered. 
+*)
+
+val url : #kind Js.t -> string 
+(** The URL of the current web page. *)
+
+val title : #kind Js.t -> string 
+(** The title of the current web page. *)
+
+val is_destroyed : #kind Js.t -> bool
+(** Whether the web page is destroyed. *)
+
+val focus : #kind Js.t -> unit 
+(** Focuses the web page. *)
+
+val is_focused : #kind Js.t -> bool 
+(** Whether the web page is focused. *)
+
+val is_loading : #kind Js.t -> bool
+(** Whether web page is still loading resources. *)
+
+val is_loading_main_frame : #kind Js.t -> bool 
+(** Whether the main frame (and not just iframes or frames within it) 
+    is still loading. 
+*)
+
+val is_waiting_for_response : #kind Js.t -> bool 
+(** Whether the web page is waiting for a first-response from the main 
+    resource of the page. 
+*)
+
+val stop : #kind Js.t -> unit 
+(** Stops any pending navigation. *)
+
+val reload : ?ignoring_cache:bool -> #kind Js.t -> unit 
+(** Reloads the current web page. *)

@@ -161,6 +161,7 @@ type _ event =
 
 
 let s = Js.string
+let s' = Js.to_string
 
 let ev_to_string : type a. a event -> Js.js_string Js.t = function 
   | DidFinishLoad -> s "did-finish-load"
@@ -205,3 +206,21 @@ let once =
     let event_str = ev_to_string event in
     let callback = Js.wrap_callback f in 
     webcontents ## once event_str callback
+
+let load_url win url = win ## loadURL (s url)
+let load_file win path = load_url win (Tools.relativize path)
+let download_url win url = win ## downloadURL (s url)
+let url win = s' (win ## getURL ())
+let title win = s' (win ## getTitle ())
+let is_destroyed win = Js.to_bool (win ## isDestroyed ())
+let focus win = win ## focus ()
+let is_focused win = Js.to_bool (win ## isFocused ())
+let is_loading win = Js.to_bool (win ## isLoading ())
+let is_loading_main_frame win = Js.to_bool (win ## isLoadingMainFrame ())
+let is_waiting_for_response win = Js.to_bool (win ## isWaitingForResponse ())
+let stop win = win ## stop () 
+
+let reload ?(ignoring_cache = false) win =
+  if ignoring_cache 
+  then win ## reloadIgnoringCache () 
+  else win ## reload ()
