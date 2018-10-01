@@ -130,8 +130,8 @@ class type web_contents = object
 
   method printToPDF : 
     <
-      marginsType : int Optdef.t
-    ; pageSize : js_string t Optdef.t 
+      marginsType : int Optdef.t readonly_prop
+    ; pageSize : js_string t Optdef.t readonly_prop
     ; printBackground : bool t Optdef.t readonly_prop
     ; printSelectionOnly : bool t Optdef.t readonly_prop
     ; landscape : bool t Optdef.t readonly_prop
@@ -142,11 +142,11 @@ class type web_contents = object
   method findInPage :
     js_string t 
     -> <
-      forward : bool t Optdef.t
-    ; findNext : bool t Optdef.t
-    ; matchCase : bool t Optdef.t
-    ; wordStart : bool t Optdef.t
-    ; medialCapitalAsWordStart : bool t Optdef.t
+      forward : bool t Optdef.t readonly_prop
+    ; findNext : bool t Optdef.t readonly_prop
+    ; matchCase : bool t Optdef.t readonly_prop
+    ; wordStart : bool t Optdef.t readonly_prop
+    ; medialCapitalAsWordStart : bool t Optdef.t readonly_prop
     > t Optdef.t 
     -> int meth
 

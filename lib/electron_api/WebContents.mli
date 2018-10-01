@@ -278,7 +278,7 @@ val zoom_factor : #kind Js.t -> float -> unit
 
 val zoom_factor_of : #kind Js.t -> (float -> unit) -> unit
 (** Sends a request to get current zoom factor, the callback will be 
-    called with callback(zoomFactor).  
+    called with callback(zoomFactor).
 *)
 
 val zoom_level : #kind Js.t -> int -> unit 
@@ -331,3 +331,13 @@ val replace : ?misspelling:bool -> #kind Js.t -> string -> unit
 
 val insert_text : #kind Js.t -> string -> unit
 (** Inserts text to the focused element. *)
+
+val find_in : 
+  ?forward:bool
+  -> ?find_next:bool 
+  -> ?match_case:bool
+  -> ?word_start:bool
+  -> ?capital_as_word_start:bool
+  -> #kind Js.t
+  -> string
+  -> int

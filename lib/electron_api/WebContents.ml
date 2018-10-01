@@ -278,4 +278,23 @@ let replace ?(misspelling = false) win text =
 let paste ?(match_style = false) win =
   if match_style
   then win ## pasteAndMatchStyle ()
-  else win ## paste () 
+  else win ## paste ()
+
+let to_opt f x =
+   Optional.Option.map x f 
+   |> Js.Optdef.option 
+
+let find_in 
+  ?forward 
+  ?find_next 
+  ?match_case 
+  ?word_start 
+  ?capital_as_word_start
+  win words = 
+   let opts = object%js
+    val forward = to_opt Js.bool forward
+    val findNext = to_opt Js.bool find_next
+    val matchCase = to_opt Js.bool match_case
+    val wordStart = to_opt Js.bool word_start
+    val medialCapitalAsWordStart = to_opt Js.bool capital_as_word_start
+   end in win ## findInPage (Js.string words) (Js.Optdef.return opts)
