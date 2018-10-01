@@ -13,3 +13,8 @@ let relativize path =
 let log content = 
   Firebug.console ## log content;
   content
+
+let js_array_to_list f arr =
+  let nar = Js.to_array arr in
+  let len = Array.length nar in
+  List.init len (fun i -> f nar.(i))

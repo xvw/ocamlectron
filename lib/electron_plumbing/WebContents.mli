@@ -124,7 +124,7 @@ class type web_contents = object
     ; printBackground : bool t Optdef.t readonly_prop
     ; deviceName : js_string t Optdef.t readonly_prop
     > t
-    -> (bool t) callback Optdef.t 
+    -> (bool t -> unit) callback Optdef.t 
     -> unit meth
 
 

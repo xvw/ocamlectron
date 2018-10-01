@@ -341,3 +341,18 @@ val find_in :
   -> #kind Js.t
   -> string
   -> int
+(** Starts a request to find all matches for the text in the web page. 
+    The result of the request can be obtained by subscribing to 
+    found-in-page event. 
+*)
+
+val printers : #kind Js.t -> Electron_plumbing.Struct.PrinterInfo.t list
+(** Get the list of available printers *)
+
+val print :
+  ?silent:bool
+  -> ?background:bool
+  -> ?device:string
+  -> ?callback:(bool -> unit)
+  -> #kind Js.t
+  -> unit

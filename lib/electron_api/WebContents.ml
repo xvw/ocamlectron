@@ -298,3 +298,22 @@ let find_in
     val wordStart = to_opt Js.bool word_start
     val medialCapitalAsWordStart = to_opt Js.bool capital_as_word_start
    end in win ## findInPage (Js.string words) (Js.Optdef.return opts)
+
+let printers win =
+  win ## getPrinters ()
+  |> Tools.js_array_to_list
+    (Electron_plumbing.Struct.PrinterInfo.from_object) 
+  
+  
+let print ?silent ?background ?device ?callback win =
+  let cb =
+    to_opt
+      (fun f -> Js.wrap_callback (fun x -> f (Js.to_bool x)))
+      callback
+  in
+  let op = object%js
+    val silent = to_opt Js.bool silent
+    val printBackground = to_opt Js.bool background
+    val deviceName = to_opt Js.string device
+  end
+  in win ## print op cb
