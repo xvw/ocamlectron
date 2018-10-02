@@ -139,6 +139,20 @@ class type web_contents = object
     -> (Builtin.Error.t -> Builtin.Buffer.t -> unit) callback
     -> unit meth
 
+  method printToPDF_formatted : 
+    <
+      marginsType : int Optdef.t readonly_prop
+    ; pageSize :
+        <width: int readonly_prop; height: int readonly_prop> t
+          Optdef.t readonly_prop
+    ; printBackground : bool t Optdef.t readonly_prop
+    ; printSelectionOnly : bool t Optdef.t readonly_prop
+    ; landscape : bool t Optdef.t readonly_prop
+    > t
+    -> (Builtin.Error.t -> Builtin.Buffer.t -> unit) callback
+    -> unit meth
+
+
   method findInPage :
     js_string t 
     -> <

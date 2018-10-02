@@ -356,3 +356,33 @@ val print :
   -> ?callback:(bool -> unit)
   -> #kind Js.t
   -> unit
+(** Prints window's web page. When silent is set to true, 
+    Electron will pick the system's default printer if deviceName
+    is empty and the default settings for printing. 
+*)
+
+val print_to_pdf :
+  ?margins:[`Default | `Nothing | `Minimal]
+  -> ?page:
+    [
+      `A3
+    | `A4
+    | `A5
+    | `Legal
+    | `Tabloid
+    | `Letter
+    | `Format of (int * int)
+    ]
+  -> ?background:bool
+  -> ?only_selection:bool
+  -> ?landscape:bool
+  -> callback:(
+      Electron_plumbing.Builtin.Error.t
+      -> Electron_plumbing.Builtin.Buffer.t
+      -> unit
+    )
+  -> #kind Js.t
+  -> unit
+(** Prints window's web page as PDF with Chromium's preview printing
+    custom settings.
+*)

@@ -317,3 +317,62 @@ let print ?silent ?background ?device ?callback win =
     val deviceName = to_opt Js.string device
   end
   in win ## print op cb
+
+
+let print_to_pdf
+    ?margins
+    ?page
+    ?background
+    ?only_selection
+    ?landscape
+    ~callback
+    win =
+  let m  =
+    to_opt
+      (function `Default -> 0 | `Nothing -> 1 | `Minimal -> 2)
+      margins in
+  let bg = to_opt Js.bool background in
+  let os = to_opt Js.bool only_selection in
+  let la = to_opt Js.bool landscape in
+  let cb = Js.wrap_callback (fun a b -> callback a b) in
+  let (a, b) = match page with
+    | Some (`Format (w, h)) ->
+      (Js.Optdef.empty, Js.Optdef.return (object%js
+         val width = w
+         val height = h
+       end))
+    | _ ->
+      ((to_opt
+        (function
+          | `A3 -> Js.string "A3"
+          | `A4 -> Js.string "A4"
+          | `A5 -> Js.string "A5"
+          | `Legal -> Js.string "Legal"
+          | `Letter -> Js.string "Letter"
+          | `Tabloid -> Js.string "Tabloid"
+          | _ -> Js.string "unknow"
+        ) page ),
+       Js.Optdef.empty
+      ) in
+  let opt =
+    match page with
+    | Some (`Format _) ->
+      `A (object%js
+        val marginsType = m
+        val pageSize = b
+        val printBackground = bg
+        val printSelectionOnly = os
+        val landscape = la
+      end)
+    | _ ->
+      `B (object%js
+        val marginsType = m
+        val pageSize = a
+        val printBackground = bg
+        val printSelectionOnly = os
+        val landscape = la
+      end)
+  in
+  match opt with
+  | `A o -> win ## printToPDF_formatted o cb
+  | `B o -> win ## printToPDF o cb
