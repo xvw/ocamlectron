@@ -64,11 +64,14 @@ class type web_contents = object
   method getPrinters : unit -> PrinterInfo.t js_array t meth
   method addWorkspace : js_string t -> unit meth 
   method removeWorkspace : js_string t -> unit meth 
-  method setDevToolsWebContents : web_contents t -> unit meth 
-  method openDevTools : < mode : js_string t > t Optdef.t -> unit meth 
+      
+  method openDevTools :
+    < mode : js_string t readonly_prop > t Optdef.t
+    -> unit meth
+      
   method closeDevTools : unit -> unit meth 
-  method isDevToolsOpened : unit -> unit meth 
-  method isDevToolsFocused : unit -> unit meth 
+  method isDevToolsOpened : unit -> bool t meth 
+  method isDevToolsFocused : unit -> bool t meth 
   method toggleDevTools : unit -> unit meth 
   method inspectElement : int -> int -> unit meth 
   method inspectServiceWorker : unit -> unit meth 

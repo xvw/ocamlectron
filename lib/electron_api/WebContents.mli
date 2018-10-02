@@ -386,3 +386,45 @@ val print_to_pdf :
 (** Prints window's web page as PDF with Chromium's preview printing
     custom settings.
 *)
+
+val has_service_worker : #kind Js.t -> (bool -> unit) -> unit
+(** Checks if any ServiceWorker is registered and returns a boolean
+    as response to callback.
+*)
+
+val add_workspace : #kind Js.t -> string -> unit
+(** Adds the specified path to DevTools workspace. 
+    Must be used after DevTools creation. 
+*)
+
+val remove_workspace : #kind Js.t -> string -> unit
+(** Removes the specified path from DevTools workspace. *)
+
+
+val open_devtools :
+  ?mode:[
+    `Right
+  | `Bottom
+  | `Undocked
+  | `Detach
+  ]
+  -> #kind Js.t
+  -> unit
+(** Opens the devtools.
+
+    When contents is a <webview> tag, the mode would be detach 
+    by default, explicitly passing an empty mode can force using 
+    last used dock state. 
+*)
+
+val close_devtools : #kind Js.t -> unit
+(** Close the devtools *)
+
+val devtools_opened : #kind Js.t -> bool
+(** Whether the devtools is opened. *)
+
+val devtools_focused : #kind Js.t -> bool
+(** Whether the devtools is focused. *)
+
+val toggle_devtools : #kind Js.t -> bool
+(** Toggles the developer tools. *)

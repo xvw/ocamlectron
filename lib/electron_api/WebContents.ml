@@ -376,3 +376,33 @@ let print_to_pdf
   match opt with
   | `A o -> win ## printToPDF_formatted o cb
   | `B o -> win ## printToPDF o cb
+
+
+let has_service_worker win callback =
+  let cb = Js.wrap_callback (fun x -> callback (Js.to_bool x)) in
+  win ## hasServiceWorker cb
+
+
+let add_workspace win path = win ## addWorkspace (Js.string path)
+let remove_workspace win path = win ## removeWorkspace (Js.string path)
+
+let open_devtools ?mode win =
+  let m = to_opt (fun option ->
+      let r = match option with
+        | `Right -> "right"
+        | `Bottom -> "bottom"
+        | `Undocked -> "undocked"
+        | `Detach -> "detach"
+      in object%js
+        val mode = Js.string r
+      end
+    ) mode
+  in win ## openDevTools m
+
+let close_devtools win = win ## closeDevTools ()
+let devtools_opened win = Js.to_bool (win ## isDevToolsOpened ())
+let devtools_focused win = Js.to_bool (win ## isDevToolsFocused ())
+    
+let toggle_devtools win =
+  let () = win ## toggleDevTools () in
+  devtools_opened win
