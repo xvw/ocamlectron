@@ -450,3 +450,54 @@ val disable_device_emulation : #kind Js.t -> unit
 (** Disable device emulation enabled by 
     [webContents.enableDeviceEmulation]. 
 *)
+
+val save_page :
+  path:string
+  -> save_type:[`HTMLOnly | `HTMLComplete | `MHTML]
+  -> callback:(Electron_plumbing__Builtin.Error.t -> unit)
+  -> #kind Js.t
+  -> bool
+(** Returns true if the process of saving page has been initiated 
+    successfully. 
+*)
+
+val show_definition_for_selection : #kind Js.t -> unit
+(** Shows pop-up dictionary that searches the selected word on the 
+    page. 
+*)
+
+val is_off_screen : #kind Js.t -> bool
+(** Indicates whether offscreen rendering is enabled. *)
+
+val start_painting : #kind Js.t -> unit
+(** If offscreen rendering is enabled and not painting, 
+    start painting. 
+*)
+  
+val stop_painting : #kind Js.t -> unit
+(** If offscreen rendering is enabled and painting, stop painting. *)
+
+val is_painting : #kind Js.t -> bool
+(** If offscreen rendering is enabled returns whether it is currently 
+    painting. 
+*)
+
+val frame_rate : #kind Js.t -> int -> unit
+(** If offscreen rendering is enabled sets the frame rate to 
+    the specified number. Only values between 1 and 60 are accepted. 
+*)
+  
+val frame_rate_of : #kind Js.t -> int
+(** If offscreen rendering is enabled returns the current frame rate.  *)
+
+val invalidate : #kind Js.t -> unit
+(** Schedules a full repaint of the window this web contents is in. *)
+
+val id_of : #kind Js.t -> int
+(** Returns the id of a WebContent *)
+
+val os_process_id_of : #kind Js.t -> int
+(** Returns the chromium internal pid of the associated 
+    renderer. Can be compared to the frameProcessId passed by 
+    frame specific navigation events (e.g. did-frame-navigate) 
+*)

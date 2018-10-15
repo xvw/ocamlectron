@@ -449,3 +449,44 @@ let enable_device_emulation
 
 
 let disable_device_emulation win = win ## disableDeviceEmulation ()
+
+let save_page ~path ~save_type ~callback win =
+  let p = Js.string path in
+  let st = match save_type with
+    | `HTMLOnly -> "HTMLOnly"
+    | `HTMLComplete -> "HTMLComplete"
+    | `MHTML -> "MHTML"
+  in
+  let cb = Js.wrap_callback callback in
+  (win ## savePage p (Js.string st) cb)
+  |> Js.to_bool
+
+let show_definition_for_selection win =
+  win ## showDefinitionForSelection ()
+
+let is_off_screen win =
+  Js.to_bool (win ## isOffscreen ())
+
+let start_painting win =
+  win ## startPainting ()
+
+let stop_painting win =
+  win ## stopPainting ()
+
+let is_painting win =
+  Js.to_bool (win ## isPainting ())
+
+let frame_rate win fps =
+  win ## setFrameRate fps
+
+let frame_rate_of win =
+  win ## getFrameRate ()
+
+let invalidate win =
+  win ## invalidate ()
+
+let id_of win =
+  win ##. id
+
+let os_process_id_of win =
+  win ## getOSProcessId ()

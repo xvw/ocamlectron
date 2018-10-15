@@ -78,9 +78,10 @@ class type web_contents = object
   (* method send : js_string t -> 'a meth *)
   method disableDeviceEmulation : unit -> unit meth
   method showDefinitionForSelection : unit -> unit meth
-  method isOffScreen : unit -> bool t meth
+  method isOffscreen : unit -> bool t meth
   method startPainting : unit -> unit meth 
-  method stopPainting : unit -> unit meth 
+  method stopPainting : unit -> unit meth
+  method isPainting : unit -> bool t meth
   method setFrameRate : int -> unit meth 
   method getFrameRate : unit -> int meth 
   method invalidate : unit -> unit meth
@@ -102,7 +103,7 @@ class type web_contents = object
     js_string t 
     -> js_string t 
     -> (Builtin.Error.t -> unit) callback 
-    -> unit meth
+    -> bool t meth
 
   (* method sendInputEvent : 
      < 
