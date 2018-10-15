@@ -1,23 +1,27 @@
 open Electron_main
-let log x = ignore (Common.Tools.log x)
 
-let create_window _ _ = 
-  let win = BrowserWindow.make  ~width:800 ~height:600 () in 
-  log "foo";
-  BrowserWindow.load_file win "index.html"; 
-  BrowserWindow.(once win Closed (fun () -> log "foo")); 
-  Lwt.return_unit
-
-let quit_app _ _  = 
-  log "bye bye";
-  Lwt.return_unit
-
-let () =  
-  let open App.Lwt_events in
-  Lwt_js_events.async_loop ready target create_window
+let trace message = 
+  message 
+  |> Js.string 
+  |> Electron_api.Tools.log 
   |> ignore
 
-let () =  
-  let open App.Lwt_events in
-  Lwt_js_events.async_loop quit target quit_app
-  |> ignore
+module My_app = Make.Basic_app(
+  struct 
+    let file = "./index.html"
+    let main_window () = 
+      Electron.make_browser_window 
+        ~width:640 
+        ~height:480 ()
+
+    let init _electron _app _window = 
+      trace "Hello World !"
+
+    let exit = Some (0, fun i -> 
+        trace "Bye !";
+        Electron_api.Process.exit ~code:i ()
+      ) 
+  end
+  )
+
+let () = My_app.start ()

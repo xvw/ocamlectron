@@ -1,0 +1,29 @@
+(library
+  (name electron_plumbing)
+  (public_name ocamlectron.plumbing)
+  (synopsis "Lowlevel framework")
+  (preprocess (pps js_of_ocaml-ppx lwt_ppx))
+  (libraries js_of_ocaml-lwt)
+  (modules_without_implementation 
+    eventEmitter
+    event
+    process
+    app
+    task
+    release
+    versions
+    memoryUsage
+    cPUUsage
+    iOCounters
+    processMemoryInfo
+    systemMemoryInfo
+    browserWindow
+    webContents
+    position
+    size 
+    rectangle
+    electronMain
+    electronRender
+    printerInfo
+    referer
+  ))

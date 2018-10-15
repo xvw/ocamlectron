@@ -1,0 +1,6 @@
+(library
+  (name electron_api)
+  (public_name ocamlectron.api)
+  (synopsis "Electron common API")
+  (preprocess (pps js_of_ocaml-ppx lwt_ppx))
+  (libraries js_of_ocaml-lwt electron_plumbing))

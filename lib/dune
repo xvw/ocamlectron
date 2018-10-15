@@ -3,7 +3,14 @@
   (public_name ocamlectron)
   (synopsis "A small framework to build application using Electron")
   (preprocess (pps js_of_ocaml-ppx lwt_ppx))
-  (libraries js_of_ocaml-lwt binding common electron_main electron_render))
+  (libraries 
+    js_of_ocaml-lwt 
+    electron_plumbing
+    electron_api 
+    electron_main 
+    electron_render
+  )
+)
 
 (documentation
  (package ocamlectron)
