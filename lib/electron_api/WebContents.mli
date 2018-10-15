@@ -428,3 +428,25 @@ val devtools_focused : #kind Js.t -> bool
 
 val toggle_devtools : #kind Js.t -> bool
 (** Toggles the developer tools. *)
+
+val inspect_element : #kind Js.t -> int -> int -> unit
+(** Starts inspecting element at position (x, y). *)
+  
+val inspect_service_worker : #kind Js.t -> unit
+(** Opens the developer tools for the service worker context. *)
+
+val enable_device_emulation :
+  screen_position:[`Desktop | `Mobile]
+  -> screen_size:(int * int)
+  -> ?device_scale_factor:int
+  -> view_size:(int * int)
+  -> view_position:(int * int)
+  -> ?scale:float
+  -> #kind Js.t
+  -> unit
+(** Enable device emulation with the given parameters.*)
+
+val disable_device_emulation : #kind Js.t -> unit
+(** Disable device emulation enabled by 
+    [webContents.enableDeviceEmulation]. 
+*)

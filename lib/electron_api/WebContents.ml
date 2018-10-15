@@ -1,5 +1,7 @@
 class type kind = Electron_plumbing.WebContents.web_contents
 
+module S = Electron_plumbing.Struct
+
 type _ event = 
   | DidFinishLoad : (unit -> unit) event
   | DidFailLoad : (
@@ -406,3 +408,44 @@ let devtools_focused win = Js.to_bool (win ## isDevToolsFocused ())
 let toggle_devtools win =
   let () = win ## toggleDevTools () in
   devtools_opened win
+
+let inspect_element win x y = win ## inspectElement x y
+let inspect_service_worker win = win ## inspectServiceWorker ()
+
+
+let enable_device_emulation
+    ~screen_position
+    ~screen_size
+    ?(device_scale_factor=0)
+    ~view_size
+    ~view_position
+    ?(scale=1.0)
+    win =
+  let size (w, h) = S.Size.(to_object {width=w; height=h}) in
+  let sp = match screen_position with
+    | `Mobile -> "mobile"
+    | `Desktop -> "desktop"
+  in
+  let sz = screen_size |> size in
+  let vs = view_size |> size in
+  let vp =
+    view_position
+    |> (fun (x, y) ->
+        object%js
+          val x = x
+          val y = y
+        end
+      )
+  in
+  let obj = object%js
+    val screenPosition = Js.string sp
+    val screenSize = sz
+    val deviceScaleFactor = device_scale_factor
+    val viewSize = vs
+    val viewPosition = vp
+    val scale = scale
+  end
+  in win ## enableDeviceEmulation obj
+
+
+let disable_device_emulation win = win ## disableDeviceEmulation ()

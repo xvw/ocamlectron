@@ -75,7 +75,7 @@ class type web_contents = object
   method toggleDevTools : unit -> unit meth 
   method inspectElement : int -> int -> unit meth 
   method inspectServiceWorker : unit -> unit meth 
-  method send : js_string t -> 'a meth
+  (* method send : js_string t -> 'a meth *)
   method disableDeviceEmulation : unit -> unit meth
   method showDefinitionForSelection : unit -> unit meth
   method isOffScreen : unit -> bool t meth
@@ -117,6 +117,9 @@ class type web_contents = object
     ; screenSize : Size.t readonly_prop
     ; deviceScaleFactor : int readonly_prop
     ; viewSize : Size.t readonly_prop
+    ; viewPosition : <
+        x : int readonly_prop; y: int readonly_prop
+      > t readonly_prop
     ; scale : float readonly_prop
     > t 
     -> unit meth
