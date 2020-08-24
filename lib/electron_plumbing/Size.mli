@@ -1,5 +1,6 @@
 (** Describe a Size *)
 
+open Js_of_ocaml
 open Js 
 
 class type size = object 

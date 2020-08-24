@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 (** Same of [require] from JavaScript *)
 val require : string -> 'a
 

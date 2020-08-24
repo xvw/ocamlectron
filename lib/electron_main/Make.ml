@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 module type BASIC_APP = 
 sig
   val main_window : unit -> Electron_api.BrowserWindow.t

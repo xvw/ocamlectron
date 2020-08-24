@@ -4,6 +4,7 @@
     {{: https://electronjs.org/docs/api/app }  ElectronJS : documentation for [app] }
 *)
 
+open Js_of_ocaml
 open Js 
 
 class type app = object

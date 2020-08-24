@@ -1,5 +1,6 @@
 (** Describe a position *)
 
+open Js_of_ocaml
 open Js 
 
 class type position = object 

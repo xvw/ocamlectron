@@ -6,6 +6,8 @@
     {{: https://electronjs.org/docs/api/app }  ElectronJS : documentation for [app] }
 *)
 
+open Js_of_ocaml
+
 (** {2 Internals types} *)
 
 type t = Electron_plumbing.App.t

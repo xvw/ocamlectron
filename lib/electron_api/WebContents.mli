@@ -2,6 +2,8 @@
 
 (** {2 Types and interfaces} *)
 
+open Js_of_ocaml
+
 class type kind = Electron_plumbing.WebContents.web_contents
 (** Alias for "kind of WebContents" *)
 

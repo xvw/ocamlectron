@@ -5,6 +5,8 @@
 
 (** {2 Internals types} *)
 
+open Js_of_ocaml
+
 type t = Electron_plumbing.BrowserWindow.t
 
 type title_bar_style = 

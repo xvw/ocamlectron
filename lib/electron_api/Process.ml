@@ -1,3 +1,4 @@
+open Js_of_ocaml
 open Optional
 open Electron_plumbing.Builtin
 

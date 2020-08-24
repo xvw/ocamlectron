@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 type t =
   | Aix 
   | Darwin 
