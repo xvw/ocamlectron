@@ -1,6 +1,6 @@
 (** Built-in JavaScript 's object  *)
 
-
+open Js_of_ocaml
 open Js
 
 module Promise : 

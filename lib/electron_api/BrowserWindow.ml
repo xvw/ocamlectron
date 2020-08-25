@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 type t = Electron_plumbing.BrowserWindow.t
 let singleton electron = electron ##. _BrowserWindow
 

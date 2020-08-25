@@ -3,6 +3,7 @@
     - {{: https://electronjs.org/docs/api/browser-window } Documentation of [BrowserWindow]}
 *)
 
+open Js_of_ocaml
 open Js
 
 (** Define a windows  *)

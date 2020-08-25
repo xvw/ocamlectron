@@ -1,5 +1,6 @@
 (** Release Infos *)
 
+open Js_of_ocaml
 open Js 
 
 class type release = object 

@@ -1,3 +1,4 @@
+open Js_of_ocaml
 open Js 
 
 class type event = object 

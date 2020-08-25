@@ -8,6 +8,7 @@
     - {{: https://electronjs.org/docs/api/process }  ElectronJS : documentation for [process] } 
 *)
 
+open Js_of_ocaml
 open Js
 
 class type process = object

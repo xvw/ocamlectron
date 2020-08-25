@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 (** This module is [Work in progress], his goal is to provides an LWT's API 
     for JavaScript event handlers.
 *)

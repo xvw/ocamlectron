@@ -2,6 +2,7 @@
     Note that all statistics are reported in Kilobytes. 
 *)
 
+open Js_of_ocaml
 open Js 
 
 class type system_memory_info = object 

@@ -1,5 +1,6 @@
 (** Accessors for IO data *)
 
+open Js_of_ocaml
 open Js 
 
 class type io_counters = object 

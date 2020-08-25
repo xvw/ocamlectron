@@ -1,3 +1,4 @@
+open Js_of_ocaml
 open Electron_main
 
 let trace message = 

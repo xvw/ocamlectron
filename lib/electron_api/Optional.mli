@@ -1,6 +1,7 @@
 (** Helper to work with optional values (empty values or not) to 
     deal with [option], [opt] and [optdef] with a common API. *)
 
+open Js_of_ocaml
 
  (** {2 Interface} *)
 

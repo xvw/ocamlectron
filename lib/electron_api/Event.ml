@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 module EventEmitter = Electron_plumbing.EventEmitter
 
 type 'a t = Js.js_string Js.t

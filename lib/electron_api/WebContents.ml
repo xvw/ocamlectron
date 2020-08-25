@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 class type kind = Electron_plumbing.WebContents.web_contents
 
 module S = Electron_plumbing.Struct

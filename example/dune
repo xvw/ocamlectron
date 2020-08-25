@@ -2,8 +2,9 @@
   (name main)
   (js_of_ocaml (flags :standard))
   (preprocess (pps js_of_ocaml-ppx))
-  (libraries 
-    js_of_ocaml 
+  (modes byte js)
+  (libraries
+    js_of_ocaml
     ocamlectron.api
     ocamlectron.main
   )
